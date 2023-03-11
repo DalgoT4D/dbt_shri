@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: daily_issue_form_normalized
+    description: "Normalized data of Daily Issue Form" 
+    +schema: intermediate
+    columns: 
+       - name: _airbyte_ab_id
+         description: "The primary key for this table"
+         tests:
+           - unique
+           - not_null
+
+ - name: raw_enrollment_normalized
+    description: "Normalized data of Raw Enrollment Form" 
+    +schema: intermediate
+    columns: 
+       - name: _airbyte_ab_id
+         description: "The primary key for this table"
+         tests:
+           - unique
+           - not_null
+  
