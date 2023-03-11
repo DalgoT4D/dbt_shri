@@ -1,0 +1,24 @@
+version: 2
+
+sources:
+  - name: source_shri_surveys
+    schema: staging
+    tables:
+      - name: daily_issue_form
+        identifier: _airbyte_raw_daily_issue_form
+        description: One record per form data. 
+      - name: raw_enrollment
+        identifier: _airbyte_raw_enrollment
+        description: One record per form data. 
+      - name: use_tracking
+        identifier: _airbyte_raw_nonregular_use_tracking
+        description: One record per form data. 
+      - name: staff_barcode
+        identifier: _airbyte_raw_staff_barcode
+        description: One record per form data. 
+      - name: use_tracking
+        identifier: _airbyte_raw_use_tracking
+        description: One record per form data.
+      - name: weekly_photo
+        identifier: _airbyte_raw_weekly_photo
+        description: One record per form data.
