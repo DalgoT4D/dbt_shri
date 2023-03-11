@@ -20,4 +20,14 @@ models:
          tests:
            - unique
            - not_null
+
+ - name: use_tracking_normalized
+    description: "Normalized data of Use Tracking Form" 
+    +schema: intermediate
+    columns: 
+       - name: _airbyte_ab_id
+         description: "The primary key for this table"
+         tests:
+           - unique
+           - not_null
   
