@@ -10,7 +10,7 @@ sources:
       - name: raw_enrollment
         identifier: _airbyte_raw_enrollment
         description: One record per form data. 
-      - name: use_tracking
+      - name: nonregular_use_tracking
         identifier: _airbyte_raw_nonregular_use_tracking
         description: One record per form data. 
       - name: staff_barcode

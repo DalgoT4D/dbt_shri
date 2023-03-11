@@ -21,8 +21,8 @@ models:
            - unique
            - not_null
 
- - name: use_tracking_normalized
-    description: "Normalized data of Use Tracking Form" 
+ - name: nonregular_use_tracking_normalized
+    description: "Normalized data of Nonregular Use Tracking Form" 
     +schema: intermediate
     columns: 
        - name: _airbyte_ab_id
@@ -33,6 +33,27 @@ models:
 
 - name: staff_barcode_normalized
     description: "Normalized data of Staff Barcode Form" 
+    +schema: intermediate
+    columns: 
+       - name: _airbyte_ab_id
+         description: "The primary key for this table"
+         tests:
+           - unique
+           - not_null
+
+
+- name: use_tracking_normalized
+    description: "Normalized data of Weekly Photo Form" 
+    +schema: intermediate
+    columns: 
+       - name: _airbyte_ab_id
+         description: "The primary key for this table"
+         tests:
+           - unique
+           - not_null
+
+- name: weekly_photo_normalized
+    description: "Normalized data of Weekly Photo Form" 
     +schema: intermediate
     columns: 
        - name: _airbyte_ab_id
