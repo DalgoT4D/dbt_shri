@@ -30,4 +30,13 @@ models:
          tests:
            - unique
            - not_null
-  
+
+- name: staff_barcode_normalized
+    description: "Normalized data of Staff Barcode Form" 
+    +schema: intermediate
+    columns: 
+       - name: _airbyte_ab_id
+         description: "The primary key for this table"
+         tests:
+           - unique
+           - not_null
