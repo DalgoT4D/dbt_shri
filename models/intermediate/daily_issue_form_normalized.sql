@@ -8,3 +8,8 @@
 ) }}
 
 
+select
+        _airbyte_ab_id,
+        _airbyte_emitted_at
+
+from {{ source('source_shri_surveys', 'daily_issue_form') }}
