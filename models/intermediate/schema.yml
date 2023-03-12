@@ -52,12 +52,12 @@ models:
            - unique
            - not_null
 
-# - name: weekly_photo_normalized
-#     description: "Normalized data of Weekly Photo Form" 
-#     +schema: intermediate
-#     columns: 
-#        - name: _airbyte_ab_id
-#          description: "The primary key for this table"
-#          tests:
-#            - unique
-#            - not_null
+- name: weekly_photo_normalized
+    description: "Normalized data of Weekly Photo Form" 
+    +schema: intermediate
+    columns: 
+       - name: _airbyte_ab_id
+         description: "The primary key for this table"
+         tests:
+           - unique
+           - not_null
