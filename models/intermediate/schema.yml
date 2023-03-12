@@ -11,7 +11,7 @@ models:
            - unique
            - not_null
 
- - name: raw_enrollment_normalized
+  - name: enrollment_normalized
     description: "Normalized data of Raw Enrollment Form" 
     +schema: intermediate
     columns: 
@@ -21,7 +21,7 @@ models:
            - unique
            - not_null
 
- - name: nonregular_use_tracking_normalized
+  - name: nonregular_use_tracking_normalized
     description: "Normalized data of Nonregular Use Tracking Form" 
     +schema: intermediate
     columns: 
@@ -31,7 +31,7 @@ models:
            - unique
            - not_null
 
-- name: staff_barcode_normalized
+  - name: staff_barcode_normalized
     description: "Normalized data of Staff Barcode Form" 
     +schema: intermediate
     columns: 
@@ -42,7 +42,7 @@ models:
            - not_null
 
 
-- name: use_tracking_normalized
+  - name: use_tracking_normalized
     description: "Normalized data of Weekly Photo Form" 
     +schema: intermediate
     columns: 
@@ -52,7 +52,7 @@ models:
            - unique
            - not_null
 
-- name: weekly_photo_normalized
+  - name: weekly_photo_normalized
     description: "Normalized data of Weekly Photo Form" 
     +schema: intermediate
     columns: 
