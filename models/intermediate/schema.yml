@@ -21,15 +21,15 @@ models:
            - unique
            - not_null
 
-#  - name: nonregular_use_tracking_normalized
-#     description: "Normalized data of Nonregular Use Tracking Form" 
-#     +schema: intermediate
-#     columns: 
-#        - name: _airbyte_ab_id
-#          description: "The primary key for this table"
-#          tests:
-#            - unique
-#            - not_null
+ - name: nonregular_use_tracking_normalized
+    description: "Normalized data of Nonregular Use Tracking Form" 
+    +schema: intermediate
+    columns: 
+       - name: _airbyte_ab_id
+         description: "The primary key for this table"
+         tests:
+           - unique
+           - not_null
 
 # - name: staff_barcode_normalized
 #     description: "Normalized data of Staff Barcode Form" 
