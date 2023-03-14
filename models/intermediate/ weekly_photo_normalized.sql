@@ -26,6 +26,6 @@ select
 from {{ source('source_shri_surveys', 'weekly_photo') }}
 
 
-- facility name
-- submission time
-- url for image
+-- - facility name
+-- - submission time
+-- - url for image
