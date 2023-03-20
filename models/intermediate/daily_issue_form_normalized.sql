@@ -1,3 +1,7 @@
+#################### DAILY ISSUE FORM ###############################
+
+# Here we are pulling what we need for daily issue form and cleaning or renaming it. 
+
 {{ config(
   materialized='table',
    indexes=[
@@ -6,7 +10,6 @@
     schema='intermediate'
 
 ) }}
-
 
 select
         _airbyte_ab_id,
