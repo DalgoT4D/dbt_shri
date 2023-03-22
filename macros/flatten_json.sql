@@ -21,7 +21,7 @@ select
 _airbyte_ab_id,
 _airbyte_data,
 {% for column_name in results_list %}
-_airbyte_data->>'{{ column_name }}' as {{ column_name }}{% if not loop.last %},{% endif %}
+_airbyte_data->>'{{ column_name }}' as {{ column_name | replace('/', '_') | replace('-', '_') }}{% if not loop.last %},{% endif %}
 {% endfor %}
 from {{model_name}}
 {% endmacro %}
