@@ -8,9 +8,9 @@
 ) }}
 
 
-select
-        _airbyte_ab_id,
-        _airbyte_emitted_at
-
-
-from {{ source('source_shri_surveys', 'raw_enrollment') }}
+{{
+    flatten_json(
+        model_name = source('source_shri_surveys', 'raw_enrollment'),
+        json_column = '_airbyte_data'
+    )
+}}
