@@ -22,3 +22,6 @@ sources:
       - name: weekly_photo
         identifier: _airbyte_raw_weekly_photo
         description: One record per form data.
+      - name: facility_koboid_link
+        identifier: _airbyte_raw_facility_koboid_link
+        description: One record per form data.
