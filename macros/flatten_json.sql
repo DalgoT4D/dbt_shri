@@ -1,5 +1,3 @@
-import re
-
 {% macro flatten_json(model_name, json_column) %}
   
 {% set survey_methods_query %}
@@ -19,9 +17,8 @@ from {{model_name}}
 
 select
 _airbyte_ab_id,
-_airbyte_data,
 {% for column_name in results_list %}
-_airbyte_data->>'{{ column_name }}' as {{ column_name | replace('/', '_') | replace('-', '_') }}{% if not loop.last %},{% endif %}
+{{ json_column }}->>'{{ column_name }}' as {{ column_name | replace('begin_group_yeQ4kl9Kt/', '') | replace('begin_group_G8GvBDlis/', '') | replace('/', '_') | replace('-', '_') }}{% if not loop.last %},{% endif %}
 {% endfor %}
 from {{model_name}}
 {% endmacro %}

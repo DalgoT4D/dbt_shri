@@ -1,4 +1,3 @@
-
 {{ config(
   materialized='table',
    indexes=[
@@ -11,7 +10,7 @@
 
 {{
     flatten_json(
-        model_name = source('source_shri_surveys', 'daily_issue_form'),
+        model_name = source('source_shri_surveys', 'facility_koboid_link'),
         json_column = '_airbyte_data'
     )
 }}
