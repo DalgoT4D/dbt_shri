@@ -1,4 +1,4 @@
-{% macro flatten_json(model_name, json_column, json_fields_to_retain, non_json_column_fields) %}
+{% macro flatten_json(model_name, json_column) %}
   
 {% set survey_methods_query %}
 
@@ -16,9 +16,9 @@ from {{model_name}}
 {% endif %}
 
 select
-{{ non_json_column_fields | join(', ') }},
-{% for column_name in json_fields_to_retain %}
-{{ json_column }}->>'{{ column_name }}' as {{ column_name | replace('/', '_') | replace('-', '_') }}{% if not loop.last %},{% endif %}
+_airbyte_ab_id,
+{% for column_name in results_list %}
+{{ json_column }}->>'{{ column_name }}' as {{ column_name | replace('begin_group_yeQ4kl9Kt/', '') | replace('begin_group_G8GvBDlis/', '') | replace('/', '_') | replace('-', '_') }}{% if not loop.last %},{% endif %}
 {% endfor %}
 from {{model_name}}
 {% endmacro %}
