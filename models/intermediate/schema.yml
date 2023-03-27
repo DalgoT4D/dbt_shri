@@ -62,7 +62,7 @@ models:
            - unique
            - not_null
            
-  - name: facility_koboid_link
+  - name: facility_koboid_link_normalized
     description: "Normalized data of Facility Kobo ID Link" 
     +schema: intermediate
     columns: 

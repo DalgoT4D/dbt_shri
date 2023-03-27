@@ -8,11 +8,12 @@
 ) }}
 
 
-select
-        _airbyte_ab_id,
-        _airbyte_emitted_at,
-        _airbyte_data ->> 'facilityname' as facility_name,
-        _airbyte_data ->> 'kobo_username' as kobo_username,
-        _airbyte_data ->> '_submission_time' as _submission_time
+{{
+    flatten_json(
+        model_name = source('source_shri_surveys', 'facility_koboid_link'),
+        json_column = '_airbyte_data',
+        json_fields_to_retain =  ['_id', 'kobo_username', 'facilityname', '_submission_time'],
+        non_json_column_fields = ['_airbyte_ab_id', '_airbyte_emitted_at']
+    )
+}}
 
-from {{ source('source_shri_surveys', 'facility_koboid_link') }}
