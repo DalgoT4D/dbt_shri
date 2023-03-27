@@ -7,12 +7,12 @@
 
 ) }}
 
-with my_cte as {{
+with my_cte as ({{
     flatten_json(
         model_name = source('source_shri_surveys', 'weekly_photo'),
         json_column = '_airbyte_data'
     )
-}}
+}})
 
 
 {{ dbt_utils.deduplicate(
