@@ -1,31 +1,26 @@
 
 {{ config(
   materialized='table',
-   indexes=[
-      {'columns': ['_airbyte_ab_id'], 'type': 'hash'}
-    ],
     schema='intermediate'
 
 ) }}
 
 with 
    daily_issue as (select
-   {{ dbt_utils.star(from= ref('daily_issue_form_normalized'), except=['_notes', '_geolocation', '_version_']) }},
-    '' as facility
+   {{ dbt_utils.star(from= ref('daily_issue_form_normalized'), except=['_airbyte_ab_id', '_id', '_notes', '_geolocation', '_version_']) }}
    from {{ ref('daily_issue_form_normalized') }} ),
 
    form_kd as 
    (select
-   {{ dbt_utils.star(from= ref('enrollment_normalized'), except=['_notes', '_geolocation', '_version_']) }}
-   from {{ ref('enrollment_normalized') }} ),
+   {{ dbt_utils.star(from= ref('facility_koboid_link_normalized'), except=['_notes', '_geolocation', '_version_', '_xform_id_string', '_tags', '_status']) }}
+   from {{ ref('facility_koboid_link_normalized') }} ),
 
    join_all_tables as (
-    select *, 
-    form_kd.facilityname,
-    '' as facilityname
+    select daily_issue.*, 
+    form_kd.facilityname
     from daily_issue
     left join form_kd
-    ON daily_issue.facilityname = form_kd.facilityname
+    ON daily_issue._submitted_by = form_kd.kobo_username
    )
 
 select * from join_all_tables
