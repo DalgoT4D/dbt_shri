@@ -17,9 +17,9 @@ with my_cte as ({{
 }})
 
 
-{{ dbt_utils.deduplicate(
+({{ dbt_utils.deduplicate(
     relation='my_cte',
     partition_by='_id',
     order_by='_id desc',
    )
-}}
+}})
