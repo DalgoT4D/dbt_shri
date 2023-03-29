@@ -8,20 +8,32 @@
 
 ) }}
 
+-- Creating a CTE that selects and renames columns from the 'enrollment_normalized' table
 WITH cte AS (
     SELECT
+
+        -- Renaming columns
         meta_deprecatedid as deprecatedID,
         meta_rootuuid as rootuuid,
         form_timestamp_formatted as formtimestampformatted,
+
+        -- Selecting all columns from 'enrollment_normalized' except for the ones listed
         {{ dbt_utils.star(from= ref('enrollment_normalized'), except=['_xform_id_string', 'form_timestamp_formatted', 'id_num', '_tags', 'name_c', 'firstname', '_geolocation', '_status', 'meta_rootuuid', 'meta_instanceid', 'meta_deprecatedid', 'mothername', 'lastname', 'identification_c', '_attachments', '_validation_status', '_notes', 'form_timestamp', 'formhub_uuid', 'lastname_c', '__version__', '_uuid', 'firstname_c']) }},
+        
+        -- Creating a new column with the date of enrollment from form_timestamp_formatted
         to_date(form_timestamp_formatted, 'YYYY-MM-DD') AS date_enrollment,
+
+        -- Creating a new column with the age in years from yob
         ROUND(CAST(EXTRACT(YEAR FROM CURRENT_DATE) - CAST(yob AS integer) AS float)::numeric, 1) AS age_years
     from {{ ref('enrollment_normalized') }} 
 )
 
+-- Selecting columns from the CTE and joining with the 'facility_koboid_link_normalized' table to get updated facility data
 SELECT
     a.*,
-    coalesce(b.facilityname, a.facility) as facility_updated,
+    coalesce(b.facilityname, a.facility) as facility_updated,  -- Coalescing the facility name from both tables
+
+    -- Creating a new column with age categories based on the age in years
     CASE
         WHEN age_years BETWEEN 1 AND 10 THEN '1-10'
         WHEN age_years BETWEEN 11 AND 20 THEN '11-20'
