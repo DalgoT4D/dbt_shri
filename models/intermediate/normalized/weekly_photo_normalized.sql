@@ -7,6 +7,8 @@
 
 ) }}
 
+-- Creating a CTE that flattens the JSON data from the raw_weekly_photo table
+
 with my_cte as ({{
     flatten_json(
         model_name = source('source_shri_surveys', 'weekly_photo'),
@@ -14,6 +16,7 @@ with my_cte as ({{
     )
 }})
 
+-- Deduplicating the data in the CTE based on the '_id' column
 
 {{ dbt_utils.deduplicate(
     relation='my_cte',
