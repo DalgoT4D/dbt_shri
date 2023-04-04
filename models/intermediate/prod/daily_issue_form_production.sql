@@ -23,7 +23,7 @@ with merged_normalized AS
                      'electrical_group_outage_wiring_full',
                      'supplies_group_outage_soap_hours'
        ]) AS issue,
-       unnest(array[cleanliness_group_outage_pan_full as , 
+       unnest(array[cleanliness_group_outage_pan_full, 
                      electrical_group_outage_wiring_hours,
                      plumbing_group_outage_pipe_full, 
                      plumbing_group_outage_tools,

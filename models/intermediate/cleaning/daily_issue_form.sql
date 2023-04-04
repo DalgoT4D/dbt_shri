@@ -7,7 +7,7 @@
 
 with 
    daily_issue as (select
-   {{ dbt_utils.star(from= ref('daily_issue_form_normalized'), except=['_airbyte_ab_id', '_id', '_notes', '_geolocation', '_version_']) }}
+   {{ dbt_utils.star(from= ref('daily_issue_form_normalized'), except=['_airbyte_ab_id', '_notes', '_geolocation', '_version_']) }}
    from {{ ref('daily_issue_form_normalized') }} ),
 
    form_kd as 
