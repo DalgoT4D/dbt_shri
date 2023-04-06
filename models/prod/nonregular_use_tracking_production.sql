@@ -1,7 +1,6 @@
 
 {{ config(
-  materialized='table',
-    schema='final'
+  materialized='table'
 ) }}
 
 -- Selecting specific columns from the 'nonregular_use_tracking' table
