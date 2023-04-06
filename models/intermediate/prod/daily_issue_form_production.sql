@@ -5,7 +5,7 @@
 ) }}
 
 
-with my_cte AS (SELECT facilityname as facility, shift_type,
+with my_cte AS (SELECT facilityname as facility, shift_type, timestamp_formatted as dateauto,
        unnest(array['Electrical - bulb', 
                     'Plumbing - basin tap', 
                     'Technology - Internet', 
@@ -72,5 +72,6 @@ select *,
       Case 
         When outage = '0' then 'NO'
         When outage = '1' then 'YES'
-      END as shutdown
+      END as shutdown,
+      to_date(dateauto, 'YYYY-MM-DD') AS date_auto
 from my_cte where outage is not null
