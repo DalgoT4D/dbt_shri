@@ -68,10 +68,13 @@ with my_cte AS (SELECT facilityname as facility, shift_type, timestamp_formatted
 
 
 
-select *,
-      Case 
-        When outage = '0' then 'NO'
-        When outage = '1' then 'YES'
-      END as shutdown,
-      to_date(dateauto, 'YYYY-MM-DD') AS date_auto
-from my_cte where outage is not null
+SELECT facility,
+       shift_type,
+       issue,
+       CASE outage
+         WHEN '0' THEN 'NO'
+         WHEN '1' THEN 'YES'
+         ELSE outage
+       END as shutdown,
+       to_date(dateauto, 'YYYY-MM-DD') AS date_auto
+FROM my_cte WHERE outage IS NOT NULL
