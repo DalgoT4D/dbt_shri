@@ -69,6 +69,8 @@ with my_cte AS (SELECT facilityname as facility, shift_type, timestamp_formatted
 SELECT facility,
        shift_type,
        issue,
+       full_partial,
+       num_hours,
        CASE outage
          WHEN '0' THEN 'NO'
          WHEN '1' THEN 'YES'
