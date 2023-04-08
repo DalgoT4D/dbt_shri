@@ -69,6 +69,7 @@ with my_cte AS (SELECT facilityname as facility, shift_type, timestamp_formatted
 SELECT facility,
        shift_type,
        issue,
+       fixed,
        case full_part 
           When '1' THEN 'part day'
           When '2' THEN 'full day'
@@ -80,4 +81,4 @@ SELECT facility,
          ELSE outage
        END as shutdown,
        to_date(dateauto, 'YYYY-MM-DD') AS date_auto
-FROM my_cte WHERE outage IS NOT NULL
+FROM my_cte WHERE fixed IS NOT NULL
