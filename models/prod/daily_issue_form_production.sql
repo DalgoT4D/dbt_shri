@@ -49,7 +49,7 @@ with my_cte AS (SELECT facilityname as facility, shift_type, timestamp_formatted
                     supplies_group_outage_harpicetc_full,
                     infrastructure_group_outage_gate_full,
                     supplies_group_outage_soap_full,
-                    plumbing_group_outage_pipe_full]) AS full_partial,
+                    plumbing_group_outage_pipe_full]) AS full_part,
        unnest(array[electrical_group_outage_bulb_hours, 
                     plumbing_group_outage_basintap_hours, 
                     technology_group_outage_internet_hours, 
@@ -69,7 +69,10 @@ with my_cte AS (SELECT facilityname as facility, shift_type, timestamp_formatted
 SELECT facility,
        shift_type,
        issue,
-       full_partial,
+       case full_part 
+          When '1' THEN 'part day'
+          When '2' THEN 'full day'
+        End as full_partial,
        num_hours,
        CASE outage
          WHEN '0' THEN 'NO'
