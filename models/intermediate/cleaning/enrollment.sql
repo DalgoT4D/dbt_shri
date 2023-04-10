@@ -79,11 +79,3 @@ SELECT
 FROM cte AS a LEFT JOIN {{ ref('facility_koboid_link_normalized') }} AS b on 
 a._submitted_by = b.kobo_username
 
-
-
-
-
--- SELECT date_auto, sum(child_girl_number :: integer)
--- FROM prod.nonregular_use_tracking_production
--- group by date_auto 
--- order by date_auto desc
