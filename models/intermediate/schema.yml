@@ -71,3 +71,8 @@ models:
          tests:
            - unique
            - not_null
+
+  - name: enrollment_production_dedup_remove
+    description: "Normalized data of Facility Kobo ID Link" 
+    +schema: prod
+  

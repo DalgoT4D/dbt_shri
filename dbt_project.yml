@@ -36,3 +36,13 @@ models:
     # Config indicated by + and applies to all files under models/example/
     example:
       +materialized: view
+
+tests:
+  <resource-path>:
+    +fail_calc: <string>
+    +limit: <integer>
+    +severity: error | warn
+    +error_if: <string>
+    +warn_if: <string>
+    +store_failures: true | false
+    +where: <string>

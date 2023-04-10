@@ -18,13 +18,20 @@ WITH cte AS (
         form_timestamp_formatted as formtimestampformatted,
 
         -- Selecting all columns from 'enrollment_normalized' except for the ones listed
-        {{ dbt_utils.star(from= ref('enrollment_normalized'), except=['_xform_id_string', 'form_timestamp_formatted', 'id_num', '_tags', 'name_c', 'firstname', '_geolocation', '_status', 'meta_rootuuid', 'meta_instanceid', 'meta_deprecatedid', 'mothername', 'lastname', 'identification_c', '_attachments', '_validation_status', '_notes', 'form_timestamp', 'formhub_uuid', 'lastname_c', '__version__', '_uuid', 'firstname_c']) }},
+        {{ dbt_utils.star(from= ref('enrollment_normalized'), except=['yob', '_xform_id_string', 'form_timestamp_formatted', '_tags', 'name_c', 'firstname', '_geolocation', '_status', 'meta_rootuuid', 'meta_instanceid', 'meta_deprecatedid', 'mothername', 'lastname', 'identification_c', '_attachments', '_validation_status', '_notes', 'form_timestamp', 'formhub_uuid', 'lastname_c', '__version__', '_uuid', 'firstname_c']) }},
         
         -- Creating a new column with the date of enrollment from form_timestamp_formatted
         to_date(form_timestamp_formatted, 'YYYY-MM-DD') AS date_enrollment,
 
         -- Creating a new column with the age in years from yob
-        ROUND(CAST(EXTRACT(YEAR FROM CURRENT_DATE) - CAST(yob AS integer) AS float)::numeric, 1) AS age_years
+        case  
+            when CAST(yob AS integer) < 150 then CAST(yob AS integer) 
+            else  ROUND(CAST(EXTRACT(YEAR FROM CURRENT_DATE) - CAST(yob AS integer) AS float)::numeric, 1)
+        end as age_years,
+
+        CAST(yob AS integer)
+
+
     from {{ ref('enrollment_normalized') }} 
 )
 
@@ -48,3 +55,12 @@ SELECT
     END AS age_cat
 FROM cte AS a LEFT JOIN {{ ref('facility_koboid_link_normalized') }} AS b on 
 a._submitted_by = b.kobo_username
+
+
+
+
+
+-- SELECT date_auto, sum(child_girl_number :: integer)
+-- FROM prod.nonregular_use_tracking_production
+-- group by date_auto 
+-- order by date_auto desc
