@@ -3,7 +3,7 @@
 ) }}
 
 
-select facilityname, shift_type, 
+select _id, facilityname, shift_type, 
  Case
   when minorissue_type is not null then true
   else false
