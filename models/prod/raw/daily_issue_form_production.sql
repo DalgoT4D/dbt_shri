@@ -3,7 +3,7 @@
 ) }}
 
 
-with my_cte AS (SELECT facilityname as facility, shift_type, timestamp_formatted as dateauto,
+with my_cte AS (SELECT _id, minorissue_type, facilityname as facility, shift_type, timestamp_formatted as dateauto,
        unnest(array['Electrical - bulb', 
                     'Plumbing - basin tap', 
                     'Technology - Internet', 
@@ -62,6 +62,7 @@ with my_cte AS (SELECT facilityname as facility, shift_type, timestamp_formatted
                     supplies_group_outage_soap_hours,
                     plumbing_group_outage_pipe_hours]) AS num_hours
        FROM {{ref('daily_issue_form')}}
+       where minorissue_type is not null
 )
 
 
@@ -70,6 +71,7 @@ SELECT facility,
        shift_type,
        issue,
        fixed,
+       _id, 
        case full_part 
           When '1' THEN 'part day'
           When '2' THEN 'full day'
@@ -81,4 +83,5 @@ SELECT facility,
          ELSE outage
        END as shutdown,
        to_date(dateauto, 'YYYY-MM-DD') AS date_auto
-FROM my_cte WHERE fixed IS NOT NULL
+FROM my_cte 
+where outage is not null 
