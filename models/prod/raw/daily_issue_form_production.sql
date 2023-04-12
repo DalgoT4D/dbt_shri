@@ -62,7 +62,7 @@ with my_cte AS (SELECT _id, minorissue_type, facilityname as facility, shift_typ
                     supplies_group_outage_soap_hours,
                     infrastructure_group_outage_gate_hours]) AS num_hours
        FROM {{ref('daily_issue_form')}}
-       where minorissue_type is not null
+       WHERE NOT ((minorissue_type LIKE '%1%') AND (minorissue_type LIKE '%2%') AND (minorissue_type LIKE '%3%') AND (minorissue_type LIKE '%4%') AND (minorissue_type LIKE '%5%') AND (minorissue_type LIKE '%6%') AND (minorissue_type LIKE '%7%'))
 )
 
 
@@ -71,7 +71,8 @@ SELECT facility,
        shift_type,
        issue,
        fixed,
-       _id, 
+       _id,
+       true as any_isue,
        case full_part 
           When '1' THEN 'part day'
           When '2' THEN 'full day'
@@ -84,4 +85,7 @@ SELECT facility,
        END as shutdown,
        to_date(dateauto, 'YYYY-MM-DD') AS date_auto
 FROM my_cte 
-where outage is not null 
+where not (outage is null and
+fixed is null and
+full_part is null and
+num_hours is null)
