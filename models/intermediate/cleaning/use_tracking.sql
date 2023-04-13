@@ -9,13 +9,15 @@ with cte as(
             numberid as userid,
             coalesce(begin_group_ajqop6jqs_name_timestamp_formatted, 
                      begin_group_kthfwkunp_name_timestamp_formatted, 
-                     begin_group_5xw8upowl_name_timestamp_formatted) 
+                     begin_group_5xw8upowl_name_timestamp_formatted,
+                     name_timestamp_formatted) 
             as datetime_auto_day,
             to_date
             ( coalesce ( 
             begin_group_ajqop6jqs_name_timestamp_formatted, 
             begin_group_kthfwkunp_name_timestamp_formatted, 
-            begin_group_5xw8upowl_name_timestamp_formatted), 'YYYY-MM-DD') as date_auto,
+            begin_group_5xw8upowl_name_timestamp_formatted, 
+            name_timestamp_formatted), 'YYYY-MM-DD') as date_auto,
             {{ dbt_utils.star(from = ref('use_tracking_normalized'), 
             except=['begin_group_5xw8upowl_name_timestamp', 
                     'begin_group_kthfwkunp_repeat_numberid', 
@@ -36,7 +38,6 @@ with cte as(
                     'formhub_uuid', 
                     'endtime', 
                     'starttime', 
-                    '_id', 
                     '_xform_id_string', 
                     'meta_instanceid', 
                     '_validation_status', 
@@ -57,10 +58,11 @@ SELECT
     a.*,
     b.facilityname AS facility,
     c.yob AS yob,
-    c.gender AS gender
+    c.gender AS gender,
+    c.date_enrollment
 FROM cte AS a
 LEFT JOIN {{ ref('facility_koboid_link_normalized') }} AS b
 ON a._submitted_by = b.kobo_username
-LEFT JOIN {{ ref('enrollment_normalized') }} AS c
-ON a.userid = c.id_num
+LEFT JOIN {{ ref('enrollment_production') }} AS c
+ON a.userid = c.userid
 order by date_auto asc
