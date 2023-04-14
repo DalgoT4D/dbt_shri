@@ -7,12 +7,22 @@
 
 with 
    daily_issue as (select
-   {{ dbt_utils.star(from= ref('daily_issue_form_normalized'), except=['_airbyte_ab_id', '_notes', '_geolocation', '_version_']) }}
+   {{ dbt_utils.star(from= ref('daily_issue_form_normalized'), 
+   except=['_airbyte_ab_id', 
+           '_notes', 
+           '_geolocation', 
+           '_version_']) }}
    from {{ ref('daily_issue_form_normalized') }} ),
 
    form_kd as 
    (select
-   {{ dbt_utils.star(from= ref('facility_koboid_link_normalized'), except=['_notes', '_geolocation', '_version_', '_xform_id_string', '_tags', '_status']) }}
+   {{ dbt_utils.star(from= ref('facility_koboid_link_normalized'), 
+   except=['_notes', 
+           '_geolocation', 
+           '_version_', 
+           '_xform_id_string', 
+           '_tags', 
+           '_status']) }}
    from {{ ref('facility_koboid_link_normalized') }} ),
 
    join_all_tables as (
