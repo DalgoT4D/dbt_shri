@@ -1,7 +1,7 @@
 {{ config(
-  materialized='table'
+  materialized='table',
+  schema='aggregated'
 ) }}
-
 
 
 {{ dbt_utils.union_relations(
