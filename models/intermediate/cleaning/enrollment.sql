@@ -12,9 +12,6 @@
 WITH cte AS (
     SELECT
 
-        -- Renaming columns
-        meta_deprecatedid as deprecatedID,
-        meta_rootuuid as rootuuid,
         form_timestamp_formatted as formtimestampformatted,
 
         -- Selecting all columns from 'enrollment_normalized' except for the ones listed
