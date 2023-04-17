@@ -11,7 +11,14 @@ with
    except=['_airbyte_ab_id', 
            '_notes', 
            '_geolocation', 
-           '_version_']) }}
+           '_version_',
+           '_xform_id_string',
+           '_tags',
+           '_status',
+           'attachments',
+           'meta_deprecatedid',
+           '_validation_status',
+           'meta_instancename']) }}
    from {{ ref('daily_issue_form_normalized') }} ),
 
    form_kd as 
