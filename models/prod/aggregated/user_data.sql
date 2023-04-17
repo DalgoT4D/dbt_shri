@@ -21,7 +21,7 @@ left join {{ref('enrollment_production')}} as b
 on a.userid = b.userid)
 
 select *,
-   {{ dbt_utils.safe_divide('n_by_id', 'days_since_enroll') }}
+   {{ dbt_utils.safe_divide('n_by_id', 'days_since_enroll') }} as avg_useperday
 from user_data 
 
 
