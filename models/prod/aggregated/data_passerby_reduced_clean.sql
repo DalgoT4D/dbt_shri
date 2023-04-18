@@ -1,7 +1,6 @@
 
 {{ config(
-  materialized='table',
-  schema='aggregated'
+  materialized='table'
 ) }}
 
 
@@ -33,5 +32,5 @@ sum(
  b.woman_number + b.girl_number + b.man_number + b.boy_number + a.men_regular_number + a.women_regular_number  as total_use
  
  from my_cte as a
- left join {{ref('nonregular_clean')}} as b
+ left join {{ref('data_passerbyuse_clean')}} as b
  on a.facility = b.facility and a.date_auto = b.date_auto 
