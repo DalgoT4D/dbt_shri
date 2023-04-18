@@ -62,7 +62,13 @@ with my_cte AS (SELECT _id, minorissue_type, facilityname as facility, shift_typ
                     supplies_group_outage_soap_hours,
                     infrastructure_group_outage_gate_hours]) AS num_hours
        FROM {{ref('daily_issue_form')}}
-       WHERE NOT ((minorissue_type LIKE '%1%') AND (minorissue_type LIKE '%2%') AND (minorissue_type LIKE '%3%') AND (minorissue_type LIKE '%4%') AND (minorissue_type LIKE '%5%') AND (minorissue_type LIKE '%6%') AND (minorissue_type LIKE '%7%'))
+       WHERE NOT ((minorissue_type LIKE '%1%') 
+             AND (minorissue_type LIKE '%2%') 
+             AND (minorissue_type LIKE '%3%') 
+             AND (minorissue_type LIKE '%4%') 
+             AND (minorissue_type LIKE '%5%') 
+             AND (minorissue_type LIKE '%6%') 
+             AND (minorissue_type LIKE '%7%'))
 )
 
 
