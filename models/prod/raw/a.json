@@ -1,0 +1,195 @@
+{
+    "_id": 221862244,
+    "_tags": [],
+    "_uuid": "5db4fa69-5067-41b1-8639-3d2afad38f41",
+    "_notes": [],
+    "_status": "submitted_via_web",
+    "endtime": "2023-02-27T21:01:54.554+05:30",
+    "starttime": "2023-02-27T21:01:41.291+05:30",
+    "timestamp": "2023-02-27T21:01:41.296+05:30",
+    "shift_type": "2",
+    "__version__": "v5GvGNZb27L3JH8xNqirkG",
+    "_attachments": [],
+    "_geolocation": [
+        null,
+        null
+    ],
+    "formhub/uuid": "d11902fdb75249a3b0c35c1f10a5103a",
+    "_submitted_by": "shriindia",
+    "meta/instanceID": "uuid:5db4fa69-5067-41b1-8639-3d2afad38f41",
+    "minorissue_type": "3",
+    "_submission_time": "2023-02-27T15:34:23",
+    "_xform_id_string": "a9Dq7ARVscc2eY85r79ZxP",
+    "meta/instanceName": "minorissues_2023-02-27",
+    "_validation_status": {},
+    "timestamp-formatted": "2023-02-27 21:01:41.296",
+    "infrastructure_group/gate_fixed": "1",
+    "infrastructure_group/outage_gate": "0"
+}
+
+{
+    "_id": 222447730,
+    "_tags": [],
+    "_uuid": "75c0f2e4-4f61-4ab3-9b24-c373d42142b4",
+    "_notes": [],
+    "_status": "submitted_via_web",
+    "endtime": "2023-03-02T10:23:55.168+05:30",
+    "starttime": "2023-03-02T10:23:05.875+05:30",
+    "timestamp": "2023-03-02T10:23:05.877+05:30",
+    "shift_type": "1",
+    "__version__": "v5GvGNZb27L3JH8xNqirkG",
+    "_attachments": [],
+    "_geolocation": [
+        null,
+        null
+    ],
+    "formhub/uuid": "d11902fdb75249a3b0c35c1f10a5103a",
+    "_submitted_by": "peterbar",
+    "meta/instanceID": "uuid:75c0f2e4-4f61-4ab3-9b24-c373d42142b4",
+    "minorissue_type": "1",
+    "_submission_time": "2023-03-02T04:56:05",
+    "_xform_id_string": "a9Dq7ARVscc2eY85r79ZxP",
+    "meta/instanceName": "minorissues_2023-03-02",
+    "_validation_status": {},
+    "timestamp-formatted": "2023-03-2 10:23:05.877",
+    "electrical_group/bulb_fixed": "1",
+    "electrical_group/outage_bulb": "0"
+}
+
+
+{
+    "_id": 215519748,
+    "_tags": [],
+    "_uuid": "1ef42626-cc88-467a-b422-e84776e113ec",
+    "_notes": [],
+    "_status": "submitted_via_web",
+    "endtime": "2023-01-27T12:59:48.832+05:30",
+    "starttime": "2023-01-27T12:58:54.081+05:30",
+    "timestamp": "2023-01-27T12:58:54.082+05:30",
+    "shift_type": "1",
+    "__version__": "vNQiYmejeWVPxK4gmWoBER",
+    "_attachments": [],
+    "_geolocation": [
+        null,
+        null
+    ],
+    "formhub/uuid": "d11902fdb75249a3b0c35c1f10a5103a",
+    "_submitted_by": "peterbar",
+    "meta/instanceID": "uuid:1ef42626-cc88-467a-b422-e84776e113ec",
+    "minorissue_type": "4",
+    "_submission_time": "2023-01-27T07:31:52",
+    "_xform_id_string": "a9Dq7ARVscc2eY85r79ZxP",
+    "meta/instanceName": "minorissues_2023-01-27",
+    "_validation_status": {},
+    "timestamp-formatted": "2023-01-27 12:58:54.082",
+    "supplies_group/soap_fixed": "2"
+}
+
+
+
+select * from staging._airbyte_raw_daily_issue_form where _airbyte_data ->> '_id' = '215519748'
+
+
+{
+    "_id": 219046472,
+    "_tags": [],
+    "_uuid": "36c2b2c8-06cd-43a2-bb64-89c8299a04ab",
+    "_notes": [],
+    "_status": "submitted_via_web",
+    "endtime": "2023-02-14T12:51:32.978+05:30",
+    "starttime": "2023-02-14T12:44:21.011+05:30",
+    "timestamp": "2023-02-14T12:44:21.015+05:30",
+    "shift_type": "1",
+    "__version__": "v379hh6RVNwUmLPCEzqvBb",
+    "_attachments": [],
+    "_geolocation": [
+        null,
+        null
+    ],
+    "formhub/uuid": "d11902fdb75249a3b0c35c1f10a5103a",
+    "_submitted_by": "ranjitkumar",
+    "meta/instanceID": "uuid:36c2b2c8-06cd-43a2-bb64-89c8299a04ab",
+    "minorissue_type": "1",
+    "_submission_time": "2023-02-14T07:30:12",
+    "_xform_id_string": "a9Dq7ARVscc2eY85r79ZxP",
+    "meta/instanceName": "minorissues_2023-02-14",
+    "_validation_status": {},
+    "timestamp-formatted": "2023-02-14 12:44:21.015",
+    "electrical_group/wiring_fixed": "1",
+    "electrical_group/outage_wiring": "0"
+}
+
+
+
+
+
+
+SELECT _id, minorissue_type, facilityname as facility, shift_type, timestamp_formatted as dateauto,
+       unnest(array['Electrical - bulb', 
+                    'Electrical - wiring',
+                    'Electrical - boring',
+                    'Plumbing - basin tap', 
+                    'Plumbing - toilet tap',
+                    'Plumbing - pipe'
+                    'Technology - tablet',
+                    'Technology - Internet', 
+                    'Supplies - harpic',
+                    'Supplies - soap',
+                    'Infrastructure - gate'
+]) AS issue,
+       unnest(array[electrical_group_outage_bulb, 
+                    electrical_group_outage_wiring, 
+                    electrical_group_outage_boring,
+                    plumbing_group_outage_basintap,
+                    plumbing_group_outage_toilettap, 
+                    plumbing_group_outage_pipe,
+                    technology_group_outage_tablet, 
+                    technology_group_outage_internet,
+                    supplies_group_outage_harpicetc,
+                    supplies_group_outage_soap, 
+                    infrastructure_group_outage_gate
+]) AS outage, 
+       unnest(array[electrical_group_bulb_fixed, 
+                    electrical_group_wiring_fixed,
+                    electrical_group_boring_fixed,
+                    plumbing_group_basintap_fixed, 
+                    plumbing_group_toilettap_fixed,
+                    plumbing_group_pipe_fixed,
+                    technology_group_tablet_fixed, 
+                    technology_group_internet_fixed,  
+                    supplies_group_harpicetc_fixed, 
+                    supplies_group_soap_fixed,
+                    infrastructure_group_gate_fixed
+]) AS fixed, 
+       unnest(array[electrical_group_outage_bulb_full, 
+                    electrical_group_outage_wiring_full,
+                    electrical_group_outage_boring_full,
+                    plumbing_group_outage_basintap_full, 
+                    plumbing_group_outage_toilettap_full,
+                    plumbing_group_outage_pipe_full,
+                    technology_group_outage_tablet_full, 
+                    technology_group_outage_internet_full,
+                    supplies_group_outage_harpicetc_full,
+                    supplies_group_outage_soap_full,
+                    infrastructure_group_outage_gate_full
+]) AS full_part,
+       unnest(array[electrical_group_outage_bulb_hours, 
+                    electrical_group_outage_wiring_hours,
+                    electrical_group_outage_boring_hours,
+                    plumbing_group_outage_basintap_hours, 
+                    plumbing_group_outage_toilettap_hours, 
+                    plumbing_group_outage_pipe_hours,
+                    technology_group_outage_internet_hours, 
+                    technology_group_outage_tablet_hours,
+                    supplies_group_outage_harpicetc_hours,
+                    supplies_group_outage_soap_hours,
+                    infrastructure_group_outage_gate_hours
+]) AS num_hours
+       FROM prod_intermediate.daily_issue_form
+       WHERE NOT ((minorissue_type LIKE '%1%') 
+             AND (minorissue_type LIKE '%2%') 
+             AND (minorissue_type LIKE '%3%') 
+             AND (minorissue_type LIKE '%4%') 
+             AND (minorissue_type LIKE '%5%') 
+             AND (minorissue_type LIKE '%6%') 
+             AND (minorissue_type LIKE '%7%'))

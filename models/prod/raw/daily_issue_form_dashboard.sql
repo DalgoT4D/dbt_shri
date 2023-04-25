@@ -28,6 +28,7 @@ with my_cte AS (SELECT _id, minorissue_type, facilityname as facility, shift_typ
                     supplies_group_outage_harpicetc,
                     supplies_group_outage_soap, 
                     infrastructure_group_outage_gate]) AS outage, 
+
        unnest(array[electrical_group_bulb_fixed, 
                     electrical_group_wiring_fixed,
                     electrical_group_boring_fixed,
@@ -39,6 +40,7 @@ with my_cte AS (SELECT _id, minorissue_type, facilityname as facility, shift_typ
                     supplies_group_harpicetc_fixed, 
                     supplies_group_soap_fixed,
                     infrastructure_group_gate_fixed]) AS fixed, 
+
        unnest(array[electrical_group_outage_bulb_full, 
                     electrical_group_outage_wiring_full,
                     electrical_group_outage_boring_full,
@@ -50,6 +52,7 @@ with my_cte AS (SELECT _id, minorissue_type, facilityname as facility, shift_typ
                     supplies_group_outage_harpicetc_full,
                     supplies_group_outage_soap_full,
                     infrastructure_group_outage_gate_full]) AS full_part,
+
        unnest(array[electrical_group_outage_bulb_hours, 
                     electrical_group_outage_wiring_hours,
                     electrical_group_outage_boring_hours,
@@ -61,6 +64,7 @@ with my_cte AS (SELECT _id, minorissue_type, facilityname as facility, shift_typ
                     supplies_group_outage_harpicetc_hours,
                     supplies_group_outage_soap_hours,
                     infrastructure_group_outage_gate_hours]) AS num_hours
+                    
        FROM {{ref('daily_issue_form')}}
        WHERE NOT ((minorissue_type LIKE '%1%') 
              AND (minorissue_type LIKE '%2%') 
