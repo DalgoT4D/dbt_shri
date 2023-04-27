@@ -17,10 +17,11 @@ sum(
 
  from {{ref('use_tracking')}}
  GROUP BY
-    date_auto, facility
+    _id, date_auto, facility
  order by date_auto desc) 
 
  select a.*,
+ b._id,
  b.woman_number, 
  b.girl_number, 
  b.man_number, 

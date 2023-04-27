@@ -4,7 +4,8 @@
 
 -- Selecting specific columns from the 'nonregular_use_tracking' table
 
-SELECT starttime, 
+SELECT _id,
+       starttime, 
        who, 
        child_girl_number, 
        child_boy_number, 

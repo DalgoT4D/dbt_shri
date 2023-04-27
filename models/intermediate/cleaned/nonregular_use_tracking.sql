@@ -39,7 +39,6 @@ SELECT
              'begin_group_lky5gqsbu_child_girl_number', 
              '_airbyte_ab_id', 
              '_xform_id_string', 
-             '_id', 
              'endtime', 
              '_validation_status', 
              'formhub_uuid', 
