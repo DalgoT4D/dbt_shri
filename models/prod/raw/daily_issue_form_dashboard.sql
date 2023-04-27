@@ -82,7 +82,7 @@ SELECT facility,
        issue,
        fixed,
        _id,
-       true as any_isue,
+       true as any_issue,
        case full_part 
           When '1' THEN 'part day'
           When '2' THEN 'full day'
