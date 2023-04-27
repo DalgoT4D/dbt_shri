@@ -9,7 +9,7 @@ with my_cte AS (SELECT _id, minorissue_type, facilityname as facility, shift_typ
                     'Electrical - boring',
                     'Plumbing - basin tap', 
                     'Plumbing - toilet tap',
-                    'Plumbing - pipe'
+                    'Plumbing - pipe',
                     'Technology - tablet',
                     'Technology - Internet', 
                     'Supplies - harpic',
@@ -72,8 +72,8 @@ with my_cte AS (SELECT _id, minorissue_type, facilityname as facility, shift_typ
              AND (minorissue_type LIKE '%4%') 
              AND (minorissue_type LIKE '%5%') 
              AND (minorissue_type LIKE '%6%') 
-             AND (minorissue_type LIKE '%7%'))
-)
+             AND (minorissue_type LIKE '%7%')
+))
 
 
 
