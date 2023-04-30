@@ -4,6 +4,7 @@
 
 ) }}
 
+# This model is to join a table with koboid link normalized
 with cte as(  
         select
             numberid as userid,
