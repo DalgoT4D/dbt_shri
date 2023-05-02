@@ -17,20 +17,19 @@ sum(
 
  from {{ref('use_tracking')}}
  GROUP BY
-    _id, date_auto, facility
+    date_auto, facility
  order by date_auto desc) 
 
  select a.*,
- b._id,
- b.woman_number, 
- b.girl_number, 
- b.man_number, 
- b.boy_number,
- a.men_regular_number + b.man_number as men_use,
- a.women_regular_number + b.woman_number as women_use,
- b.boy_number as boys_use,
- b.girl_number as girls_use,
- b.woman_number + b.girl_number + b.man_number + b.boy_number + a.men_regular_number + a.women_regular_number  as total_use
+ coalesce(b.woman_number, 0) as woman_number, 
+ coalesce(b.girl_number, 0) as girl_number, 
+ coalesce(b.man_number, 0) as man_number, 
+ coalesce(b.boy_number, 0) as boy_number,
+ a.men_regular_number + coalesce(b.man_number, 0) as men_use,
+ a.women_regular_number + coalesce(b.woman_number, 0) as women_use,
+ coalesce(b.boy_number, 0) as boys_use,
+ coalesce(b.girl_number, 0) as girls_use,
+ coalesce(b.woman_number, 0) + coalesce(b.girl_number, 0) + coalesce(b.man_number,0 ) + coalesce(b.boy_number, 0) + a.men_regular_number + a.women_regular_number  as total_use
  
  from my_cte as a
  left join {{ref('data_passerbyuse_clean')}} as b
