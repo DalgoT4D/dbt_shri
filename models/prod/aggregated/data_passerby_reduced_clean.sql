@@ -35,3 +35,4 @@ sum(
  from my_cte as a
  left join {{ref('data_passerbyuse_clean')}} as b
  on a.facility = b.facility and a.date_auto = b.date_auto 
+ 
