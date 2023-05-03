@@ -4,8 +4,12 @@
 ) }}
 
 
-SELECT userid, COUNT(userid)
+with my_cte as (SELECT *
 FROM {{ ref('enrollment_production') }}
-GROUP BY userid
-HAVING COUNT(userid) > 1
+WHERE userid IN (
+  SELECT userid
+  FROM {{ ref('enrollment_production') }}
+  GROUP BY userid
+  HAVING COUNT(*) > 1
+))
 
