@@ -12,7 +12,7 @@ select
 staff_userid as userid,
 staff_position as position,
 
-with cte as (
+
 
     {{ dbt_utils.star(from= ref('staffidlink_normalized'),
          except=['_xform_id_string', 
@@ -38,4 +38,3 @@ with cte as (
 
     from {{ref('staffidlink_normalized')}}
 
-)
