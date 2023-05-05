@@ -8,11 +8,17 @@
 ) }}
 
 
-select  {{ dbt_utils.star(from= ref('staffidlink_normalized'),
+select  
+staff_userid as userid,
+staff_position as position,
+
+{{ dbt_utils.star(from= ref('staffidlink_normalized'),
          except=['_xform_id_string', 
                 '_tags', 
+                'staff_userid',
                 '_geolocation', 
                 '_status', 
+                'staff_position',
                 'meta_instanceid', 
                 'meta_instancename', 
                 'meta_deprecatedid', 
