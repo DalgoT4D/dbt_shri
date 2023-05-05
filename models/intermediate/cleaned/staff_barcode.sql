@@ -44,9 +44,12 @@ SELECT
     a.*,
     b.facilityname AS facility,
     c.yob AS yob,
-    c.gender AS gender
+    c.gender AS gender,
+    d.position 
 FROM cte AS a
 LEFT JOIN {{ ref('facility_koboid_link_normalized') }} AS b
-ON a._submitted_by = b.kobo_username
+    ON a._submitted_by = b.kobo_username
 LEFT JOIN {{ ref('enrollment_normalized') }} AS c
-ON a.userid = c.id_num
+    ON a.userid = c.id_num
+LEFT JOIN {{ ref ('staffidlink')}} as d
+    ON a.userid = d.userid
