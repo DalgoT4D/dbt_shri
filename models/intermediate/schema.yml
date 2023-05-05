@@ -72,7 +72,12 @@ models:
            - unique
            - not_null
 
-  - name: enrollment_production_dedup_remove
-    description: "Normalized data of Facility Kobo ID Link" 
-    +schema: prod
-  
+  - name: staffidlink_normalized
+    description: "Normalized data of StaffID Link" 
+    +schema: intermediate
+    columns: 
+       - name: _airbyte_ab_id
+         description: "The primary key for this table"
+         tests:
+           - unique
+           - not_null

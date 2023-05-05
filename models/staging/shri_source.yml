@@ -25,3 +25,6 @@ sources:
       - name: facility_koboid_link
         identifier: _airbyte_raw_facility_koboid_link
         description: A link between a facility and its corresponding ID in the KoboToolbox system.
+      - name: staffidlink
+        identifier: _airbyte_raw_staffidlink
+        description: A staff id link.
