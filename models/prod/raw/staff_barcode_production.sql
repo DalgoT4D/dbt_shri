@@ -13,5 +13,6 @@ SELECT userid,
        _submitted_by, 
        facility, 
        yob, 
-       gender
+       gender,
+       position
 FROM {{ref('staff_barcode')}}
