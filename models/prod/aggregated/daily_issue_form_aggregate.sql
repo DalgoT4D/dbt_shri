@@ -10,7 +10,7 @@ facilityname as facility,
 shift_type,
 false as any_issue
 FROM {{ref('daily_issue_form')}}
-WHERE (NOT ((minorissue_type LIKE '%1%') AND 
+WHERE (((minorissue_type LIKE '%1%') AND 
           (minorissue_type LIKE '%2%') AND 
           (minorissue_type LIKE '%3%') AND 
           (minorissue_type LIKE '%4%') AND 

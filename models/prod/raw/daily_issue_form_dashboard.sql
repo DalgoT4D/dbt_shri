@@ -14,7 +14,8 @@ with my_cte AS (SELECT _id, minorissue_type, facilityname as facility, shift_typ
                     'Technology - Internet', 
                     'Supplies - harpic',
                     'Supplies - soap',
-                    'Infrastructure - gate'
+                    'Infrastructure - gate',
+                    'Others'
        
        ]) AS issue,
        unnest(array[electrical_group_outage_bulb, 
@@ -27,7 +28,8 @@ with my_cte AS (SELECT _id, minorissue_type, facilityname as facility, shift_typ
                     technology_group_outage_internet,
                     supplies_group_outage_harpicetc,
                     supplies_group_outage_soap, 
-                    infrastructure_group_outage_gate]) AS outage, 
+                    infrastructure_group_outage_gate,
+                    other_group_outage_other]) AS outage, 
 
        unnest(array[electrical_group_bulb_fixed, 
                     electrical_group_wiring_fixed,
@@ -39,7 +41,8 @@ with my_cte AS (SELECT _id, minorissue_type, facilityname as facility, shift_typ
                     technology_group_internet_fixed,  
                     supplies_group_harpicetc_fixed, 
                     supplies_group_soap_fixed,
-                    infrastructure_group_gate_fixed]) AS fixed, 
+                    infrastructure_group_gate_fixed,
+                    null]) AS fixed, 
 
        unnest(array[electrical_group_outage_bulb_full, 
                     electrical_group_outage_wiring_full,
@@ -51,7 +54,8 @@ with my_cte AS (SELECT _id, minorissue_type, facilityname as facility, shift_typ
                     technology_group_outage_internet_full,
                     supplies_group_outage_harpicetc_full,
                     supplies_group_outage_soap_full,
-                    infrastructure_group_outage_gate_full]) AS full_part,
+                    infrastructure_group_outage_gate_full,
+                    other_group_outage_other_full]) AS full_part,
 
        unnest(array[electrical_group_outage_bulb_hours, 
                     electrical_group_outage_wiring_hours,
@@ -63,7 +67,10 @@ with my_cte AS (SELECT _id, minorissue_type, facilityname as facility, shift_typ
                     technology_group_outage_tablet_hours,
                     supplies_group_outage_harpicetc_hours,
                     supplies_group_outage_soap_hours,
-                    infrastructure_group_outage_gate_hours]) AS num_hours
+                    infrastructure_group_outage_gate_hours,
+                    other_group_outage_other_hours]) AS num_hours,
+
+       unnest(array[null, null, null, null, null, null, null, null, null, null, null, other_group_other_fixed]) as issue_subcategory
                     
        FROM {{ref('daily_issue_form')}}
        WHERE NOT ((minorissue_type LIKE '%1%') 
@@ -81,6 +88,7 @@ SELECT facility,
        shift_type,
        issue,
        fixed,
+       issue_subcategory,
        _id,
        true as any_issue,
        case full_part 

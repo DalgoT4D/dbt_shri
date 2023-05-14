@@ -7,8 +7,7 @@
 SELECT 
     -- passerby issue
     -- renaming a column
-    being_who_who as who,
-   CAST(SUBSTRING('2022-01-29T09:33:53.444+05:30', 12, 8) AS TIME) as time_auto, 
+    being_who_who as who, 
     -- coalescing required columns from similar fields
     coalesce(begin_group_lky5gqsbu_child_girl_number, begin_group_aypvm5n7n_child_girl_number, 
         begin_group_b0spfk4xt_child_girl_number) as child_girl_number,
