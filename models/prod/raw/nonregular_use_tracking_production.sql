@@ -12,6 +12,5 @@ SELECT _id,
        passerby_woman_number::integer, 
        passerby_man_number::integer, 
        date_auto, 
-       facility, 
-       time_auto
+       facility
 FROM {{ref('nonregular_use_tracking')}}

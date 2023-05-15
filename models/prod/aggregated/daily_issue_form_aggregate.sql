@@ -5,6 +5,7 @@
 
 SELECT  
 _id, 
+_submitted_by,
 timestamp_formatted::date as date_auto, 
 facilityname as facility, 
 shift_type,

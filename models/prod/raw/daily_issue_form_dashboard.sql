@@ -3,7 +3,7 @@
 ) }}
 
 
-with my_cte AS (SELECT _id, minorissue_type, facilityname as facility, shift_type, timestamp_formatted as dateauto,
+with my_cte AS (SELECT _id, _submitted_by, minorissue_type, facilityname as facility, shift_type, timestamp_formatted as dateauto,
        unnest(array['Electrical - bulb', 
                     'Electrical - wiring',
                     'Electrical - boring',
@@ -81,8 +81,10 @@ with my_cte AS (SELECT _id, minorissue_type, facilityname as facility, shift_typ
 SELECT 
        _id,
        facility,
+       _submitted_by,
        to_date(dateauto, 'YYYY-MM-DD') AS date_auto,
        minorissue_type,
+       null as subcategory,
        shift_type,
        issue,
        fixed,
