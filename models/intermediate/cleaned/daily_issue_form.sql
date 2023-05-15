@@ -7,6 +7,7 @@
 
 with 
    daily_issue as (select
+   coalesce(other_group_outage_other, '0') as other_group_outage_other,
    {{ dbt_utils.star(from= ref('daily_issue_form_normalized'), 
    except=['_airbyte_ab_id', 
            '_notes', 
@@ -18,7 +19,8 @@ with
            'attachments',
            'meta_deprecatedid',
            '_validation_status',
-           'meta_instancename']) }}
+           'meta_instancename',
+           'other_group_outage_other']) }}
    from {{ ref('daily_issue_form_normalized') }} ),
 
    form_kd as 
