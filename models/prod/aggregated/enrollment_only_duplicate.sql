@@ -12,4 +12,4 @@ WHERE userid IN (
   GROUP BY userid
   HAVING COUNT(*) > 1
 )
-
+ORDER BY userid
