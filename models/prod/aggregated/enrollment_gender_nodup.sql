@@ -5,10 +5,15 @@
 ) }}
 
 
+with cte as ({{ remove_duplicates('enrollment_production', 'userid', 'date_enrollment') }})
 
-({{ dbt_utils.deduplicate(
-    relation=ref('enrollment_production'),
-    partition_by='userid',
-    order_by='_submitted_by desc',
-   )
-}})
+
+select yob,
+       gender,
+       userid,
+       _submitted_by,
+       facility,
+       date_enrollment,
+       age_years ,
+       age_cat
+from cte
