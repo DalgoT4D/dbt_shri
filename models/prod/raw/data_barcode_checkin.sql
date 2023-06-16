@@ -3,6 +3,8 @@
   materialized='table'
 ) }}
 
+-- Staff barcode is using the table from intermediate schema. 
+
 -- Selecting specific columns from the 'staff_barcode' table
 
 SELECT userid, 
@@ -17,3 +19,5 @@ SELECT userid,
        gender,
        position
 FROM {{ref('staff_barcode')}}
+
+

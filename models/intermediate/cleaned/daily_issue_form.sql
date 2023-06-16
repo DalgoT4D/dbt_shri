@@ -1,5 +1,11 @@
+{{ config(
+  materialized='table',
+    schema='intermediate'
 
--- 1. Configuration: The first line `{{ config(...) }}` sets the configuration options for the subsequent code. 
+) }}
+
+
+-- 1. Configuration: The first line sets the configuration options for the subsequent code. 
 --    It specifies that the resulting table should be materialized as a regular table in the 'intermediate' schema.
 
 -- 2. Common Table Expressions (CTEs): CTEs are temporary result sets that can be referenced within the query. 
@@ -17,16 +23,6 @@
 -- In summary, this code combines data from two tables, `daily_issue_form_normalized` and `facility_koboid_link_normalized`, using a left join based on a common column. 
 
 -- Read about left join here ->>>>> https://www.tutorialspoint.com/sql/sql-left-joins.htm
-
-
-
-
-
-{{ config(
-  materialized='table',
-    schema='intermediate'
-
-) }}
 
 with 
    daily_issue as (select

@@ -50,7 +50,7 @@ SELECT
 FROM cte AS a
 LEFT JOIN {{ ref('facility_koboid_link_normalized') }} AS b
     ON a._submitted_by = b.kobo_username
-LEFT JOIN {{ ref('enrollment') }} AS c
-    ON a.userid = c.id_num
+LEFT JOIN {{ ref('enrollment_production') }} AS c
+    ON a.userid = c.userid
 LEFT JOIN {{ ref ('staffidlink')}} as d
     ON a.userid = d.userid
