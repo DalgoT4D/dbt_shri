@@ -1,4 +1,27 @@
 
+-- 1. Configuration: The first line `{{ config(...) }}` sets the configuration options for the subsequent code. 
+--    It specifies that the resulting table should be materialized as a regular table in the 'intermediate' schema.
+
+-- 2. Common Table Expressions (CTEs): CTEs are temporary result sets that can be referenced within the query. 
+--    In this code, there are three CTEs defined: `daily_issue`, `form_kd`, and `join_all_tables`.
+
+--    - `daily_issue`: It selects columns from a table called 'daily_issue_form_normalized' and renames one of the columns using the `coalesce` function. 
+--       It retrieves all columns except for a list of excluded columns.
+   
+--    - `form_kd`: It selects columns from a table called 'facility_koboid_link_normalized' and retrieves all columns except for a list of excluded columns.
+   
+--    - `join_all_tables`: It joins the previous two CTEs (`daily_issue` and `form_kd`) based on a common column `_submitted_by` and selects all columns from both CTEs.
+
+-- 3. Final Query: The last line of code `select * from join_all_tables` executes the final query, which selects all columns from the `join_all_tables` CTE.
+
+-- In summary, this code combines data from two tables, `daily_issue_form_normalized` and `facility_koboid_link_normalized`, using a left join based on a common column. 
+
+-- Read about left join here ->>>>> https://www.tutorialspoint.com/sql/sql-left-joins.htm
+
+
+
+
+
 {{ config(
   materialized='table',
     schema='intermediate'
