@@ -20,24 +20,28 @@ sum(
     date_auto, facility
  order by date_auto desc)
 
-select 
- coalesce(a.facility, b.facility) as facility, 
- coalesce(a.date_auto, b.date_auto) as date_auto,
- a.men_regular_number,
- a.women_regular_number,
- coalesce(b.girl_number, 0) as girl_number, 
- coalesce(b.boy_number, 0) as boy_number,
- coalesce(b.woman_number, 0) as woman_number,
- coalesce(b.man_number, 0) as man_number
- coalesce(a.women_regular_number, 0) + coalesce(b.woman_number, 0) as women_use,
- coalesce(b.girl_number, 0) as girls_use,
- coalesce(a.men_regular_number, 0) + coalesce(b.man_number, 0) as men_use,
- coalesce(b.boy_number, 0) as boys_use,
- coalesce(b.woman_number, 0) + coalesce(b.girl_number, 0) + coalesce(b.man_number,0 ) + coalesce(b.boy_number, 0) + coalesce(a.men_regular_number, 0) + coalesce(a.women_regular_number, 0)  as total_use
- 
- from my_cte as a
- full outer join {{ref('data_passerbyuse_clean')}} as b
- on a.facility = b.facility and a.date_auto = b.date_auto 
+SELECT 
+  COALESCE(a.facility, b.facility) AS facility, 
+  COALESCE(a.date_auto, b.date_auto) AS date_auto,
+  a.men_regular_number,
+  a.women_regular_number,
+  COALESCE(b.girl_number, 0) AS girl_number, 
+  COALESCE(b.boy_number, 0) AS boy_number,
+  COALESCE(b.woman_number, 0) AS woman_number,
+  COALESCE(b.man_number, 0) AS man_number,
+  COALESCE(a.women_regular_number, 0) + COALESCE(b.woman_number, 0) AS women_use,
+  COALESCE(b.girl_number, 0) AS girls_use,
+  COALESCE(a.men_regular_number, 0) + COALESCE(b.man_number, 0) AS men_use,
+  COALESCE(b.boy_number, 0) AS boys_use,
+  COALESCE(b.woman_number, 0) + COALESCE(b.girl_number, 0) + COALESCE(b.man_number, 0) + COALESCE(b.boy_number, 0) + COALESCE(a.men_regular_number, 0) + COALESCE(a.women_regular_number, 0) AS total_use
+FROM
+  my_cte AS a
+FULL OUTER JOIN
+  {{ref('data_passerbyuse_clean')}} AS b
+ON
+  a.facility = b.facility
+AND a.date_auto = b.date_auto
+
 
   
 
