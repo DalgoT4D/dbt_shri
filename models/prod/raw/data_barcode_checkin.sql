@@ -8,15 +8,12 @@
 -- Selecting specific columns from the 'staff_barcode' table
 
 SELECT userid, 
-       nametimestampformatted, 
+       facility, 
        datetime_auto_day, 
        date_auto, 
-       date_enrollment,
-       _submission_time, 
-       _submitted_by, 
-       facility, 
        yob, 
        gender,
+       date_enrollment,
        position
 FROM {{ref('staff_barcode')}}
 

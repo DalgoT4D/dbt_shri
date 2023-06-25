@@ -3,7 +3,6 @@
   schema='aggregated'
 ) }}
 
-
 SELECT *
 FROM {{ ref('enrollment_production') }}
 WHERE userid IN (
