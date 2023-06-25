@@ -2,6 +2,13 @@
   materialized='table'
 ) }}
 
+-- {{ref('daily_issue_form')}} -> this is referring to daily_issue_form table which is a normalized table 
+
+-- The WITH clause defines a common table expression (CTE) called my_cte that selects columns from 
+-- the daily_issue_form and facility_table tables and unnests some arrays to create new rows for 
+-- each element in the arrays. The WHERE clause filters out rows where the minorissue_type column 
+-- contains certain values.
+
 
 with my_cte AS (SELECT _id, _submitted_by, minorissue_type, facilityname as facility, shift_type, timestamp_formatted as dateauto,
        unnest(array['Electrical - bulb', 
