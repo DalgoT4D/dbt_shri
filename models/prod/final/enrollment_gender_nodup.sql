@@ -5,7 +5,7 @@
 ) }}
 
 
-with cte as ({{ remove_duplicates('enrollment_production', 'userid', 'date_enrollment') }})
+with cte as ({{ remove_duplicates('enrollment_aggregated', 'userid', 'date_enrollment') }})
 
 
 select yob,

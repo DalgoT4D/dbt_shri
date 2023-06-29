@@ -4,10 +4,10 @@
 ) }}
 
 SELECT *
-FROM {{ ref('enrollment_production') }}
+FROM {{ ref('enrollment_aggregated') }}
 WHERE userid IN (
   SELECT userid
-  FROM {{ ref('enrollment_production') }}
+  FROM {{ ref('enrollment_aggregated') }}
   GROUP BY userid
   HAVING COUNT(*) > 1
 )

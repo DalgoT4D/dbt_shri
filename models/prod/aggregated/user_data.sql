@@ -14,10 +14,10 @@ GROUP BY userid
 ORDER BY userid),
 
 user_data as (select a.*,
-   {{ dbt_utils.star(from= ref('enrollment_production'), except=['userid']) }},
+   {{ dbt_utils.star(from= ref('enrollment_gender_nodup'), except=['userid']) }},
    date_part('day', CURRENT_DATE - b.date_enrollment::timestamp) as days_since_enroll
 from my_cte as a
-left join {{ref('enrollment_production')}} as b
+left join {{ref('enrollment_gender_nodup')}} as b
 on a.userid = b.userid)
 
 select *,
