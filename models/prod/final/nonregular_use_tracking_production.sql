@@ -5,6 +5,7 @@
 
 -- Selecting specific columns from the 'nonregular_use_tracking' table
 
+{{ log("Running query to select non-regular use tracking data") }}
 SELECT _id,
        starttime, 
        who, 
