@@ -1,7 +1,7 @@
 
 {{ config(
   materialized='table',
-  schema='final'
+  schema='aggregated'
 ) }}
 
 -- Selecting specific columns from the 'enrollment' table
