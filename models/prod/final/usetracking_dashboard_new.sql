@@ -1,0 +1,11 @@
+{{ config(
+  materialized='table',
+  schema='final'
+) }}
+
+
+select date_auto, facility, 
+unnest(array['men_use','women_use','girls_use','boys_use']) as user,
+unnest(array[men_use,women_use,girls_use,boys_use]) as use
+
+from {{ref('usetracking_dashboard')}}
