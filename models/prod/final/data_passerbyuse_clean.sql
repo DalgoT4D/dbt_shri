@@ -7,7 +7,6 @@
 
 {{ log("Running query to select non-regular use tracking data") }}
 SELECT _id,
-       starttime, 
        who, 
        child_girl_number::integer, 
        child_boy_number::integer, 

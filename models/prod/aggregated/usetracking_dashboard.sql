@@ -67,7 +67,7 @@ SELECT
 FROM
   my_cte AS a
 FULL OUTER JOIN
-  {{ref('data_passerbyuse_clean')}} AS b
+  {{ref('data_passerbyuse_clean_reduced')}} AS b
 ON
   a.facility = b.facility
 AND a.date_auto = b.date_auto
