@@ -3,9 +3,7 @@
   materialized='table',
    indexes=[
       {'columns': ['_airbyte_ab_id'], 'type': 'hash'}
-    ],
-    schema='intermediate'
-
+    ]
 ) }}
 
 -- Creating a CTE that selects and renames columns from the 'enrollment_normalized' table

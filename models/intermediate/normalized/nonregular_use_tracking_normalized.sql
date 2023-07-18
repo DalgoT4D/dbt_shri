@@ -2,9 +2,7 @@
   materialized='table',
    indexes=[
       {'columns': ['_airbyte_ab_id'], 'type': 'hash'}
-    ],
-    schema='intermediate'
-
+    ]
 ) }}
 
 -- Creating a CTE that flattens the JSON data from the raw_nonregular_use_tracking table

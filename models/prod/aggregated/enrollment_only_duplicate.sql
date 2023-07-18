@@ -1,7 +1,3 @@
-{{ config(
-  materialized='table',
-  schema='aggregated'
-) }}
 
 SELECT *
 FROM {{ ref('enrollment_aggregated') }}

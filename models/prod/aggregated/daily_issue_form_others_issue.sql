@@ -1,7 +1,4 @@
-{{ config(
-  materialized='table',
-  schema='aggregated'
-) }}
+
 
 
 select  

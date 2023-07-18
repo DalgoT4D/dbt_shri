@@ -1,7 +1,3 @@
-{{ config(
-  materialized='table',
-   schema='aggregated'
-) }}
 
 SELECT  
 _id, 

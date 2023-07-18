@@ -1,7 +1,5 @@
 {{ config(
-  materialized='table',
-    schema='intermediate'
-
+  materialized='table'
 ) }}
 
 -- This model is to join a table with koboid link normalized

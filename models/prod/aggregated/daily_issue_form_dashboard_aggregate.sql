@@ -1,7 +1,3 @@
-{{ config(
-  materialized='table',
-  schema='aggregated'
-) }}
 
 -- {{ref('daily_issue_form')}} -> this is referring to daily_issue_form table which is a normalized table 
 

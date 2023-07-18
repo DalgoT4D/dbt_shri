@@ -1,7 +1,6 @@
 
 {{ config(
-  materialized='table',
-  schema='final'
+  materialized='table'
 ) }}
 
 -- Staff barcode is using the table from intermediate schema. 
