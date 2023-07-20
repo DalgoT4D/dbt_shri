@@ -4,12 +4,12 @@
 
     {%- if custom_schema_name is none -%}
 
-       {%- if target.name != "prod" -%}
+       {%- if target.schema != "prod" -%}
             {% if node.fqn[1:-1]|length == 0 %}
-                 {{target.name}}_{{ default_schema }}    
+                 {{target.schema}}_{{ default_schema }}    
             {% else %}
                 {% set prefix = node.fqn[1:-1]|join('_') %}
-                 {{target.name}}_{{ prefix | trim }}
+                 {{target.schema}}_{{ prefix | trim }}
             {% endif %}
 
 
