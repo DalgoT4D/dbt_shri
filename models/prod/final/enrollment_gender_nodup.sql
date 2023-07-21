@@ -3,8 +3,12 @@
   materialized='table'
 ) }}
 
-
-with cte as ({{ remove_duplicates('enrollment_aggregated', 'userid', 'date_enrollment') }})
+with cte as ({{ dbt_utils.deduplicate(
+    relation= ref('enrollment_aggregated'),
+    partition_by='userid',
+    order_by='date_enrollment'
+   )
+}})
 
 
 select yob,
