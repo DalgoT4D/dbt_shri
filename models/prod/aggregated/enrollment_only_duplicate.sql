@@ -1,4 +1,3 @@
-
 SELECT *
 FROM {{ ref('enrollment_aggregated') }}
 WHERE userid IN (

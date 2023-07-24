@@ -1,6 +1,3 @@
-
-
-
 -- Selecting specific columns from the 'enrollment' table
 
 SELECT yob, 
