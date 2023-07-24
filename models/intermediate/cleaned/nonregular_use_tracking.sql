@@ -2,7 +2,7 @@
   materialized='table'
 ) }}
 
-SELECT 
+with cte as (SELECT 
     -- passerby issue
     -- renaming a column
     being_who_who as who, 
@@ -47,9 +47,16 @@ SELECT
              '_status', 
              'meta_instanceid', 
              '_attachments', 
-             '_submitted_by', 
-             '_notes', 
+             '_notes',
+             'facility', 
              '__version__', ])}}
-    from {{ ref('nonregular_use_tracking_normalized') }} 
+    from {{ ref('nonregular_use_tracking_normalized') }} )
 
+
+SELECT 
+    a.*,
+    b.facilityname as facility
+from cte AS a
+LEFT JOIN {{ ref('facility_koboid_link_normalized') }} AS b
+    ON a._submitted_by = b.kobo_username
     
