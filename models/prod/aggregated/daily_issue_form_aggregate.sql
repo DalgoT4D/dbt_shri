@@ -3,6 +3,7 @@ _id,
 _submitted_by,
 timestamp_formatted::date as date_auto, 
 facilityname as facility, 
+_submission_time, 
 shift_type,
 false as any_issue
 FROM {{ref('daily_issue_form')}}

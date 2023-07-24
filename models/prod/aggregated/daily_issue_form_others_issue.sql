@@ -1,6 +1,7 @@
 select  
        _id,
        _submitted_by,
+       _submission_time,
        facilityname as facility,
        to_date(timestamp_formatted, 'YYYY-MM-DD') AS date_auto,
        minorissue_type,
