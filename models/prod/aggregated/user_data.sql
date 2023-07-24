@@ -1,5 +1,3 @@
-
-
 with my_cte as (select userid, 
 max(date_auto) as last_use_date,
 min(date_auto) as first_use_date, 

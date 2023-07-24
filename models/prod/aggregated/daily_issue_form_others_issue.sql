@@ -1,6 +1,3 @@
-
-
-
 select  
        _id,
        _submitted_by,

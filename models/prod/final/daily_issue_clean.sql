@@ -17,7 +17,6 @@ with my_cte as ({{ dbt_utils.union_relations(
 
 select 
     _id,
-    _submitted_by,
     facility,
     issue,
     shift_type,

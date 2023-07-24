@@ -1,4 +1,3 @@
-
 -- {{ref('daily_issue_form')}} -> this is referring to daily_issue_form table which is a normalized table 
 
 -- The WITH clause defines a common table expression (CTE) called my_cte that selects columns from 

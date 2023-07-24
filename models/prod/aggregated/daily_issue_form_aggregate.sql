@@ -1,4 +1,3 @@
-
 SELECT  
 _id, 
 _submitted_by,
