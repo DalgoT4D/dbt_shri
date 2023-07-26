@@ -11,6 +11,7 @@ SELECT _id,
        child_boy_number::integer, 
        passerby_woman_number::integer, 
        passerby_man_number::integer, 
+       time_auto,
        date_auto, 
        facility
 FROM {{ref('nonregular_use_tracking')}}

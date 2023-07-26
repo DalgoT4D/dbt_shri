@@ -17,7 +17,8 @@ with cte as (SELECT
         begin_group_aypvm5n7n_child_boy_number) as child_boy_number,
 
     -- creating a new column date_auto from _submission_time and convert to date format
-    to_date(_submission_time, 'YYYY-MM-DD') AS date_auto,
+    to_date(starttime, 'YYYY-MM-DD') AS date_auto,
+    TO_TIMESTAMP(SUBSTRING(starttime, 1, 23), 'YYYY-MM-DDTHH24:MI:SS')::TIME AS time_auto,
 
     -- selecting all columns from nonregular_use_tracking_normalized except the ones listed
     {{ dbt_utils.star(from = ref('nonregular_use_tracking_normalized'), 
