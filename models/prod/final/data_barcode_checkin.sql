@@ -7,9 +7,11 @@
 
 -- Selecting specific columns from the 'staff_barcode' table
 
-SELECT userid, 
+SELECT 
+       _id,
+       userid, 
        facility, 
-       datetime_auto_day, 
+       TO_TIMESTAMP(datetime_auto_day, 'YYYY-MM-DD HH24:MI:SS')::TIME as time_auto, 
        date_auto, 
        yob, 
        gender,
