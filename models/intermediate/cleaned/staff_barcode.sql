@@ -18,7 +18,6 @@ with cte as(
      except=['begin_group_chvgkvrk8_name_timestamp_formatted', 
              'group_qx5fr96_name_timestamp_formatted', 
              '_airbyte_ab_id', 
-             '_id', 
              'start', 
              'starttime', 
              '_validation_status', 
