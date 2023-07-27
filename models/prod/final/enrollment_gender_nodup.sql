@@ -3,13 +3,7 @@
   materialized='table'
 ) }}
 
-with cte as ({{ dbt_utils.deduplicate(
-    relation= ref('enrollment_aggregated'),
-    partition_by='userid',
-    order_by='date_enrollment'
-   )
-}})
-
+with cte as ({{ get_latest_row('enrollment_aggregated', 'userid', 'date_enrollment') }})
 
 select yob,
        gender,
