@@ -15,9 +15,11 @@ WITH cte AS (
         -- Selecting all columns from 'enrollment_normalized' except for the ones listed
         {{ dbt_utils.star(from= ref('enrollment_normalized'), 
         except=['yob', 
+                'formtimestampformatted',
                 '_xform_id_string', 
                 'form_timestamp_formatted', 
-                '_tags', 
+                '_tags',
+                '_submission_time', 
                 'name_c', 
                 'firstname', 
                 '_geolocation', 
@@ -40,6 +42,7 @@ WITH cte AS (
         
         -- Creating a new column with the date of enrollment from form_timestamp_formatted
         to_date(form_timestamp_formatted, 'YYYY-MM-DD') AS date_enrollment,
+        to_date(_submission_time, 'YYYY-MM-DD') AS submission_time,
 
         -- Creating a new column with the age in years from yob
         case  
