@@ -21,8 +21,8 @@ with my_cte AS (SELECT _id,
                     'Plumbing - toilet tap',
                     'Plumbing - pipe',
                     'Technology - tablet',
-                    'Technology - Internet', 
-                    'Supplies - harpic',
+                    'Technology - internet', 
+                    'Supplies - harpic etc',
                     'Supplies - soap',
                     'Infrastructure - gate'
        
