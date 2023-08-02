@@ -1,6 +1,7 @@
 -- Selecting specific columns from the 'enrollment' table
 
-SELECT yob, 
+SELECT formtimestampformatted,
+       yob, 
        gender, 
        id_num as userid, 
        _submitted_by,

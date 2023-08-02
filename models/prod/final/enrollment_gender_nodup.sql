@@ -5,7 +5,8 @@
 
 with cte as ({{ get_latest_row('enrollment_aggregated', 'userid', 'submission_time') }})
 
-select yob,
+select formtimestampformatted,
+       yob,
        gender,
        userid,
        _submitted_by,
