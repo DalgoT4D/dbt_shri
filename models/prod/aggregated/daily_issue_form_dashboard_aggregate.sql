@@ -106,8 +106,8 @@ SELECT
         End as full_partial,
        num_hours,
        CASE outage
-         WHEN '0' THEN 'NO'
-         WHEN '1' THEN 'YES'
+         WHEN '0' THEN 'no'
+         WHEN '1' THEN 'yes'
          ELSE outage
        END as shutdown
 FROM my_cte 

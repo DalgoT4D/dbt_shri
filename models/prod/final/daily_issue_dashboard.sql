@@ -15,7 +15,7 @@ select
     _submission_time,
     date_auto,
     minorissue_type,
-    subcategory,
+    subcategory as category,
     shift_type,
     issue,
     fixed,
