@@ -17,8 +17,8 @@ select
         End as full_partial,
        other_group_outage_other_hours as num_hours,
        CASE other_group_outage_other
-         WHEN '0' THEN 'NO'
-         WHEN '1' THEN 'YES'
+         WHEN '0' THEN 'no'
+         WHEN '1' THEN 'yes'
          ELSE other_group_outage_other
        END as shutdown
 
