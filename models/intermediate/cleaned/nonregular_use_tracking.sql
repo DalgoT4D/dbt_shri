@@ -58,6 +58,6 @@ SELECT
     a.*,
     b.facilityname as facility
 from cte AS a
-LEFT JOIN {{ ref('facility_koboid_link_normalized') }} AS b
+RIGHT JOIN {{ ref('facility_koboid_link_normalized') }} AS b
     ON a._submitted_by = b.kobo_username
     

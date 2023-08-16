@@ -55,7 +55,7 @@ with
     select daily_issue.*, 
     form_kd.facilityname
     from daily_issue
-    left join form_kd
+    RIGHT join form_kd
     ON daily_issue._submitted_by = form_kd.kobo_username
    )
 

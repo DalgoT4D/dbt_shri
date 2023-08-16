@@ -73,6 +73,6 @@ SELECT
         WHEN age_years BETWEEN 81 AND 91 THEN '81-91'
         ELSE 'Unknown'
     END AS age_cat
-FROM cte AS a LEFT JOIN {{ ref('facility_koboid_link_normalized') }} AS b on 
+FROM cte AS a RIGHT JOIN {{ ref('facility_koboid_link_normalized') }} AS b on 
 a._submitted_by = b.kobo_username
 

@@ -65,7 +65,7 @@ SELECT
     c.gender AS gender,
     c.date_enrollment
 FROM cte AS a
-LEFT JOIN {{ ref('facility_koboid_link_normalized') }} AS b
+RIGHT JOIN {{ ref('facility_koboid_link_normalized') }} AS b
 ON a._submitted_by = b.kobo_username
 LEFT JOIN {{ ref('enrollment_gender_nodup') }} AS c
 ON a.userid = c.userid
