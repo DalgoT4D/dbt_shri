@@ -2,6 +2,7 @@ SELECT
 _id, 
 _submitted_by,
 timestamp_formatted::date as date_auto, 
+(to_char(timestamp_formatted::time, 'HH:MI:SS'))::time AS time_auto,
 facilityname as facility, 
 _submission_time, 
 shift_type,

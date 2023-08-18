@@ -18,14 +18,14 @@ with my_cte as ({{ dbt_utils.union_relations(
 select 
     _id,
     facility,
-    _submission_time,
     issue,
+    date_auto,
+    time_auto,
     shift_type,
     fixed,
     any_issue,
     full_partial,
     num_hours,
-    shutdown,
-    date_auto
+    shutdown
 
 from my_cte

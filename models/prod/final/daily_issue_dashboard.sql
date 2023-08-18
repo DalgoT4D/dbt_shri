@@ -12,8 +12,8 @@ with my_cte as (({{ dbt_utils.union_relations(
 select 
     _id,
     facility,
-    _submission_time,
     date_auto,
+    time_auto,
     minorissue_type,
     subcategory as category,
     shift_type,
@@ -23,5 +23,6 @@ select
     full_partial,
     num_hours,
     shutdown
+
 from my_cte
 
