@@ -1,4 +1,4 @@
-select distinct 
+select
 userid, 
 position, 
 facility, 
