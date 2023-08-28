@@ -15,7 +15,7 @@ select
     date_auto,
     time_auto,
     minorissue_type,
-    subcategory as category,
+    category,
     shift_type,
     issue,
     fixed,

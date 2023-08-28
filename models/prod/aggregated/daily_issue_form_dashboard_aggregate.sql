@@ -15,19 +15,34 @@ with my_cte AS (SELECT _id,
                        (to_char(timestamp_formatted::time, 'HH:MI:SS'))::time AS timeauto, 
                        _submission_time,
 
-       unnest(array['Electrical - bulb', 
-                    'Electrical - wiring',
-                    'Electrical - boring',
-                    'Plumbing - basin tap', 
-                    'Plumbing - toilet tap',
-                    'Plumbing - pipe',
-                    'Technology - tablet',
-                    'Technology - internet', 
-                    'Supplies - harpic etc',
-                    'Supplies - soap',
-                    'Infrastructure - gate'
+       unnest(array['Bulb', 
+                    'Wiring',
+                    'Boring',
+                    'Basin tap', 
+                    'Toilet tap',
+                    'Pipe',
+                    'Tablet',
+                    'Internet', 
+                    'Harpic etc',
+                    'Soap',
+                    'Gate'
        
        ]) AS issue,
+
+       unnest(array['Electrical', 
+                    'Electrical',
+                    'Electrical',
+                    'Plumbing', 
+                    'Plumbing',
+                    'Plumbing',
+                    'Technology',
+                    'Technology', 
+                    'Supplies',
+                    'Supplies',
+                    'Infrastructure'
+       
+       ]) AS category,
+
        unnest(array[electrical_group_outage_bulb, 
                     electrical_group_outage_wiring, 
                     electrical_group_outage_boring,
@@ -78,14 +93,8 @@ with my_cte AS (SELECT _id,
                     infrastructure_group_outage_gate_hours]) AS num_hours
       
        FROM {{ref('daily_issue_form')}}
-       WHERE NOT ((minorissue_type LIKE '%1%') 
-             AND (minorissue_type LIKE '%2%') 
-             AND (minorissue_type LIKE '%3%') 
-             AND (minorissue_type LIKE '%4%') 
-             AND (minorissue_type LIKE '%5%') 
-             AND (minorissue_type LIKE '%6%') 
-             AND (minorissue_type LIKE '%7%')
-))
+
+)
 
 
 
@@ -97,7 +106,7 @@ SELECT
        to_date(dateauto, 'YYYY-MM-DD') AS date_auto,
        timeauto AS time_auto,
        minorissue_type,
-       null as subcategory,
+       category,
        shift_type,
        issue,
        fixed,
@@ -113,8 +122,5 @@ SELECT
          ELSE outage
        END as shutdown
 FROM my_cte 
-where not (outage is null and
-fixed is null and
-full_part is null and
-num_hours is null)
+where fixed is not null
 order by date_auto

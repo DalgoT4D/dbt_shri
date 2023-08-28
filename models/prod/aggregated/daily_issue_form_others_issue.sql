@@ -7,8 +7,8 @@ select
        (to_char(timestamp_formatted::time, 'HH:MI:SS'))::time AS time_auto,
        minorissue_type,
        shift_type,
-       'Others' as issue,
-       other_group_other_fixed as subcategory,
+       'Others' as category,
+       other_group_other_fixed as issue,
        null as fixed,
        true as any_issue,
        case other_group_outage_other_full
