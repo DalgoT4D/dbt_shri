@@ -12,7 +12,7 @@ with my_cte AS (SELECT _id,
                        facilityname as facility, 
                        shift_type, 
                        timestamp_formatted as dateauto,
-                       (to_char(timestamp_formatted::time, 'HH:MI:SS'))::time AS timeauto, 
+                       (to_char(timestamp_formatted::time, 'HH24:MI:SS'))::time AS timeauto, 
                        _submission_time,
 
        unnest(array['bulb', 
