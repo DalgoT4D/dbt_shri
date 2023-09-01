@@ -111,15 +111,16 @@ SELECT
        issue,
        fixed,
        true as any_issue,
-       case full_part 
-          When '1' THEN 'part day'
-          When '2' THEN 'full day'
-        End as full_partial,
+       CASE full_part 
+          WHEN '1' THEN 'part day'
+          WHEN '2' THEN 'full day'
+        END as full_partial,
        num_hours,
-       CASE outage
-         WHEN '0' THEN 'no'
-         WHEN '1' THEN 'yes'
-         ELSE outage
+       CASE
+          WHEN outage IS NULL THEN 'no'
+          WHEN outage = '0' THEN 'no'
+          WHEN outage = '1' THEN 'yes'
+       ELSE outage
        END as shutdown
 FROM my_cte 
 where fixed is not null
