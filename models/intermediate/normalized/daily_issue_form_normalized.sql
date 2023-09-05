@@ -23,11 +23,9 @@
 
 -- Creating a CTE that flattens the JSON data from the raw_daily_issue_form table
 
-({{
+{{
     flatten_json(
         model_name = source('source_shri_surveys', 'daily_issue_form'),
         json_column = '_airbyte_data'
     )
-}})
-
-
+}}

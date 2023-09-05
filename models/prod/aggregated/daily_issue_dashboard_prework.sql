@@ -1,16 +1,12 @@
 SELECT 
        _id,
        facility,
-       _submitted_by,
-       _submission_time,
-       to_date(dateauto, 'YYYY-MM-DD') AS date_auto,
-       timeauto AS time_auto,
+       date_auto,
+       time_auto,
+       shift_type,
        minorissue_type,
        category,
-       shift_type,
        issue,
-       fixed,
-       true as any_issue,
        CASE full_part 
           WHEN '1' THEN 'part day'
           WHEN '2' THEN 'full day'
