@@ -1,12 +1,14 @@
 SELECT  
 _id, 
-_submitted_by,
+facilityname as facility, 
 timestamp_formatted::date as date_auto, 
 (to_char(timestamp_formatted::time, 'HH:MI:SS'))::time AS time_auto,
-facilityname as facility, 
-_submission_time, 
-shift_type,
 null as category,
-false as any_issue
+shift_type,
+null as issue,
+null as fixed,
+null as full_partial,
+null as num_hours,
+null as shutdown
 FROM {{ref('daily_issue_form')}}
 WHERE _id not in (select _id from {{ref('daily_issue_dashboard')}})

@@ -16,15 +16,15 @@ with my_cte as ({{ dbt_utils.union_relations(
 
 
 select 
+    _id::integer,
     facility,
-    date_auto,
-    time_auto,
     shift_type,
     category,
+    date_auto,
+    time_auto,
     issue,
     shutdown,
     full_partial,
-    num_hours,
-    _id
+    num_hours
 
 from my_cte

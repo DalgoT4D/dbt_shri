@@ -14,15 +14,14 @@ select
     facility,
     date_auto,
     time_auto,
-    minorissue_type,
     category,
     shift_type,
     issue,
     fixed,
-    any_issue,
     full_partial,
     num_hours,
     shutdown
 
 from my_cte
+
 
