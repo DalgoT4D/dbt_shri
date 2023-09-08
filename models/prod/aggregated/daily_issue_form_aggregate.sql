@@ -41,7 +41,7 @@ SELECT                 _id,
                     'Odor',
                     'Wall',
                     'Basin',
-                    'Drain Blocked'
+                    'Drain blocked'
        
        ]) AS issue,
 
