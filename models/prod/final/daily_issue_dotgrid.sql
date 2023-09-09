@@ -1,3 +1,8 @@
+{{ config(
+  materialized='table'
+) }}
+
+
 WITH NumberedIssues AS (
     -- Number each entry per facility and date, ordering by shutdown
     SELECT *,
