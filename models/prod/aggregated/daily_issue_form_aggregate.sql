@@ -11,7 +11,7 @@ SELECT                 _id,
                        facilityname as facility, 
                        shift_type, 
                        to_date(timestamp_formatted, 'YYYY-MM-DD') AS date_auto,
-                       (TO_CHAR(timestamp_formatted::timestamp, 'HH24:MI'))::time AS time_auto, 
+                       date_trunc('minute', timestamp_formatted::timestamp)::time AS time_auto, 
                        _submission_time,
 
        unnest(array['Bulb', 

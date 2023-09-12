@@ -4,7 +4,7 @@ select
        _submission_time,
        facilityname as facility,
        to_date(timestamp_formatted, 'YYYY-MM-DD') AS date_auto,
-       (to_char(timestamp_formatted::time, 'HH:MI:SS'))::time AS time_auto,
+       date_trunc('minute', timestamp_formatted::timestamp)::time AS time_auto,
        minorissue_type,
        shift_type,
        'Others' as category,
