@@ -15,7 +15,7 @@ ShutdownCounts AS (
     SELECT 
         facility, 
         COUNT(*) FILTER (WHERE shutdown = 'yes' AND date_auto > wks_10) AS num
-    FROM prod_final.daily_issue_clean, DateCalculations
+    FROM {{ref('daily_issue_clean')}}, DateCalculations
     WHERE shutdown != '' AND shutdown != 'no'
     GROUP BY facility
 ),
@@ -24,7 +24,7 @@ LastOutage AS (
     SELECT
         facility,
         MAX(date_auto) AS last_outage
-    FROM prod_final.daily_issue_clean
+    FROM {{ref('daily_issue_clean')}}
     WHERE shutdown = 'yes'
     GROUP BY facility
 ),
@@ -33,7 +33,7 @@ FirstQuality AS (
     SELECT 
         facility, 
         MIN(date_auto) AS first_quality
-    FROM prod_final.daily_issue_clean
+    FROM {{ref('daily_issue_clean')}}
     GROUP BY facility
 ),
 FinalData AS (

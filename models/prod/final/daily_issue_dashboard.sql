@@ -10,14 +10,16 @@ with my_cte as (({{ dbt_utils.union_relations(
 ) }}))
 
 select 
+    _id,
     facility,
     date_auto,
-    COALESCE(category, '') AS category,
-    COALESCE(issue, '') AS issue,
-    COALESCE(shutdown, '') AS shutdown,
-    COALESCE(full_partial, '') AS full_partial,
-    COALESCE(num_hours, '') AS num_hours
+    time_auto,
+    category,
+    shift_type,
+    issue,
+    fixed,
+    full_partial,
+    num_hours,
+    shutdown
 
 from my_cte
-
-
