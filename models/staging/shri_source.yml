@@ -28,3 +28,7 @@ sources:
       - name: staffidlink
         identifier: _airbyte_raw_staffidlink
         description: A staff id link.
+      - name: dailyissuetest
+        identifier: dailyissueclean
+      - name: dailyissuedashboardtest
+        identifier: dailyissuedashboard
