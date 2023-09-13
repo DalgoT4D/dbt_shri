@@ -32,3 +32,5 @@ sources:
         identifier: dailyissueclean
       - name: dailyissuedashboardtest
         identifier: dailyissuedashboard
+      - name: dailyissuedotgridtest
+        identifier: dailyissuedotgrid

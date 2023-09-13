@@ -6,7 +6,7 @@
 WITH NumberedIssues AS (
     -- Number each entry per facility and date, ordering by shutdown
     SELECT *,
-           ROW_NUMBER() OVER (PARTITION BY facility, date_auto ORDER BY shutdown DESC) AS num_perday
+           ROW_NUMBER() OVER (PARTITION BY facility, date_auto ORDER BY time_auto) AS num_perday
     FROM {{ref('daily_issue_clean')}}
 ),
 FilteredIssues AS (
