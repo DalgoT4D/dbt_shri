@@ -1,9 +1,3 @@
-
-{{ config(
-  materialized='table'
-) }}
-
-
 ------------------- Explanation of the Full outer join ----------------------
 
 -- A FULL OUTER JOIN is a type of join operation in SQL that returns all rows from both tables being joined, 
