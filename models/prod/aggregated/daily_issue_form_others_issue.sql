@@ -7,7 +7,7 @@ select
        date_trunc('minute', timestamp_formatted::timestamp)::time AS time_auto,
        minorissue_type,
        shift_type,
-       'Others' as category,
+       'Other' as category,
        other_group_other_fixed as issue,
        null as fixed,
        true as any_issue,
