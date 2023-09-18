@@ -24,3 +24,11 @@ SELECT
     attachment->>'download_medium_url' AS download_medium_url
 FROM 
     expanded
+
+
+-- SELECT 
+--     _airbyte_data->>'_id' AS id,
+--     attachment.value AS attachment_data
+-- FROM 
+--     staging._airbyte_raw_weekly_photo, 
+--     LATERAL jsonb_array_elements(_airbyte_data->'_attachments') AS attachment;
