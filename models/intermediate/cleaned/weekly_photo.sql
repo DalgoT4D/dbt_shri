@@ -1,0 +1,1 @@
+select * from {{ref('weekly_photo_normalized')}}

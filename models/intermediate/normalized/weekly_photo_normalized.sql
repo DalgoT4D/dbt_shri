@@ -1,24 +1,25 @@
-{{ config(
-  materialized='table',
-   indexes=[
-      {'columns': ['_airbyte_ab_id'], 'type': 'hash'}
-    ]
-) }}
+WITH expanded AS (
+    SELECT 
+        _airbyte_data::json->>'_id' AS id,
+        _airbyte_data::json->>'_submitted_by' AS _submitted_by,
+        json_array_elements_text(_airbyte_data::json->'_attachments')::json AS attachment
+    FROM {{source('source_shri_surveys', 'weeklyphoto')}}
+       
+)
 
--- Creating a CTE that flattens the JSON data from the raw_weekly_photo table
+SELECT 
+    id,
+    _submitted_by,
+    attachment->>'id' AS attachment_id,
+    attachment->>'xform' AS xform,
+    attachment->>'filename' AS filename,
+    attachment->>'instance' AS instance,
+    attachment->>'mimetype' AS mimetype,
+    attachment->>'download_url' AS download_url,
+    attachment->>'download_large_url' AS download_large_url,
+    attachment->>'download_small_url' AS download_small_url,
+    attachment->>'download_medium_url' AS download_medium_url
+FROM 
+    expanded
 
-with my_cte as ({{
-    flatten_json(
-        model_name = source('source_shri_surveys', 'weekly_photo'),
-        json_column = '_airbyte_data'
-    )
-}})
 
--- Deduplicating the data in the CTE based on the '_id' column
-
-{{ dbt_utils.deduplicate(
-    relation='my_cte',
-    partition_by='_id',
-    order_by='_id desc',
-   )
-}}

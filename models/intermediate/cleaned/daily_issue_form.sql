@@ -1,8 +1,3 @@
-{{ config(
-  materialized='table'
-) }}
-
-
 -- 1. Configuration: The first line sets the configuration options for the subsequent code. 
 --    It specifies that the resulting table should be materialized as a regular table in the 'intermediate' schema.
 

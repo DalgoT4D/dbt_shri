@@ -1,7 +1,3 @@
-{{ config(
-  materialized='table'
-) }}
-
 with cte as (SELECT 
     -- passerby issue
     -- renaming a column

@@ -1,7 +1,3 @@
-{{ config(
-  materialized='table'
-) }}
-
 with cte as(  
   select
     maintenance_numberid_in as userid,

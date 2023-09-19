@@ -1,7 +1,3 @@
-{{ config(
-  materialized='table'
-) }}
-
 -- This model is to join a table with koboid link normalized
 -- Read more about with cte here https://www.postgresql.org/docs/current/queries-with.html
 with cte as(  
