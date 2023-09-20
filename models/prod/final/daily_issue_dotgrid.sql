@@ -36,5 +36,7 @@ RecentIssues AS (
     WHERE date_auto > CURRENT_DATE - INTERVAL '71 days'
 )
 -- Final selection
-SELECT facility, date_auto, status
+SELECT facility, date_auto, status,
+EXTRACT(DOW FROM date_auto) AS day_of_the_week,
+DATE_PART('week', date_auto) AS week
 FROM RecentIssues
