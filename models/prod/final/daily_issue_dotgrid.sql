@@ -37,6 +37,7 @@ RecentIssues AS (
 )
 -- Final selection
 SELECT facility, date_auto, status,
-EXTRACT(DOW FROM date_auto) AS day_of_the_week,
-DATE_PART('week', date_auto) AS week
+CAST(EXTRACT(DOW FROM date_auto) AS INTEGER) AS day_of_the_week,
+DATE_PART('week', date_auto) AS week,
+1 AS bubble 
 FROM RecentIssues
