@@ -34,10 +34,21 @@ RecentIssues AS (
     SELECT * 
     FROM StatusAssigned
     WHERE date_auto > CURRENT_DATE - INTERVAL '71 days'
+),
+NumberedRecentIssues AS (
+    -- Number days and weeks
+    SELECT *,
+           ROW_NUMBER() OVER (PARTITION BY facility ORDER BY date_auto) AS day_seq,
+           CEIL(ROW_NUMBER() OVER (PARTITION BY facility ORDER BY date_auto) / 7.0) AS week_seq
+    FROM RecentIssues
 )
 -- Final selection
-SELECT facility, date_auto, status,
-CAST(EXTRACT(DOW FROM date_auto) AS INTEGER) AS day_of_the_week,
-DATE_PART('week', date_auto) AS week,
-1 AS bubble 
-FROM RecentIssues
+SELECT 
+    facility, 
+    date_auto, 
+    status,
+    ((day_seq - 1) % 7) + 1 AS day_of_the_week,
+    week_seq AS week,
+    1 AS bubble 
+FROM NumberedRecentIssues
+ORDER BY facility, date_auto
