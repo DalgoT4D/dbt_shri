@@ -64,5 +64,5 @@ FROM cte AS a
 RIGHT JOIN {{ ref('facility_koboid_link_normalized') }} AS b
 ON a._submitted_by = b.kobo_username
 LEFT JOIN {{ ref('enrollment_gender_nodup') }} AS c
-ON a.userid = c.userid
+ON trim(a.userid) = trim(c.userid)
 order by date_auto asc
