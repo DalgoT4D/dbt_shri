@@ -51,4 +51,5 @@ SELECT
     week_seq AS week,
     1 AS bubble 
 FROM NumberedRecentIssues
+WHERE week_seq <= 10
 ORDER BY facility, date_auto
