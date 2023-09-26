@@ -9,4 +9,4 @@ with cte as (select  _id, to_date
             
          from {{ ref('use_tracking_normalized') }} )
             
-select * from cte where date_auto = '2023-08-18' and _submitted_by = 'ranjitkumar'
+select * from cte where date_auto = '2021-11-07' and _submitted_by = 'shriindia'
