@@ -31,11 +31,5 @@ sources:
       - name: weeklyphoto
         identifier: _airbyte_raw_weekly_photo
         description: raw weekly photo
-      - name: dailyissuetest
-        identifier: dailyissueclean
-      - name: dailyissuedashboardtest
-        identifier: dailyissuedashboard
-      - name: dailyissuedotgridtest
-        identifier: dailyissuedotgrid
       - name: facility_cost
         identifier: calculations
