@@ -17,17 +17,18 @@ FilteredIssues AS (
 ),
 StatusAssigned AS (
     -- Assign status according to the given rules
-    SELECT 
-        facility,
-        date_auto,
-        CASE
-            WHEN date_auto IS NULL THEN 'no data'
-            WHEN shutdown IS NULL OR shutdown = 'no' THEN 'online'
-            WHEN shutdown = 'yes' AND full_partial = 'part day' THEN 'part-day outage'
-            WHEN shutdown = 'yes' AND full_partial = 'full day' THEN 'full-day outage'
-            ELSE 'unknown' -- Catch-all condition, adjust as necessary
-        END AS status
-    FROM FilteredIssues
+   SELECT 
+    facility,
+    date_auto,
+    CASE
+        WHEN date_auto IS NULL THEN 'no data'
+        WHEN COALESCE(TRIM(shutdown), '') = '' THEN 'online' -- Handles NULL, empty, or spaces
+        WHEN TRIM(shutdown) = 'no' THEN 'online'
+        WHEN TRIM(shutdown) = 'yes' AND full_partial = 'part day' THEN 'part-day outage'
+        WHEN TRIM(shutdown) = 'yes' AND full_partial = 'full day' THEN 'full-day outage'
+        ELSE 'unknown' -- Catch-all condition, adjust as necessary
+    END AS status
+FROM FilteredIssues 
 ),
 RecentIssues AS (
     -- Only keep records within the last 71 days

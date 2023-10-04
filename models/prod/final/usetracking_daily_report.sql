@@ -10,5 +10,4 @@ men_use as men,
 women_use as women,
 boys_use as boys,
 girls_use as girls
-from 
 FROM {{ref('usetracking_dashboard')}}

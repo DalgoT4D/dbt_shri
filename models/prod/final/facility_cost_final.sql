@@ -1,10 +1,21 @@
 {{ config(
   materialized='table'
 ) }}
+
+
+-- SELECT facility, SUM(total_use) as total_use
+--     FROM prod_final.usetracking_dashboard
+--     WHERE 
+--         EXTRACT(MONTH FROM date_auto) = 7
+--          AND
+--         EXTRACT(YEAR FROM date_auto) = 2023
+--     GROUP BY facility
+
 with mycte as (
     SELECT facility, SUM(total_use) as total_use
     FROM prod_final.usetracking_dashboard
-    WHERE date_auto BETWEEN (CURRENT_DATE - INTERVAL '3 months') AND CURRENT_DATE
+    WHERE date_auto >= DATE_TRUNC('MONTH', CURRENT_DATE) - INTERVAL '3 months'
+      AND date_auto < DATE_TRUNC('MONTH', CURRENT_DATE)
     GROUP BY facility
 ),
 cost as (
