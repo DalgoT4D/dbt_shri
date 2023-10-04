@@ -47,8 +47,8 @@ sum(
 SELECT 
   COALESCE(a.facility, b.facility) AS facility, 
   COALESCE(a.date_auto, b.date_auto) AS date_auto,
-  a.men_regular_number,
-  a.women_regular_number,
+  COALESCE(a.men_regular_number, 0) AS men_regular_number,
+  COALESCE(a.women_regular_number, 0) AS women_regular_number,
   COALESCE(b.girl_number, 0) AS girl_number, 
   COALESCE(b.boy_number, 0) AS boy_number,
   COALESCE(b.woman_number, 0) AS woman_number,
