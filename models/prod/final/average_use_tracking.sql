@@ -13,7 +13,7 @@ WHERE
     (facility = 'Dundibagh' AND date_auto >= '2022-02-19')
     OR (facility = 'Basgoda' AND date_auto >= '2022-02-19')
     OR (facility = 'Gomia' AND date_auto >= '2022-02-19')
-    OR (facility = 'Azad nagar' AND date_auto >= '2022-08-23')
+    OR (facility = 'Azad Nagar' AND date_auto >= '2022-08-23')
     OR (facility = 'North Basgoda' AND date_auto >= '2022-08-23')
     OR (facility = 'Peterbaar' AND date_auto >= '2023-01-13')
     OR (facility = 'Jaridih CSR' AND date_auto >= '2023-07-01')
