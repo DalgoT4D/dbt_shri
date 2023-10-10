@@ -26,16 +26,21 @@ combine AS (
         m.facility, 
         m.total_use,
         c.totals_inr,
-        CASE 
-            WHEN m.total_use != 0 THEN CAST(c.totals_inr AS numeric) / m.total_use
-            ELSE NULL
-        END AS inr_per_use,
-        CASE 
-            WHEN m.total_use != 0 THEN (CAST(c.totals_inr AS numeric) / m.total_use) / 83.24
-            ELSE NULL
-        END AS usd_per_use
+        ROUND(
+            CASE 
+                WHEN m.total_use != 0 THEN CAST(c.totals_inr AS numeric) / m.total_use
+                ELSE NULL
+            END, 2
+        ) AS inr_per_use,
+        ROUND(
+            CASE 
+                WHEN m.total_use != 0 THEN (CAST(c.totals_inr AS numeric) / m.total_use) / 83.24
+                ELSE NULL
+            END, 2
+        ) AS usd_per_use
     FROM mycte m
     LEFT JOIN cost c ON m.facility = c.facility
 )
+
 
 SELECT * FROM combine
