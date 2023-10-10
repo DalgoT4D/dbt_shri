@@ -44,7 +44,7 @@ SELECT
     f.facility,
     SUM(f.total_use) as total_use,
     (fd.max_date - fd.min_date) AS days_range,
-    ROUND((SUM(f.total_use) / (fd.max_date - fd.min_date + 1))::numeric / 1000, 1) || 'k' as average_use_per
+    ROUND((SUM(f.total_use) / (fd.max_date - fd.min_date + 1))::numeric / 1000, 1) as average_use_per
 FROM FilteredData f
 JOIN FacilityDates fd ON f.facility = fd.facility
 GROUP BY f.facility, fd.min_date, fd.max_date
