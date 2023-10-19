@@ -21,6 +21,17 @@ mycte AS (
         OR (facility = 'Kasmar' AND date_auto >= '2023-07-01')
         OR (facility = 'Vurahi' AND date_auto >= '2023-07-01')
     GROUP BY facility, date_auto
+    
+    UNION ALL
+
+    -- Logic for facilities NOT in the specified list
+    SELECT 
+        facility,
+        date_auto
+    FROM prod_final.usetracking_dashboard
+    WHERE 
+        facility NOT IN ('Dundibagh', 'Basgoda', 'Gomia', 'Azad Nagar', 'North Basgoda', 'Peterbaar', 'Jaridih CSR', 'Jaridih SBM', 'Kasmar', 'Vurahi')
+    GROUP BY facility, date_auto
 ),
 
 FacilityDates AS (
