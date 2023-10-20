@@ -18,6 +18,7 @@ FilteredIssues AS (
 StatusAssigned AS (
     -- Assign status according to the given rules
    SELECT 
+    _id, 
     facility,
     date_auto,
     CASE
@@ -45,6 +46,7 @@ NumberedRecentIssues AS (
 )
 -- Final selection
 SELECT 
+    _id,
     facility, 
     date_auto, 
     status,
