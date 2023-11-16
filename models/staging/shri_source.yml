@@ -33,3 +33,5 @@ sources:
         description: raw weekly photo
       - name: facility_cost
         identifier: calculations
+      - name: waterquality 
+        identifier: _airbyte_raw_waterquality
