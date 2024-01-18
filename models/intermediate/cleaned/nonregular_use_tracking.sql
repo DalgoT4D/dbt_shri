@@ -13,7 +13,10 @@ with cte as (SELECT
         begin_group_aypvm5n7n_child_boy_number) as child_boy_number,
 
     -- creating a new column date_auto from _submission_time and convert to date format
-    to_date(starttime, 'YYYY-MM-DD') AS date_auto,
+    COALESCE(
+    TO_DATE(being_who_date, 'YYYY-MM-DD'), 
+    TO_DATE(starttime, 'YYYY-MM-DD')   
+   ) AS date_auto,
     SUBSTRING(starttime FROM 'T(\d{2}:\d{2}:\d{2})')::time AS time_auto,
 
     -- selecting all columns from nonregular_use_tracking_normalized except the ones listed
