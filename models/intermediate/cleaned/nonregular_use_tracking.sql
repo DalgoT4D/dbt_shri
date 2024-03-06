@@ -34,7 +34,7 @@ with cte as (SELECT
              'begin_group_aypvm5n7n_passerby_women_number', 
              'begin_group_aypvm5n7n_child_girl_number', 
              'begin_group_lky5gqsbu_child_girl_number', 
-             '_airbyte_ab_id', 
+             '_airbyte_raw_id', 
              '_xform_id_string', 
              'endtime', 
              '_validation_status', 

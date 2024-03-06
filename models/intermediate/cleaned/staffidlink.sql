@@ -1,6 +1,6 @@
 {{ config(
    indexes=[
-      {'columns': ['_airbyte_ab_id'], 'type': 'hash'}
+      {'columns': ['_airbyte_raw_id'], 'type': 'hash'}
     ]
 ) }}
 

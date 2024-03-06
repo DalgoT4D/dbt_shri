@@ -1,6 +1,6 @@
 {{ config(
    indexes=[
-      {'columns': ['_airbyte_ab_id'], 'type': 'hash'}
+      {'columns': ['_airbyte_raw_id'], 'type': 'hash'}
     ]
 ) }}
 
@@ -8,7 +8,7 @@
 
 -- 1.  This DBT macro sets the configuration options for the subsequent block of code. 
 --     In this case, it specifies that the resulting table should be materialized as a regular table in the 'intermediate' 
---     schema and includes an index on the '_airbyte_ab_id' column.
+--     schema and includes an index on the '_airbyte_raw_id' column.
 
 -- 2. CTE (Common Table Expression) Definition: The code starts with a CTE named `my_cte`. 
 --    It uses the `flatten_json` macro to flatten the JSON data from the 'source_shri_surveys' model's 'daily_issue_form' table. 
@@ -25,6 +25,6 @@
 {{
     flatten_json(
         model_name = source('source_shri_surveys', 'daily_issue_form'),
-        json_column = '_airbyte_data'
+        json_column = 'data'
     )
 }}

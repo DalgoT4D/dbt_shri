@@ -5,7 +5,7 @@ models:
     description: "Normalized data of Daily Issue Form" 
     +schema: intermediate
     columns: 
-       - name: _airbyte_ab_id
+       - name: _airbyte_raw_id
          description: "The primary key for this table"
          tests:
            - unique
@@ -15,7 +15,7 @@ models:
     description: "Normalized data of Raw Enrollment Form" 
     +schema: intermediate
     columns: 
-       - name: _airbyte_ab_id
+       - name: _airbyte_raw_id
          description: "The primary key for this table"
          tests:
            - unique
@@ -25,7 +25,7 @@ models:
     description: "Normalized data of Nonregular Use Tracking Form" 
     +schema: intermediate
     columns: 
-       - name: _airbyte_ab_id
+       - name: _airbyte_raw_id
          description: "The primary key for this table"
          tests:
            - unique
@@ -35,7 +35,7 @@ models:
     description: "Normalized data of Staff Barcode Form" 
     +schema: intermediate
     columns: 
-       - name: _airbyte_ab_id
+       - name: _airbyte_raw_id
          description: "The primary key for this table"
          tests:
            - unique
@@ -46,7 +46,7 @@ models:
     description: "Normalized data of Weekly Photo Form" 
     +schema: intermediate
     columns: 
-       - name: _airbyte_ab_id
+       - name: _airbyte_raw_id
          description: "The primary key for this table"
          tests:
            - unique
@@ -64,7 +64,7 @@ models:
     description: "Normalized data of StaffID Link" 
     +schema: intermediate
     columns: 
-       - name: _airbyte_ab_id
+       - name: _airbyte_raw_id
          description: "The primary key for this table"
          tests:
            - unique
