@@ -33,7 +33,7 @@ with cte as(
                     'time_and_date', 
                     '_uuid', 
                     '_tags', 
-                    '_airbyte_ab_id', 
+                    '_airbyte_raw_id', 
                     'formhub_uuid', 
                     'endtime', 
                     'starttime', 

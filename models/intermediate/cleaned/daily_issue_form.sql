@@ -21,7 +21,7 @@ with
    daily_issue as (select
    coalesce(other_group_outage_other, '0') as other_group_outage_other,
    {{ dbt_utils.star(from= ref('daily_issue_form_normalized'), 
-   except=['_airbyte_ab_id', 
+   except=['_airbyte_raw_id', 
            '_notes', 
            '_geolocation', 
            '_version_',

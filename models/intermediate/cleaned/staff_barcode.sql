@@ -13,7 +13,7 @@ with cte as(
     {{ dbt_utils.star(from = ref('staff_barcode_normalized'),
      except=['begin_group_chvgkvrk8_name_timestamp_formatted', 
              'group_qx5fr96_name_timestamp_formatted', 
-             '_airbyte_ab_id', 
+             '_airbyte_raw_id', 
              'start', 
              'starttime', 
              '_validation_status', 
