@@ -4,6 +4,10 @@
 -- the daily_issue_form and facility_table tables and unnests some arrays to create new rows for 
 -- each element in the arrays. The WHERE clause filters out rows where the minorissue_type column 
 -- contains certain values.
+{{ config(
+  materialized='table'
+) }}
+
 
 SELECT                 _id, 
                        _submitted_by, 

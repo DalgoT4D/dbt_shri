@@ -1,3 +1,8 @@
+{{ config(
+  materialized='table'
+) }}
+
+
 SELECT  
 _id, 
 facilityname as facility, 

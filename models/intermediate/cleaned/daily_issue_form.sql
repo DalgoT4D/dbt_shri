@@ -16,6 +16,10 @@
 -- In summary, this code combines data from two tables, `daily_issue_form_normalized` and `facility_koboid_link_normalized`, using a left join based on a common column. 
 
 -- Read about left join here ->>>>> https://www.tutorialspoint.com/sql/sql-left-joins.htm
+{{ config(
+  materialized='table'
+) }}
+
 
 with 
    daily_issue as (select

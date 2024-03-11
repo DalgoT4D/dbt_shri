@@ -1,7 +1,8 @@
 {{ config(
    indexes=[
       {'columns': ['_airbyte_raw_id'], 'type': 'hash'}
-    ]
+    ],
+    materialized='table'
 ) }}
 
 -- The provided DBT code snippet performs the following operations:

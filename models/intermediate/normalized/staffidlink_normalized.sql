@@ -1,7 +1,8 @@
 {{ config(
    indexes=[
       {'columns': ['_airbyte_raw_id'], 'type': 'hash'}
-    ]
+    ],
+    materialized='table'
 ) }}
 
 

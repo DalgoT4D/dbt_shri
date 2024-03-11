@@ -1,7 +1,8 @@
 {{ config(
    indexes=[
       {'columns': ['_airbyte_raw_id'], 'type': 'hash'}
-    ]
+    ],
+    materialized='table'
 ) }}
 
 -- Creating a CTE that flattens the JSON data from the raw_nonregular_use_tracking table

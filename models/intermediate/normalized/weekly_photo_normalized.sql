@@ -1,3 +1,8 @@
+{{ config(
+  materialized='table'
+) }}
+
+
 SELECT 
     data->>'_id' AS id,
     data->>'_submitted_by' AS _submitted_by,

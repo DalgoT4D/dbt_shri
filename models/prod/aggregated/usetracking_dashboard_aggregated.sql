@@ -29,6 +29,10 @@
 -- The main query selects columns from the my_cte CTE and the data_passerbyuse_clean table and applies some additional 
 -- transformations to the data. The COALESCE function is used to handle null values. The resulting data is returned as a result set.
 
+{{ config(
+  materialized='table'
+) }}
+
 with my_cte as (select date_auto, facility, 
 sum(
     case when gender = 'male' then 1 

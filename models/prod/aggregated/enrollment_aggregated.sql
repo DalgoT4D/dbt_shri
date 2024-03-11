@@ -1,4 +1,7 @@
 -- Selecting specific columns from the 'enrollment' table
+{{ config(
+  materialized='table'
+) }}
 
 SELECT formtimestampformatted,
        yob, 

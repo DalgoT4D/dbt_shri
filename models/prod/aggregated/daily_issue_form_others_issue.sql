@@ -1,3 +1,8 @@
+{{ config(
+  materialized='table'
+) }}
+
+
 select  
        _id,
        _submitted_by,

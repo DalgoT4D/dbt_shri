@@ -1,7 +1,8 @@
 {{ config(
    indexes=[
       {'columns': ['_airbyte_raw_id'], 'type': 'hash'}
-    ]
+    ],
+    materialized='table'
 ) }}
 
 -- Creating a CTE that selects and renames columns from the 'enrollment_normalized' table

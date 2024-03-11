@@ -1,3 +1,8 @@
+{{ config(
+  materialized='table'
+) }}
+
+
 with cte as (select  _id, to_date
             ( coalesce ( 
             begin_group_ajqop6jqs_name_timestamp_formatted, 
