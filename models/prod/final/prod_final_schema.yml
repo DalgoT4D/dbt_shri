@@ -18,3 +18,8 @@ models:
     tests:
       - dbt_utils.expression_is_true:
           expression: "date_auto >= '2020-01-01' AND date_auto <= '2024-12-31'"
+
+  - name: no_reports_data
+    tests:
+      - dbt_utils.expression_is_true:
+          expression: "no_of_reported_issues >= 0"
