@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: no_reports_data  # replace with your model's name
+    tests:
+      - not_null:
+          column_name: date_auto
+      - not_null:
+          column_name: facility
+
+  - name: no_reports_data
+    tests:
+      - accepted_values:
+          column_name: facility
+          values: ['Azad Nagar', 'Dundibagh', 'Gomia', 'Jaridih CSR', 'Karanpur', 'Kasmar', 'Nemua', 'Peterbaar', 'Vurahi']
+
+  - name: no_reports_data
+    tests:
+      - dbt_utils.expression_is_true:
+          expression: "date_auto >= '2020-01-01' AND date_auto <= '2024-12-31'"
