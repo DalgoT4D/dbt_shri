@@ -20,34 +20,38 @@
   materialized='table'
 ) }}
 
-
 with 
    daily_issue as (select
-   coalesce(other_group_outage_other, '0') as other_group_outage_other,
-   {{ dbt_utils.star(from= ref('daily_issue_form_normalized'), 
-   except=['_airbyte_raw_id', 
-           '_notes', 
-           '_geolocation', 
-           '_version_',
-           '_xform_id_string',
-           '_tags',
-           '_status',
-           'attachments',
-           'meta_deprecatedid',
-           '_validation_status',
-           'meta_instancename',
-           'other_group_outage_other']) }}
+     coalesce(other_group_outage_other, '0') as other_group_outage_other,
+     coalesce(to_date(timestamp_formatted, 'YYYY-MM-DD'), to_date('2024-04-22', 'YYYY-MM-DD')) AS date_auto,
+     coalesce(
+       date_trunc('minute', timestamp_formatted::timestamp)::time,
+       date_trunc('minute', to_timestamp('2024-04-22 21:10:00.000+05:30', 'YYYY-MM-DD HH24:MI:SS.FFTZH:TZM'))::time
+     ) AS time_auto,
+     {{ dbt_utils.star(from= ref('daily_issue_form_normalized'), 
+     except=['_airbyte_raw_id', 
+             '_notes', 
+             '_geolocation', 
+             '_version_',
+             '_xform_id_string',
+             '_tags',
+             '_status',
+             'attachments',
+             'meta_deprecatedid',
+             '_validation_status',
+             'meta_instancename',
+             'other_group_outage_other']) }}
    from {{ ref('daily_issue_form_normalized') }} ),
 
    form_kd as 
    (select
-   {{ dbt_utils.star(from= ref('facility_koboid_link_normalized'), 
-   except=['_notes', 
-           '_geolocation', 
-           '_version_', 
-           '_xform_id_string', 
-           '_tags', 
-           '_status']) }}
+     {{ dbt_utils.star(from= ref('facility_koboid_link_normalized'), 
+     except=['_notes', 
+             '_geolocation', 
+             '_version_', 
+             '_xform_id_string', 
+             '_tags', 
+             '_status']) }}
    from {{ ref('facility_koboid_link_normalized') }} ),
 
    join_all_tables as (

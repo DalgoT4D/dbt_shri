@@ -6,8 +6,8 @@
 SELECT  
 _id, 
 facilityname as facility, 
-timestamp_formatted::date as date_auto, 
-date_trunc('minute', timestamp_formatted::timestamp)::time AS time_auto,
+date_auto,
+time_auto,
 null as category,
 shift_type,
 null as issue,
