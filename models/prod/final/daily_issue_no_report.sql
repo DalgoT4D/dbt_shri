@@ -3,7 +3,7 @@
 ) }}
 
 -- Determine the dynamic range of dates based on the existing data
-WITH dynamic_range AS (
+WITH cte as (WITH dynamic_range AS (
   SELECT MIN(date_auto::date) AS start_date, MAX(date_auto::date) AS end_date
   FROM {{ref('usetracking_dashboard_new')}}
 ),
@@ -28,7 +28,12 @@ SELECT ac.date, ac.facility
 FROM all_combinations ac
 LEFT JOIN data_counts dc 
 ON ac.date = dc.date_auto AND ac.facility = dc.facility
-WHERE dc.num_entries IS NULL OR dc.num_entries = 0
+WHERE dc.num_entries IS NULL OR dc.num_entries = 0)
+
+SELECT
+cast(date as date) as date_auto, 
+facility 
+from cte
 
 
 
