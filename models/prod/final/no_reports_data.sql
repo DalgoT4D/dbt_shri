@@ -34,7 +34,7 @@ issues_reported AS (
 )
 
 SELECT 
-    cp.date_auto,
+    cast(cp.date_auto as date) as date_auto,
     cp.facility,
     COALESCE(ir.reported_issues_count, 0) AS no_of_reported_issues
 FROM 
