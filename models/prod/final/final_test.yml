@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: daily_issue_no_report
+  - name: uses_no_report
     tests:
       - not_null:
           column_name: date_auto
