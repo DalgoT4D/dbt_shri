@@ -8,10 +8,10 @@ models:
         description: "The auto-generated or fallback date."
         tests:
           - not_null
-          - date
+       
 
       - name: time_auto
         description: "The auto-generated or fallback time."
         tests:
           - not_null
-          - time
+

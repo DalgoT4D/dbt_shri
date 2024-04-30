@@ -62,4 +62,4 @@ with
     ON daily_issue._submitted_by = form_kd.kobo_username
    )
 
-select * from join_all_tables
+select * from join_all_tables where date_auto is not null and time_auto is not null
