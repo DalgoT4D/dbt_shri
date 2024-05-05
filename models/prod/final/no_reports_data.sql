@@ -17,6 +17,6 @@ WITH DateRange AS (
 SELECT fd.facility, CAST(fd.date AS date) AS date, COUNT(d._id) AS submission_count
 FROM FacilityDates fd
 LEFT JOIN prod_final.daily_issue_clean d ON fd.facility = d.facility AND fd.date = d.date_auto
-WHERE fd.date <= CURRENT_DATE  -- Adding the WHERE clause here
+WHERE fd.date <= CURRENT_DATE  
 GROUP BY fd.facility, fd.date
 HAVING COUNT(d._id) < 2

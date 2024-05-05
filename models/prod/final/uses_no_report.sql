@@ -34,6 +34,7 @@ SELECT
 cast(date as date) as date_auto, 
 facility 
 from cte
+WHERE date <= CURRENT_DATE 
 
 
 
