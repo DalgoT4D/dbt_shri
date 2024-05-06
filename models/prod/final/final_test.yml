@@ -1,9 +1,21 @@
 version: 2
 
 models:
+  - name: no_reports_data
+    tests: 
+      - no_reports_data
   - name: uses_no_report
-    tests:
-      - not_null:
-          column_name: date_auto
-      - not_null:
-          column_name: facility
+    tests:  
+      - uses_no_report
+  - name: uses_no_report
+    description: "Describes the usage of reports without actual reports generated."
+    columns:
+      - name: date_auto
+        description: "The auto-generated date when the report should have been used."
+        tests:
+          - not_null
+    
+      - name: facility
+        description: "The facility associated with the report usage."
+        tests:
+          - not_null
