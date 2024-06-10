@@ -15,6 +15,9 @@ select
        'Other' as category,
        other_group_other_fixed as issue,
        null as fixed,
+       null as full_facility,
+       null as stalls,
+       null as sides,
        true as any_issue,
        case other_group_outage_other_full
           When '1' THEN 'part day'
