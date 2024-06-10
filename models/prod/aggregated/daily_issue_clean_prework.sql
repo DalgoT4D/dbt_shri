@@ -14,6 +14,9 @@ null as issue,
 null as fixed,
 null as full_partial,
 null as num_hours,
+null as full_facility,
+null as stalls,
+null as sides,
 null as shutdown
 FROM {{ref('daily_issue_form')}}
 WHERE _id not in (select _id from {{ref('daily_issue_dashboard')}})
