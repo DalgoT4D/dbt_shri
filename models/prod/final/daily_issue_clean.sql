@@ -19,7 +19,7 @@ SELECT
     _id::integer,
     COALESCE(full_facility, '') as full_facility,
     COALESCE(stalls, '') as stalls,
-    COALESCE(sides, ''), as sides,
+    COALESCE(sides, '') as sides,
     COALESCE(facility, '') as facility,
     COALESCE(shift_type, '') as shift_type,
     COALESCE(category, '') as category,
