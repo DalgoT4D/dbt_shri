@@ -17,9 +17,9 @@ with my_cte as ({{ dbt_utils.union_relations(
 
 SELECT 
     _id::integer,
-    full_facility,
-    stalls,
-    sides,
+    COALESCE(full_facility, '') as full_facility,
+    COALESCE(stalls, '') as stalls,
+    COALESCE(sides, ''), as sides,
     COALESCE(facility, '') as facility,
     COALESCE(shift_type, '') as shift_type,
     COALESCE(category, '') as category,
