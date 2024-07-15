@@ -2,34 +2,37 @@
   materialized='table'
 ) }}
 
-
-WITH NumberedIssues AS (
-    -- Number each entry per facility and date, ordering by shutdown
+WITH 
+SortedIssues AS (
+    -- Sort entries by facility, date, reverse shutdown status, and full_partial
     SELECT *,
-           ROW_NUMBER() OVER (PARTITION BY facility, date_auto ORDER BY time_auto) AS num_perday
+           ROW_NUMBER() OVER (PARTITION BY facility, date_auto ORDER BY facility, date_auto, 
+                              CASE WHEN shutdown = 'yes' THEN 1 ELSE 0 END DESC, 
+                              CASE WHEN full_partial = 'full day' THEN 1 ELSE 0 END DESC, 
+                              time_auto) AS num_perday
     FROM {{ref('daily_issue_clean')}}
 ),
 FilteredIssues AS (
-    -- Only keep the first record for each facility-date
+    -- Keep only the first record for each facility-date combination
     SELECT * 
-    FROM NumberedIssues
+    FROM SortedIssues
     WHERE num_perday = 1
 ),
 StatusAssigned AS (
     -- Assign status according to the given rules
-   SELECT 
-    _id, 
-    facility,
-    date_auto,
-    CASE
-        WHEN date_auto IS NULL THEN 'no data'
-        WHEN COALESCE(TRIM(shutdown), '') = '' THEN 'online' -- Handles NULL, empty, or spaces
-        WHEN TRIM(shutdown) = 'no' THEN 'online'
-        WHEN TRIM(shutdown) = 'yes' AND full_partial = 'part day' THEN 'part-day outage'
-        WHEN TRIM(shutdown) = 'yes' AND full_partial = 'full day' THEN 'full-day outage'
-        ELSE 'unknown' -- Catch-all condition, adjust as necessary
-    END AS status
-FROM FilteredIssues 
+    SELECT 
+        _id, 
+        facility,
+        date_auto,
+        CASE
+            WHEN date_auto IS NULL THEN 'no data'
+            WHEN COALESCE(TRIM(shutdown), '') = '' THEN 'online' -- Handles NULL, empty, or spaces
+            WHEN TRIM(shutdown) = 'no' THEN 'online'
+            WHEN TRIM(shutdown) = 'yes' AND full_partial = 'part day' THEN 'part-day outage'
+            WHEN TRIM(shutdown) = 'yes' AND full_partial = 'full day' THEN 'full-day outage'
+            ELSE 'unknown' -- Catch-all condition, adjust as necessary
+        END AS status
+    FROM FilteredIssues 
 ),
 RecentIssues AS (
     -- Only keep records within the last 71 days
