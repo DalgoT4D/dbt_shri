@@ -2,7 +2,6 @@
   materialized='table'
 ) }}
 
-
 WITH 
 DateCalculations AS (
     -- Calculate today and 10 weeks ago
@@ -10,14 +9,43 @@ DateCalculations AS (
         CURRENT_DATE AS today,
         CURRENT_DATE - INTERVAL '70 days' AS wks_10
 ),
-ShutdownCounts AS (
-    -- Count shutdown instances for each facility within the last 10 weeks
+CleanedData AS (
+    -- Drop records with no issue
+    SELECT *
+    FROM {{ref('daily_issue_clean')}}
+    WHERE issue != ''
+),
+FullDayOutages AS (
+    -- Count full-day shutdown instances for each facility within the last 10 weeks
     SELECT 
         facility, 
-        COUNT(*) FILTER (WHERE shutdown = 'yes' AND date_auto > wks_10) AS num
-    FROM {{ref('daily_issue_clean')}}, DateCalculations
-    WHERE shutdown != '' AND shutdown != 'no'
+        COUNT(*) AS num_last10_full
+    FROM CleanedData, DateCalculations
+    WHERE shutdown = 'yes' 
+    AND full_partial = 'full day'
+    AND date_auto >= wks_10
     GROUP BY facility
+),
+PartialDayOutages AS (
+    -- Sum partial-day shutdown hours for each facility within the last 10 weeks
+    SELECT 
+        facility, 
+        COALESCE(SUM(CAST(num_hours AS NUMERIC)), 0) / 16 AS num_last10_partialhrs_days
+    FROM CleanedData, DateCalculations
+    WHERE shutdown = 'yes' 
+    AND full_partial = 'part day'
+    AND date_auto >= wks_10
+    GROUP BY facility
+),
+ShutdownCounts AS (
+    -- Combine full-day and partial-day outages
+    SELECT 
+        COALESCE(f.facility, p.facility) AS facility,
+        COALESCE(f.num_last10_full, 0) AS num_last10_full, 
+        COALESCE(p.num_last10_partialhrs_days, 0) AS num_last10_partialhrs_days,
+        (COALESCE(f.num_last10_full, 0) + COALESCE(p.num_last10_partialhrs_days, 0)) AS num_last10_totaldays
+    FROM FullDayOutages f
+    FULL OUTER JOIN PartialDayOutages p ON f.facility = p.facility
 ),
 LastOutage AS (
     -- Get the date of the last outage for each facility
@@ -40,11 +68,11 @@ FinalData AS (
     -- Combine the above data to compute the necessary columns
     SELECT 
         fq.facility, 
-        COALESCE(ROUND(100 - s.num::decimal / 70, 2), 100) AS last_10_weeks,
+        ROUND(100 - 100 * COALESCE(s.num_last10_totaldays, 0) / 70, 2) AS last_10_weeks,
         COALESCE(l.last_outage, fq.first_quality) AS continuous_since,
         CASE 
-            WHEN l.last_outage IS NOT NULL THEN -(l.last_outage - d.today)
-            ELSE -(fq.first_quality - d.today)
+            WHEN l.last_outage IS NOT NULL THEN (d.today - l.last_outage)
+            ELSE (d.today - fq.first_quality)
         END AS days_continuous_operation
     FROM FirstQuality fq
     JOIN DateCalculations d ON TRUE
