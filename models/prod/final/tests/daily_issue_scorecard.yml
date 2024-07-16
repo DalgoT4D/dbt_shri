@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: daily_issue_scorecard
+    description: "Calculates the last 10 weeks continuous operation for facilities."
+    columns:
+      - name: facility
+        description: "The facility name."
+        tests:
+          - not_null
+      - name: last_10_weeks
+        description: "Percentage of days with continuous operation in the last 10 weeks."
+        tests:
+          - not_null
+      - name: continuous_since
+        description: "Date since continuous operation started."
+        tests:
+          - not_null
+      - name: days_continuous_operation
+        description: "Number of days of continuous operation."
+        tests:
+          - not_null
+         
