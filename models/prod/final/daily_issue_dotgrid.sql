@@ -35,10 +35,10 @@ StatusAssigned AS (
     FROM FilteredIssues 
 ),
 RecentIssues AS (
-    -- Only keep records within the last 71 days
+    -- Only keep records within the last 70 days
     SELECT * 
     FROM StatusAssigned
-    WHERE date_auto > CURRENT_DATE - INTERVAL '71 days'
+    WHERE date_auto > CURRENT_DATE - INTERVAL '70 days'
 ),
 NumberedRecentIssues AS (
     -- Number days and weeks
