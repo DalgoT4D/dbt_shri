@@ -23,6 +23,8 @@ with cte as (SELECT
     TO_DATE(starttime, 'YYYY-MM-DD')   
    ) AS date_auto,
     SUBSTRING(starttime FROM 'T(\d{2}:\d{2}:\d{2})')::time AS time_auto,
+    begin_group_aypvm5n7n_highlow AS highlow,
+    begin_group_aypvm5n7n_highlow_other AS highlow_other,
 
     -- selecting all columns from nonregular_use_tracking_normalized except the ones listed
     {{ dbt_utils.star(from = ref('nonregular_use_tracking_normalized'), 
