@@ -10,6 +10,5 @@ SELECT
   woman_number AS women,
   boys_use AS boys,
   girls_use AS girls,
-  high_use_count,  -- Include high use count in the report
-  low_use_count    -- Include low use count in the report
+  highlow_usage_level   -- Include low use count in the report
 FROM {{ ref('usetracking_dashboard') }}
