@@ -14,8 +14,6 @@ CASE
             THEN 'high'
         WHEN SUM(CASE WHEN CAST(highlow AS INTEGER) = 2 THEN 1 ELSE 0 END) > SUM(CASE WHEN CAST(highlow AS INTEGER) = 1 THEN 1 ELSE 0 END)
             THEN 'low'
-        WHEN SUM(CASE WHEN CAST(highlow AS INTEGER) = 1 THEN 1 ELSE 0 END) = SUM(CASE WHEN CAST(highlow AS INTEGER) = 2 THEN 1 ELSE 0 END)
-            THEN 'normal'
         ELSE NULL
     END as highlow_usage_level 
 FROM {{ref('data_passerbyuse_clean')}}
