@@ -13,5 +13,9 @@ SELECT _id,
        passerby_man_number::integer, 
        time_auto,
        date_auto, 
-       facility
+       facility,
+       highlow,
+       highlow_other
+       
 FROM {{ref('nonregular_use_tracking')}}
+

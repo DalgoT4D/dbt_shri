@@ -61,6 +61,7 @@ SELECT
   COALESCE(b.girl_number, 0) AS girls_use,
   COALESCE(a.men_regular_number, 0) + COALESCE(b.man_number, 0) AS men_use,
   COALESCE(b.boy_number, 0) AS boys_use,
+  COALESCE(b.highlow_usage_level, '') AS highlow_usage_level, 
   COALESCE(b.woman_number, 0) + COALESCE(b.girl_number, 0) + COALESCE(b.man_number, 0) + COALESCE(b.boy_number, 0) + COALESCE(a.men_regular_number, 0) + COALESCE(a.women_regular_number, 0) AS total_use
 FROM
   my_cte AS a
