@@ -11,7 +11,7 @@ sources:
         identifier: Enrollment
         description: Data structure containing unprocessed information about enrollments.
       - name: nonregular_use_tracking
-        identifier: Nonregular_use_tracking
+        identifier: Daily_use_tracking
         description: System for tracking the usage that is not used on a regular basis.
       - name: staff_barcode
         identifier: Staff_barcode
