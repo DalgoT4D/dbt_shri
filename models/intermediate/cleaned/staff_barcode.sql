@@ -2,7 +2,6 @@
   materialized='table'
 ) }}
 
-
 with cte as(  
   select
     maintenance_numberid_in as userid,
@@ -41,10 +40,11 @@ with cte as(
 SELECT
     a.*,
     b.facilityname AS facility,
-    c.yob AS yob,
-    c.gender AS gender,
     c.date_enrollment,
-    d.position 
+    CASE 
+        WHEN LENGTH(a.userid) > 7 THEN a.userid  
+        ELSE d.position                         
+    END AS position
 FROM cte AS a
 RIGHT JOIN {{ ref('facility_koboid_link_normalized') }} AS b
     ON a._submitted_by = b.kobo_username
