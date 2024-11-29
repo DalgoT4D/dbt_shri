@@ -42,7 +42,7 @@ SELECT
     b.facilityname AS facility,
     c.date_enrollment,
     CASE 
-        WHEN LENGTH(a.userid) > 7 THEN a.userid  
+        WHEN LENGTH(a.userid) >= 7 THEN a.userid  
         ELSE d.position                         
     END AS position
 FROM cte AS a
