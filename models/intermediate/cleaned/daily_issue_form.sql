@@ -20,60 +20,69 @@
   materialized='table'
 ) }}
 
-with 
-   daily_issue as (select
-     coalesce(other_group_outage_other, '0') as other_group_outage_other,
-     coalesce(to_date(date, 'YYYY-MM-DD'), to_date(timestamp_formatted, 'YYYY-MM-DD')) AS date_auto,
-	   coalesce(cast(
-		left(time, 5) AS time), date_trunc('minute', timestamp_formatted::timestamp)::time) AS time_auto,
-     {{ dbt_utils.star(from= ref('daily_issue_form_normalized'), 
-     except=['_airbyte_raw_id', 
-             '_notes', 
-             '_geolocation', 
-             '_version_',
-             '_xform_id_string',
-             '_tags',
-             '_status',
-             'attachments',
-             'meta_deprecatedid',
-             '_validation_status',
-             'meta_instancename',
-             'other_group_outage_other']) }}
-   from {{ ref('daily_issue_form_normalized') }} ),
+WITH 
+   daily_issue AS (
+       SELECT
+           coalesce(other_group_outage_other, '0') AS other_group_outage_other,
+           coalesce(to_date(date, 'YYYY-MM-DD'), to_date(timestamp_formatted, 'YYYY-MM-DD')) AS date_auto,
+           coalesce(cast(left(time, 5) AS time), date_trunc('minute', timestamp_formatted::timestamp)::time) AS time_auto,
+           {{ dbt_utils.star(from= ref('daily_issue_form_normalized'), 
+             except=['_airbyte_raw_id', '_notes', '_geolocation', '_version_', 
+                     '_xform_id_string', '_tags', '_status', 'attachments', 
+                     'meta_deprecatedid', '_validation_status', 'meta_instancename', 
+                     'other_group_outage_other', 'facilityname']) }} -- Exclude 'facilityname'
+       FROM {{ ref('daily_issue_form_normalized') }}
+   ),
 
-   form_kd as 
-   (select
-     {{ dbt_utils.star(from= ref('facility_koboid_link_normalized'), 
-     except=['_notes', 
-             '_geolocation', 
-             '_version_', 
-             '_xform_id_string', 
-             '_tags', 
-             '_status']) }}
-   from {{ ref('facility_koboid_link_normalized') }} ),
+   form_kd AS (
+       SELECT
+           {{ dbt_utils.star(from= ref('facility_koboid_link_normalized'), 
+             except=['_notes', '_geolocation', '_version_', '_xform_id_string', '_tags', '_status']) }}
+       FROM {{ ref('facility_koboid_link_normalized') }}
+   ),
 
-   join_all_tables as (
-    select daily_issue.*, 
-    form_kd.facilityname
-    from daily_issue
-    RIGHT join form_kd
-    ON daily_issue._submitted_by = form_kd.kobo_username
+   join_all_tables AS (
+       SELECT 
+           di.*, 
+           fk.facilityname
+       FROM daily_issue di
+       RIGHT JOIN form_kd fk 
+           ON di._submitted_by = fk.kobo_username
+   ),
+
+   min_dates AS (
+       -- Subquery to get the minimum date_auto for each facility
+       SELECT 
+           facilityname, 
+           MIN(date_auto) AS min_date_auto
+       FROM join_all_tables
+       WHERE date_auto IS NOT NULL
+       GROUP BY facilityname
    )
 
-select * from join_all_tables 
-where date_auto is not null 
-and time_auto is not null
-and (facilityname = 'Dundibagh' AND date_auto >= '2022-02-19')
-        OR (facilityname = 'Basgoda' AND date_auto >= '2022-02-19')
-        OR (facilityname = 'Gomia' AND date_auto >= '2022-02-19')
-        OR (facilityname = 'Azad Nagar' AND date_auto >= '2022-08-23')
-        OR (facilityname = 'North Basgoda' AND date_auto >= '2022-08-23')
-        OR (facilityname = 'Peterbaar' AND date_auto >= '2023-01-14')
-        OR (facilityname = 'Vurahi' AND date_auto >= '2023-03-02')
-        OR (facilityname = 'Jaridih CSR' AND date_auto >= '2023-07-01')
-        OR (facilityname = 'Jaridih SBM' AND date_auto >= '2023-07-01')
-        OR (facilityname = 'Kasmar' AND date_auto >= '2023-07-01')
-        OR (facilityname = 'Nemua' AND date_auto >= '2023-10-29')
-        OR (facilityname = 'Bela Museri' AND date_auto >= '2023-12-04')
-        OR (facilityname = 'Bairo' AND date_auto >= '2023-11-01')
-        OR (facilityname = 'Karanpur' AND date_auto >= '2023-10-13') 
+SELECT jt.*, md.min_date_auto
+FROM join_all_tables jt
+LEFT JOIN min_dates md 
+    ON jt.facilityname = md.facilityname
+WHERE jt.date_auto IS NOT NULL 
+  AND jt.time_auto IS NOT NULL
+  AND (
+       -- Explicit conditions for known facilities
+       (jt.facilityname = 'Dundibagh' AND jt.date_auto >= '2022-02-19') OR
+       (jt.facilityname = 'Basgoda' AND jt.date_auto >= '2022-02-19') OR
+       (jt.facilityname = 'Gomia' AND jt.date_auto >= '2022-02-19') OR
+       (jt.facilityname = 'Azad Nagar' AND jt.date_auto >= '2022-08-23') OR
+       (jt.facilityname = 'North Basgoda' AND jt.date_auto >= '2022-08-23') OR
+       (jt.facilityname = 'Peterbaar' AND jt.date_auto >= '2023-01-14') OR
+       (jt.facilityname = 'Vurahi' AND jt.date_auto >= '2023-03-02') OR
+       (jt.facilityname = 'Jaridih CSR' AND jt.date_auto >= '2023-07-01') OR
+       (jt.facilityname = 'Jaridih SBM' AND jt.date_auto >= '2023-07-01') OR
+       (jt.facilityname = 'Kasmar' AND jt.date_auto >= '2023-07-01') OR
+       (jt.facilityname = 'Nemua' AND jt.date_auto >= '2023-10-29') OR
+       (jt.facilityname = 'Bela Museri' AND jt.date_auto >= '2023-12-04') OR
+       (jt.facilityname = 'Bairo' AND jt.date_auto >= '2023-11-01') OR
+       (jt.facilityname = 'Karanpur' AND jt.date_auto >= '2023-10-13') OR
+       -- Default condition for new facilities: Use their minimum date_auto
+       (jt.date_auto >= md.min_date_auto)
+  )
+
