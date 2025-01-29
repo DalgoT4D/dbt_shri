@@ -8,7 +8,7 @@ mycte AS (
     SELECT 
         facility,
         date_auto
-    FROM prod_final.usetracking_dashboard
+    FROM {{ref('usetracking_dashboard')}}
     WHERE 
         (facility = 'Dundibagh' AND date_auto >= '2022-02-19')
         OR (facility = 'Basgoda' AND date_auto >= '2022-02-19')
@@ -21,14 +21,14 @@ mycte AS (
         OR (facility = 'Kasmar' AND date_auto >= '2023-07-01')
         OR (facility = 'Vurahi' AND date_auto >= '2023-07-01')
     GROUP BY facility, date_auto
-    
+
     UNION ALL
 
     -- Logic for facilities NOT in the specified list
     SELECT 
         facility,
         date_auto
-    FROM prod_final.usetracking_dashboard
+    FROM {{ref('usetracking_dashboard')}}
     WHERE 
         facility NOT IN ('Dundibagh', 'Basgoda', 'Gomia', 'Azad Nagar', 'North Basgoda', 'Peterbaar', 'Jaridih CSR', 'Jaridih SBM', 'Kasmar', 'Vurahi')
     GROUP BY facility, date_auto
@@ -55,7 +55,7 @@ SELECT
     f.facility,
     SUM(f.total_use) as total_use,
     (fd.max_date - fd.min_date) AS days_range,
-    ROUND((SUM(f.total_use) / (fd.max_date - fd.min_date + 1))::numeric / 1000, 1) as average_use_per
+    ROUND((SUM(f.total_use) / (fd.max_date - fd.min_date + 1))::numeric, 0) as average_use_per -- Removed /1000 to get the full value
 FROM FilteredData f
 JOIN FacilityDates fd ON f.facility = fd.facility
 GROUP BY f.facility, fd.min_date, fd.max_date

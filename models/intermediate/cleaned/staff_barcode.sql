@@ -2,17 +2,16 @@
   materialized='table'
 ) }}
 
-with cte as(  
-  select
-    maintenance_numberid_in as userid,
+WITH cte AS(  
+  SELECT
+    CAST(maintenance_numberid_in AS TEXT) AS userid,  -- Ensure it's always treated as text
+    group_qx5fr96_name_timestamp_formatted AS nametimestampformatted,
 
-    group_qx5fr96_name_timestamp_formatted as nametimestampformatted,
+    COALESCE(group_qx5fr96_name_timestamp_formatted, 
+             begin_group_chvgkvrk8_name_timestamp_formatted) AS datetime_auto_day,
 
-    coalesce(group_qx5fr96_name_timestamp_formatted, 
-             begin_group_chvgkvrk8_name_timestamp_formatted) as datetime_auto_day,
-
-    to_date(coalesce(group_qx5fr96_name_timestamp_formatted, 
-            begin_group_chvgkvrk8_name_timestamp_formatted), 'YYYY-MM-DD') as date_auto,
+    TO_DATE(COALESCE(group_qx5fr96_name_timestamp_formatted, 
+            begin_group_chvgkvrk8_name_timestamp_formatted), 'YYYY-MM-DD') AS date_auto,
 
     {{ dbt_utils.star(from = ref('staff_barcode_normalized'),
      except=['begin_group_chvgkvrk8_name_timestamp_formatted', 
@@ -33,8 +32,11 @@ with cte as(
              '_notes', 
              'begin_group_chvgkvrk8_name_timestamp', 
              '__version__', 
-             'group_qx5fr96_name_timestamp'])}}
-  from {{ ref('staff_barcode_normalized') }} 
+             'group_qx5fr96_name_timestamp',
+             'yob', 
+             'gender'
+             ])}}
+  FROM {{ ref('staff_barcode_normalized') }} 
 )
 
 SELECT
@@ -42,13 +44,14 @@ SELECT
     b.facilityname AS facility,
     c.date_enrollment,
     CASE 
-        WHEN LENGTH(a.userid) >= 7 THEN a.userid  
-        ELSE d.position                         
+        WHEN LENGTH(TRIM(a.userid)) >= 7 THEN TRIM(a.userid)  -- Ensures no extra spaces affect the length check
+        WHEN d.position IS NOT NULL THEN d.position  -- Fallback to staffidlink
+        ELSE 'Unknown Position'  -- If no position is found
     END AS position
 FROM cte AS a
 RIGHT JOIN {{ ref('facility_koboid_link_normalized') }} AS b
     ON a._submitted_by = b.kobo_username
 LEFT JOIN {{ ref('enrollment_gender_nodup') }} AS c
     ON a.userid = c.userid
-LEFT JOIN {{ ref ('staffidlink')}} as d
+LEFT JOIN {{ ref('staffidlink') }} AS d
     ON a.userid = d.userid
