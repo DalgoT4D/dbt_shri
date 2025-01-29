@@ -13,7 +13,7 @@
 
 WITH mycte AS (
     SELECT facility, SUM(total_use) as total_use
-    FROM prod_final.usetracking_dashboard
+    FROM {{ ref('usetracking_dashboard') }}
     WHERE date_auto >= DATE_TRUNC('MONTH', CURRENT_DATE) - INTERVAL '3 months'
       AND date_auto < DATE_TRUNC('MONTH', CURRENT_DATE)
     GROUP BY facility
