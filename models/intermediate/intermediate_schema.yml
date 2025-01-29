@@ -69,3 +69,12 @@ models:
          tests:
            - unique
            - not_null
+
+  - name: facility_cost
+    description: "cost shouldn't be null" 
+    +schema: intermediate_cleaned
+    columns: 
+       - name: totals_inr
+         description: "quarterly spent on particular facility"
+         tests:
+           - not_null
