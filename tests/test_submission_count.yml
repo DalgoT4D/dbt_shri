@@ -1,0 +1,18 @@
+unit_tests:
+  - name: test_submission_count
+    model: no_reports_data
+    given:
+      - input: ref('daily_issue_clean')
+        rows:
+          - {facility: 'A', date_auto: '2024-01-01', issue: 'Issue 1'}
+          - {facility: 'A', date_auto: '2024-01-01', issue: 'Issue 2'}
+          - {facility: 'B', date_auto: '2024-01-01', issue: 'Issue 1'}
+          - {facility: 'B', date_auto: '2024-01-02', issue: 'Issue 1'}
+          - {facility: 'C', date_auto: '2024-01-02', issue: 'Issue 1'}
+    expect:
+      rows:
+        - {facility: 'A', date: '2024-01-02', submission_count: 0}  
+        - {facility: 'B', date: '2024-01-01', submission_count: 1}
+        - {facility: 'B', date: '2024-01-02', submission_count: 1}
+        - {facility: 'C', date: '2024-01-01', submission_count: 0}  
+        - {facility: 'C', date: '2024-01-02', submission_count: 1}
