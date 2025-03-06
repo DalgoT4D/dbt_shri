@@ -38,5 +38,5 @@ LEFT JOIN SubmissionCounts sc
 ON fd.facility = sc.facility 
 AND fd.date = sc.date_auto
 WHERE fd.date <= CURRENT_DATE::DATE  -- Ensure comparison is done on DATE type
-AND COALESCE(sc.submission_count, 0) < 2
+AND (COALESCE(sc.submission_count, 0) < 2 OR COALESCE(sc.submission_count, 0) > 2)
 ORDER BY fd.facility, fd.date
