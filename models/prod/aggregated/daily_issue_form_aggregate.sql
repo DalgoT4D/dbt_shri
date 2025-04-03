@@ -1,300 +1,79 @@
--- {{ref('daily_issue_form')}} -> this is referring to daily_issue_form table which is a normalized table 
-
--- The WITH clause defines a common table expression (CTE) called my_cte that selects columns from 
--- the daily_issue_form and facility_table tables and unnests some arrays to create new rows for 
--- each element in the arrays. The WHERE clause filters out rows where the minorissue_type column 
--- contains certain values.
 {{ config(
   materialized='table'
 ) }}
 
+{%- set input_relation = ref('daily_issue_form') -%}
+{%- set issue_dict = get_issue_column_mapping('daily_issue_form') -%}
 
-SELECT                 _id, 
-                       _submitted_by, 
-                       minorissue_type, 
-                       facilityname as facility, 
-                       shift_type, 
-                       date_auto,
-                       time_auto, 
-                       _submission_time,
+with exploded as (
+  select
+    _id,
+    _submitted_by,
+    facilityname as facility,
+    minorissue_type,
+    shift_type,
+    date_auto,
+    time_auto,
+    _submission_time,
+    
+    -- Build an array of issue names (as string literals)
+    unnest(array[
+      {%- for key, mapping in issue_dict | dictsort %}
+        '{{ key }}'{{ "," if not loop.last }}
+      {%- endfor %}
+    ]) as issue,
+    
+    -- Build an array of category values (as string literals)
+    unnest(array[
+      {%- for key, mapping in issue_dict | dictsort %}
+        '{{ mapping.category }}'{{ "," if not loop.last }}
+      {%- endfor %}
+    ]) as category,
+    
+    -- For each metric, if the mapping exists output the column reference; otherwise output null.
+    unnest(array[
+      {%- for key, mapping in issue_dict | dictsort %}
+        {{ mapping.outage if mapping.outage is defined else 'null' }}{{ "," if not loop.last }}
+      {%- endfor %}
+    ]) as outage,
+    
+    unnest(array[
+      {%- for key, mapping in issue_dict | dictsort %}
+        {{ mapping.fixed if mapping.fixed is defined else 'null' }}{{ "," if not loop.last }}
+      {%- endfor %}
+    ]) as fixed,
+    
+    unnest(array[
+      {%- for key, mapping in issue_dict | dictsort %}
+        {{ mapping.full if mapping.full is defined else 'null' }}{{ "," if not loop.last }}
+      {%- endfor %}
+    ]) as full_part,
+    
+    unnest(array[
+      {%- for key, mapping in issue_dict | dictsort %}
+        {{ mapping.hours if mapping.hours is defined else 'null' }}{{ "," if not loop.last }}
+      {%- endfor %}
+    ]) as num_hours,
+    
+    unnest(array[
+      {%- for key, mapping in issue_dict | dictsort %}
+        {{ mapping.fullfacility if mapping.fullfacility is defined else 'null' }}{{ "," if not loop.last }}
+      {%- endfor %}
+    ]) as full_facility,
+    
+    unnest(array[
+      {%- for key, mapping in issue_dict | dictsort %}
+        {{ mapping.stalls if mapping.stalls is defined else 'null' }}{{ "," if not loop.last }}
+      {%- endfor %}
+    ]) as stalls,
+    
+    unnest(array[
+      {%- for key, mapping in issue_dict | dictsort %}
+        {{ mapping.sides if mapping.sides is defined else 'null' }}{{ "," if not loop.last }}
+      {%- endfor %}
+    ]) as sides
 
-       unnest(array['Bulb', 
-                    'Wiring',
-                    'Boring',
-                    'Switch',
-                    'Stabilizer',
-                    'Basin tap', 
-                    'Toilet tap',
-                    'Pipe',
-                    'Socket',
-                    'Tools',
-                    'Tablet',
-                    'Internet', 
-                    'Harpic etc',
-                    'Soap',
-                    'Jug',
-                    'Dustbin',
-                    'Gloves',
-                    'Gate',
-                    'Floor',
-                    'Wall',
-                    'Painting',
-                    'Roof',
-                    'Pan',
-                    'Pan',
-                    'Odor',
-                    'Wall',
-                    'Basin',
-                    'Drain blocked'
-       
-       ]) AS issue,
+  from {{ input_relation }}
+)
 
-       unnest(array['Electrical', 
-                    'Electrical',
-                    'Electrical',
-                    'Electrical',
-                    'Electrical',
-                    'Plumbing', 
-                    'Plumbing',
-                    'Plumbing',
-                    'Plumbing',
-                    'Plumbing',
-                    'Technology',
-                    'Technology', 
-                    'Supplies',
-                    'Supplies',
-                    'Supplies',
-                    'Supplies',
-                    'Supplies',
-                    'Infrastructure',
-                    'Infrastructure',
-                    'Infrastructure',
-                    'Infrastructure',
-                    'Infrastructure',
-                    'Infrastructure',
-                    'Cleanliness',
-                    'Cleanliness',
-                    'Cleanliness',
-                    'Cleanliness',
-                    'Cleanliness'
-                    
-       
-       ]) AS category,
-
-       unnest(array[electrical_group_outage_bulb, 
-                    electrical_group_outage_wiring, 
-                    electrical_group_outage_boring,
-                    electrical_group_outage_switch,
-                    electrical_group_outage_stabilizer,
-                    plumbing_group_outage_basintap,
-                    plumbing_group_outage_toilettap, 
-                    plumbing_group_outage_pipe,
-                    plumbing_group_outage_socket,
-                    plumbing_group_outage_tools,
-                    technology_group_outage_tablet, 
-                    technology_group_outage_internet,
-                    supplies_group_outage_harpicetc,
-                    supplies_group_outage_soap, 
-                    supplies_group_outage_jug,
-                    supplies_group_outage_dustbin,
-                    supplies_group_outage_glove,
-                    infrastructure_group_outage_gate,
-                    infrastructure_group_outage_floor,
-                    infrastructure_group_outage_wall,
-                    infrastructure_group_outage_painting,
-                    infrastructure_group_outage_roof,
-                    infrastructure_group_outage_pan,
-                    cleanliness_group_outage_pan,
-                    cleanliness_group_outage_odor,
-                    cleanliness_group_outage_wallclean,
-                    cleanliness_group_outage_basinclean,
-                    cleanliness_group_outage_drainblock
-
-                    ]) AS outage, 
-
-       unnest(array[electrical_group_bulb_fixed, 
-                    electrical_group_wiring_fixed,
-                    electrical_group_boring_fixed,
-                    electrical_group_switch_fixed,
-                    electrical_group_stabilizer_fixed,
-                    plumbing_group_basintap_fixed, 
-                    plumbing_group_toilettap_fixed,
-                    plumbing_group_pipe_fixed,
-                    plumbing_group_socket_fixed,
-                    plumbing_group_tools_fixed,
-                    technology_group_tablet_fixed, 
-                    technology_group_internet_fixed,  
-                    supplies_group_harpicetc_fixed, 
-                    supplies_group_soap_fixed,
-                    supplies_group_jug_fixed,
-                    supplies_group_dustbin_fixed,
-                    supplies_group_glove_fixed,
-                    infrastructure_group_gate_fixed,
-                    infrastructure_group_floor_fixed,
-                    infrastructure_group_wall_fixed,
-                    infrastructure_group_painting_fixed,
-                    infrastructure_group_roof_fixed,
-                    infrastructure_group_pan_fixed,
-                    cleanliness_group_pan_fixed,
-                    cleanliness_group_odor_fixed,
-                    cleanliness_group_wallclean_fixed,
-                    cleanliness_group_basinclean_fixed,
-                    cleanliness_group_drainblock_fixed
-                    ]) AS fixed, 
-
-       unnest(array[electrical_group_outage_bulb_full, 
-                    electrical_group_outage_wiring_full,
-                    electrical_group_outage_boring_full,
-                    electrical_group_outage_switch_full,
-                    electrical_group_outage_stabilizer_full,
-                    plumbing_group_outage_basintap_full, 
-                    plumbing_group_outage_toilettap_full,
-                    plumbing_group_outage_pipe_full,
-                    plumbing_group_outage_socket_full,
-                    plumbing_group_outage_tools_full,
-                    technology_group_outage_tablet_full, 
-                    technology_group_outage_internet_full,
-                    supplies_group_outage_harpicetc_full,
-                    supplies_group_outage_soap_full,
-                    supplies_group_outage_jug_full,
-                    supplies_group_outage_dustbin_full,
-                    supplies_group_outage_glove_full,
-                    infrastructure_group_outage_gate_full,
-                    infrastructure_group_outage_floor_full,
-                    infrastructure_group_outage_wall_full,
-                    infrastructure_group_outage_painting_full,
-                    infrastructure_group_outage_roof_full,
-                    infrastructure_group_outage_pan_full,
-                    cleanliness_group_outage_pan_full,
-                    cleanliness_group_outage_odor_full,
-                    cleanliness_group_outage_wallclean_full,
-                    cleanliness_group_outage_basinclean_full,
-                    cleanliness_group_outage_drainblock_full
-                    ]) AS full_part,
-
-       unnest(array[electrical_group_outage_bulb_hours, 
-                    electrical_group_outage_wiring_hours,
-                    electrical_group_outage_boring_hours,
-                    electrical_group_outage_switch_hours,
-                    electrical_group_outage_stabilizer_hours,
-                    plumbing_group_outage_basintap_hours, 
-                    plumbing_group_outage_toilettap_hours, 
-                    plumbing_group_outage_pipe_hours,
-                    plumbing_group_outage_socket_hours,
-                    plumbing_group_outage_tools_hours,
-                    technology_group_outage_internet_hours, 
-                    technology_group_outage_tablet_hours,
-                    supplies_group_outage_harpicetc_hours,
-                    supplies_group_outage_soap_hours,
-                    supplies_group_outage_jug_hours,
-                    supplies_group_outage_dustbin_hours,
-                    supplies_group_outage_glove_hours,
-                    infrastructure_group_outage_gate_hours,
-                    infrastructure_group_outage_floor_hours,
-                    infrastructure_group_outage_wall_hours,
-                    infrastructure_group_outage_painting_hours,
-                    infrastructure_group_outage_roof_hours,
-                    infrastructure_group_outage_pan_hours,
-                    cleanliness_group_outage_pan_hours,
-                    cleanliness_group_outage_odor_hours,
-                    cleanliness_group_outage_wallclean_hours,
-                    cleanliness_group_outage_basinclean_hours,
-                    cleanliness_group_outage_drainblock_hours
-                    ]) AS num_hours,
-
-        unnest(array[electrical_group_outage_bulb_fullfacility, 
-                    electrical_group_outage_wiring_fullfacility,
-                    electrical_group_outage_boring_fullfacility,
-                    electrical_group_outage_switch_fullfacility,
-                    electrical_group_outage_stabilizer_fullfacility,
-                    plumbing_group_outage_basintap_fullfacility, 
-                    plumbing_group_outage_toilettap_fullfacility,
-                    plumbing_group_outage_pipe_fullfacility,
-                    plumbing_group_outage_socket_fullfacility,
-                    plumbing_group_outage_tools_fullfacility,
-                    technology_group_outage_tablet_fullfacility, 
-                    technology_group_outage_internet_fullfacility,
-                    supplies_group_outage_harpicetc_fullfacility,
-                    supplies_group_outage_soap_fullfacility,
-                    supplies_group_outage_jug_fullfacility,
-                    supplies_group_outage_dustbin_fullfacility,
-                    supplies_group_outage_glove_fullfacility,
-                    infrastructure_group_outage_gate_fullfacility,
-                    infrastructure_group_outage_floor_fullfacility,
-                    infrastructure_group_outage_wall_fullfacility,
-                    infrastructure_group_outage_painting_fullfacility,
-                    infrastructure_group_outage_roof_fullfacility,
-                    infrastructure_group_outage_pan_fullfacility,
-                    cleanliness_group_outage_panclean_fullfacility,
-                    cleanliness_group_outage_odor_fullfacility,
-                    cleanliness_group_outage_wallclean_fullfacility,
-                    cleanliness_group_outage_basinclean_fullfacility,
-                    cleanliness_group_outage_drainblock_fullfacility
-                    ]) AS full_facility,
-
-          unnest(array[
-                    electrical_group_stalls_bulb,
-                    electrical_group_stalls_wiring,
-                    electrical_group_stalls_boring,
-                    electrical_group_stalls_switch,
-                    electrical_group_outage_stabilizer,
-                    plumbing_group_stalls_basintap,
-                    plumbing_group_stalls_toilettap, 
-                    plumbing_group_stalls_pipe,
-                    plumbing_group_stalls_socket,
-                    plumbing_group_stalls_tools,
-                    technology_group_stalls_tablet, 
-                    technology_group_stalls_internet,
-                    supplies_group_stalls_harpicetc,
-                    supplies_group_stalls_soap, 
-                    supplies_group_stalls_jug,
-                    supplies_group_stalls_dustbin,
-                    supplies_group_stalls_glove,
-                    infrastructure_group_stalls_gate,
-                    infrastructure_group_stalls_floor,
-                    infrastructure_group_stalls_wall,
-                    infrastructure_group_stalls_painting,
-                    infrastructure_group_stalls_roof,
-                    infrastructure_group_stalls_pan,
-                    cleanliness_group_stalls_panclean,
-                    cleanliness_group_stalls_odor,
-                    cleanliness_group_stalls_wallclean,
-                    cleanliness_group_stalls_basinclean,
-                    cleanliness_group_stalls_drainblock
-                ]) AS stalls, 
-            
-                unnest(array[
-                    electrical_group_sides_bulb,
-                    electrical_group_sides_wiring,
-                    electrical_group_sides_boring,
-                    electrical_group_sides_switch,
-                    plumbing_group_sides_basintap,
-                    plumbing_group_sides_toilettap, 
-                    plumbing_group_sides_pipe,
-                    plumbing_group_sides_socket,
-                    plumbing_group_sides_tools,
-                    technology_group_sides_tablet, 
-                    technology_group_sides_internet,
-                    supplies_group_sides_harpicetc,
-                    supplies_group_sides_soap, 
-                    supplies_group_sides_jug,
-                    supplies_group_sides_dustbin,
-                    supplies_group_sides_glove,
-                    infrastructure_group_sides_gate,
-                    infrastructure_group_sides_floor,
-                    infrastructure_group_sides_wall,
-                    infrastructure_group_sides_painting,
-                    infrastructure_group_sides_roof,
-                    infrastructure_group_sides_pan,
-                    cleanliness_group_sides_panclean,
-                    cleanliness_group_sides_odor,
-                    cleanliness_group_sides_wallclean,
-                    cleanliness_group_sides_basinclean,
-                    cleanliness_group_sides_drainblock
-                ]) AS sides
-
-
-
-      
-       FROM {{ref('daily_issue_form')}}
-
+select * from exploded
