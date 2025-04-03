@@ -1,3 +1,7 @@
+{{ config(
+  materialized='table'
+) }}
+
 {%- set input_relation = ref('daily_issue_form') -%}
 {%- set issue_dict = get_issue_column_mapping('daily_issue_form') -%}
 
