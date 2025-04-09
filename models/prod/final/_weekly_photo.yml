@@ -1,0 +1,24 @@
+version: 2
+models:
+  - name: weekly_photo
+    columns:
+      - name: id
+        description: Unique identifier for each record in the raw weekly photo data.
+        data_type: text
+      - name: attachment_id
+        description: Unique identifier for each attachment.
+        data_type: text
+      - name: image_link
+        description: URL to access the image linked to the weekly photo record.
+        data_type: text
+      - name: date_auto
+        description: Date when the photo data was automatically processed or recorded.
+        data_type: date
+      - name: facility
+        description: Name of the facility associated with the weekly photo submission.
+        data_type: text
+    description: >-
+      This table consolidates weekly photo data by linking photo information with associated facility
+      details. It includes unique identifiers for photos and attachments, URLs for downloading images,
+      and timestamps for when photos were captured, alongside the facility name linked by the user who
+      submitted the form.

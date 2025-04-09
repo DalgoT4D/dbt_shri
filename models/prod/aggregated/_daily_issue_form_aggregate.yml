@@ -1,0 +1,56 @@
+version: 2
+models:
+  - name: daily_issue_form_aggregate
+    columns:
+      - name: _id
+        description: Unique identifier for each record in the Facility_KoboID_link table.
+        data_type: text
+      - name: _submitted_by
+        description: User who submitted the form
+        data_type: text
+      - name: facility
+        description: Name of the facility
+        data_type: text
+      - name: minorissue_type
+        description: Type of minor issue reported
+        data_type: text
+      - name: shift_type
+        description: Type of shift during which the issue was reported
+        data_type: text
+      - name: date_auto
+        description: The auto-generated or fallback date.
+        data_type: date
+      - name: time_auto
+        description: The auto-generated or fallback time.
+        data_type: time without time zone
+      - name: _submission_time
+        description: The timestamp when the submission was made in the KoboToolbox system.
+        data_type: text
+      - name: issue
+        description: Array of issue names
+        data_type: text
+      - name: category
+        description: Array of category values
+        data_type: text
+      - name: outage
+        description: Outage information for each issue
+        data_type: text
+      - name: fixed
+        description: Status indicating if the issue was fixed
+        data_type: text
+      - name: full_part
+        description: Full part information for each issue
+        data_type: text
+      - name: num_hours
+        description: Number of hours related to the issue
+        data_type: text
+      - name: full_facility
+        description: Full facility information for each issue
+        data_type: text
+      - name: stalls
+        description: Stalls information for each issue
+        data_type: text
+      - name: sides
+        description: Sides information for each issue
+        data_type: text
+    description: Aggregated data from daily issue submissions.

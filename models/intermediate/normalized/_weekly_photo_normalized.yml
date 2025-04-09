@@ -1,0 +1,43 @@
+version: 2
+models:
+  - name: weekly_photo_normalized
+    description: Normalized data of Weekly Photo Form
+    +schema: intermediate
+
+    columns:
+      - name: id
+        description: Unique identifier for each record in the raw weekly photo data.
+        data_type: text
+      - name: _submitted_by
+        description: Identifier for the user who submitted the form.
+        data_type: text
+      - name: starttime
+        description: Start time of the photo capture event.
+        data_type: text
+      - name: attachment_id
+        description: Unique identifier for each attachment.
+        data_type: text
+      - name: xform
+        description: Reference to the form associated with the attachment.
+        data_type: text
+      - name: filename
+        description: Name of the file attached.
+        data_type: text
+      - name: instance
+        description: Instance identifier for the attachment.
+        data_type: text
+      - name: mimetype
+        description: MIME type of the attachment file.
+        data_type: text
+      - name: download_url
+        description: URL to download the attachment.
+        data_type: text
+      - name: download_large_url
+        description: URL to download the large version of the attachment.
+        data_type: text
+      - name: download_small_url
+        description: URL to download the small version of the attachment.
+        data_type: text
+      - name: download_medium_url
+        description: URL to download the medium version of the attachment.
+        data_type: text

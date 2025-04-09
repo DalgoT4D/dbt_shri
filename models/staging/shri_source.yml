@@ -7,26 +7,268 @@ sources:
       - name: daily_issue_form
         identifier: Daily_Issue_Form
         description: A form used to track and report issues on a daily basis.
+        columns:
+          - name: _id
+            description: Unique identifier for each record in the daily issue form.
+            data_type: numeric
+          - name: end
+            description: End date or time when the issue tracking was concluded for the day.
+            data_type: character varying
+          - name: data
+            description: Contains JSON-encoded data for daily issue reporting.
+            data_type: jsonb
+          - name: endtime
+            description: The time when the issue tracking form was completed.
+            data_type: character varying
+          - name: _submission_time
+            description: The timestamp when the form was submitted.
+            data_type: character varying
+          - name: _airbyte_raw_id
+            description: Unique identifier for the raw data record from the Airbyte source.
+            data_type: character varying
+          - name: _airbyte_extracted_at
+            description: Timestamp indicating when the data was extracted by Airbyte.
+            data_type: timestamp with time zone
+          - name: _airbyte_meta
+            description: >-
+              Metadata column containing Airbyte-specific information related to the data extraction process.
+            data_type: jsonb
       - name: raw_enrollment
         identifier: Enrollment
         description: Data structure containing unprocessed information about enrollments.
+        columns:
+          - name: _id
+            description: Unique identifier for each enrollment record.
+            data_type: numeric
+          - name: end
+            description: End date of the enrollment period.
+            data_type: character varying
+          - name: data
+            description: JSONB column containing raw enrollment data.
+            data_type: jsonb
+          - name: endtime
+            description: The timestamp indicating when the enrollment period ends.
+            data_type: character varying
+          - name: _submission_time
+            description: Timestamp indicating when the enrollment data was submitted.
+            data_type: character varying
+          - name: _airbyte_raw_id
+            description: Unique identifier for raw data records in the enrollment dataset.
+            data_type: character varying
+          - name: _airbyte_extracted_at
+            description: Timestamp indicating when the data was extracted by Airbyte.
+            data_type: timestamp with time zone
+          - name: _airbyte_meta
+            description: >-
+              Metadata column containing Airbyte-specific information related to the data ingestion process.
+            data_type: jsonb
       - name: nonregular_use_tracking
         identifier: Daily_use_tracking
         description: System for tracking the usage that is not used on a regular basis.
+        columns:
+          - name: _id
+            description: Unique identifier for each record in the nonregular use tracking system.
+            data_type: numeric
+          - name: end
+            description: End date or time indicating when a specific usage event concluded.
+            data_type: character varying
+          - name: data
+            description: JSON data containing nonregular usage tracking information.
+            data_type: jsonb
+          - name: endtime
+            description: The time at which the nonregular usage event ended.
+            data_type: character varying
+          - name: _submission_time
+            description: The time when the survey response was submitted.
+            data_type: character varying
+          - name: _airbyte_raw_id
+            description: Unique identifier for raw data ingestion from Airbyte.
+            data_type: character varying
+          - name: _airbyte_extracted_at
+            description: Timestamp indicating when the data was extracted by Airbyte.
+            data_type: timestamp with time zone
+          - name: _airbyte_meta
+            description: >-
+              Metadata column storing additional information about the data record in JSONB format.
+            data_type: jsonb
       - name: staff_barcode
         identifier: Staff_barcode
         description: A barcode assigned to staff members for identification or tracking purposes.
+        columns:
+          - name: _id
+            description: Identifier for each staff barcode entry.
+            data_type: numeric
+          - name: end
+            description: End date or time associated with the staff barcode usage period.
+            data_type: character varying
+          - name: data
+            description: JSON data related to staff barcode information.
+            data_type: jsonb
+          - name: endtime
+            description: The time at which the staff barcode becomes inactive or expires.
+            data_type: character varying
+          - name: _submission_time
+            description: The timestamp when the staff barcode submission was recorded.
+            data_type: character varying
+          - name: _airbyte_raw_id
+            description: Placeholder for the raw ID of the Airbyte extraction.
+            data_type: character varying
+          - name: _airbyte_extracted_at
+            description: Timestamp indicating when the data was extracted by Airbyte.
+            data_type: timestamp with time zone
+          - name: _airbyte_meta
+            description: Metadata about the Airbyte synchronization process, stored in JSONB format.
+            data_type: jsonb
       - name: use_tracking
         identifier: Use_tracking
         description: System for tracking the usage
+        columns:
+          - name: _id
+            description: Unique identifier for each record in the use tracking system.
+            data_type: numeric
+          - name: end
+            description: End timestamp of the usage tracking period.
+            data_type: character varying
+          - name: data
+            description: JSON data related to usage tracking.
+            data_type: jsonb
+          - name: endtime
+            description: Time when the usage session ended.
+            data_type: character varying
+          - name: _submission_time
+            description: The time when the submission was recorded in the system.
+            data_type: character varying
+          - name: _airbyte_raw_id
+            description: Unique identifier for the raw data record in the source system.
+            data_type: character varying
+          - name: _airbyte_extracted_at
+            description: Timestamp indicating when the data was extracted by Airbyte.
+            data_type: timestamp with time zone
+          - name: _airbyte_meta
+            description: Metadata column containing Airbyte-specific information in JSONB format.
+            data_type: jsonb
       - name: facility_koboid_link
         identifier: Facility_KoboID_link
         description: A link between a facility and its corresponding ID in the KoboToolbox system.
+        columns:
+          - name: _id
+            description: Unique identifier for each record in the Facility_KoboID_link table.
+            data_type: numeric
+          - name: end
+            description: Timestamp indicating the end time of the data entry session.
+            data_type: character varying
+          - name: data
+            description: JSONB data containing details related to the facility's KoboToolbox ID link.
+            data_type: jsonb
+          - name: endtime
+            description: The timestamp indicating when the survey or data entry was completed.
+            data_type: character varying
+          - name: _submission_time
+            description: The timestamp when the submission was made in the KoboToolbox system.
+            data_type: character varying
+          - name: _airbyte_raw_id
+            description: Unique identifier for the raw data record from Airbyte.
+            data_type: character varying
+          - name: _airbyte_extracted_at
+            description: Timestamp indicating when the data was extracted by Airbyte.
+            data_type: timestamp with time zone
+          - name: _airbyte_meta
+            description: Metadata column containing Airbyte-specific information about the record.
+            data_type: jsonb
       - name: staffidlink
         identifier: staffIDlink
         description: A staff id link.
+        columns:
+          - name: _id
+            description: Unique identifier for the staff ID link.
+            data_type: numeric
+          - name: end
+            description: The end date indicating when the staff ID link ceases to be valid.
+            data_type: character varying
+          - name: data
+            description: A JSONB column storing additional data related to staff ID links.
+            data_type: jsonb
+          - name: endtime
+            description: The end time associated with a staff ID link record.
+            data_type: character varying
+          - name: _submission_time
+            description: Timestamp indicating when the submission was made.
+            data_type: character varying
+          - name: _airbyte_raw_id
+            description: Unique identifier for the raw data record from the Airbyte source integration.
+            data_type: character varying
+          - name: _airbyte_extracted_at
+            description: Timestamp indicating when the data was extracted by Airbyte.
+            data_type: timestamp with time zone
+          - name: _airbyte_meta
+            description: Metadata information related to the Airbyte data synchronization process.
+            data_type: jsonb
       - name: weeklyphoto
         identifier: Weekly_Photo
         description: raw weekly photo
+        columns:
+          - name: _id
+            description: Unique identifier for each record in the raw weekly photo data.
+            data_type: numeric
+          - name: end
+            description: Indicates the end date or time for the weekly photo period.
+            data_type: character varying
+          - name: data
+            description: Contains JSON data related to raw weekly photo submissions.
+            data_type: jsonb
+          - name: endtime
+            description: End time of the photo capture event, stored as a variable-length character string.
+            data_type: character varying
+          - name: _submission_time
+            description: The time when the submission was made.
+            data_type: character varying
+          - name: _airbyte_raw_id
+            description: Identifier for the raw Airbyte data record.
+            data_type: character varying
+          - name: _airbyte_extracted_at
+            description: Timestamp indicating when the data was extracted by Airbyte.
+            data_type: timestamp with time zone
+          - name: _airbyte_meta
+            description: Metadata column used by Airbyte for internal tracking and sync information.
+            data_type: jsonb
       - name: facility_cost
         identifier: Calculations
+        description: >-
+          This table contains calculated financial data for facilities, including costs per use in INR
+          and USD, quarterly totals, and average exchange rates. Additional metadata fields include raw
+          ID, extraction timestamp, and meta information for tracking data lineage.
+        columns:
+          - name: facility
+            description: Identifier for the facility associated with the calculated financial data.
+            data_type: character varying
+          - name: cost_per_use_inr
+            description: The cost per use in Indian Rupees (INR) for facility operations.
+            data_type: character varying
+          - name: cost_per_use_usd
+            description: Cost per use in USD for facility services.
+            data_type: character varying
+          - name: quarter_oct_dec_24
+            description: >-
+              Placeholder for financial data for the fourth quarter of 2024 (October to December).
+            data_type: character varying
+          - name: total_quarterly_inr
+            description: Quarterly total costs in Indian Rupees (INR) for the facility.
+            data_type: character varying
+          - name: total_quarterly_use
+            description: Total number of uses recorded for the facility in a quarter.
+            data_type: character varying
+          - name: avg_exchange_rate_quarter
+            description: Average exchange rate for the quarter, used in financial calculations.
+            data_type: character varying
+          - name: _airbyte_raw_id
+            description: >-
+              Raw ID from the Airbyte extraction process, used for tracking data lineage and source identification.
+            data_type: character varying
+          - name: _airbyte_extracted_at
+            description: Timestamp indicating when the data was extracted from the source system.
+            data_type: timestamp with time zone
+          - name: _airbyte_meta
+            description: >-
+              Contains metadata information for tracking data lineage, including extraction details and
+              source data attributes.
+            data_type: jsonb

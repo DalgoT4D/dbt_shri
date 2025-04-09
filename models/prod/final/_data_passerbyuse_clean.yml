@@ -1,0 +1,42 @@
+version: 2
+models:
+  - name: data_passerbyuse_clean
+    columns:
+      - name: _id
+        description: Unique identifier for each record in the nonregular use tracking system.
+        data_type: text
+      - name: who
+        description: Identifier for the individual related to the event.
+        data_type: text
+      - name: child_girl_number
+        description: Number of child girls involved or observed.
+        data_type: integer
+      - name: child_boy_number
+        description: Number of child boys involved or observed.
+        data_type: integer
+      - name: passerby_woman_number
+        description: Number of passerby women involved or observed.
+        data_type: integer
+      - name: passerby_man_number
+        description: Number of passerby men involved or observed.
+        data_type: integer
+      - name: time_auto
+        description: Time extracted from the start time of the event.
+        data_type: time without time zone
+      - name: date_auto
+        description: Automatically derived date from submission or event start time.
+        data_type: date
+      - name: facility
+        description: Name of the facility associated with the event.
+        data_type: text
+      - name: highlow
+        description: High or low categorization of the event.
+        data_type: text
+      - name: highlow_other
+        description: Additional information if highlow is categorized as 'other'.
+        data_type: text
+    description: >-
+      Table for capturing cleaned nonregular use data, focusing on individuals and passerby involvement
+      at facilities. It tracks specific numbers of involved groups (children and passerby), along with
+      associated time, date, and facility details. Additional high/low categorization provides further
+      context on the events.

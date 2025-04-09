@@ -1,0 +1,58 @@
+version: 2
+models:
+  - name: staffidlink_normalized
+    description: Normalized data of StaffID Link
+    +schema: intermediate
+    columns:
+      - name: _airbyte_raw_id
+        description: The primary key for this table
+        tests:
+          - unique
+          - not_null
+
+        data_type: character varying
+      - name: _id
+        description: Unique identifier for the staff ID link.
+        data_type: text
+      - name: _xform_id_string
+        data_type: text
+      - name: staff_userid
+        data_type: text
+      - name: _submitted_by
+        data_type: text
+      - name: starttime
+        data_type: text
+      - name: _tags
+        data_type: text
+      - name: meta_deprecatedid
+        data_type: text
+      - name: _submission_time
+        description: Timestamp indicating when the submission was made.
+        data_type: text
+      - name: meta_rootuuid
+        data_type: text
+      - name: _validation_status
+        data_type: text
+      - name: staff_position
+        data_type: text
+      - name: _notes
+        data_type: text
+      - name: formhub_uuid
+        data_type: text
+      - name: _geolocation
+        data_type: text
+      - name: __version__
+        data_type: text
+      - name: _status
+        data_type: text
+      - name: meta_instancename
+        data_type: text
+      - name: meta_instanceid
+        data_type: text
+      - name: _uuid
+        data_type: text
+      - name: endtime
+        description: The end time associated with a staff ID link record.
+        data_type: text
+      - name: _attachments
+        data_type: text

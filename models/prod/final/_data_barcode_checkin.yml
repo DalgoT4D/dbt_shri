@@ -1,0 +1,31 @@
+version: 2
+models:
+  - name: data_barcode_checkin
+    columns:
+      - name: _id
+        description: Unique identifier for the staff ID link.
+        data_type: text
+      - name: userid
+        description: Unique identifier for the user linked to staff information.
+        data_type: text
+      - name: facility
+        description: Name or identifier of the facility associated with the enrollment data.
+        data_type: text
+      - name: time_auto
+        description: The time when an auto-generated action occurs for staff barcode check-ins.
+        data_type: time without time zone
+      - name: date_auto
+        description: >-
+          Timestamp for when an auto-generated action related to a barcode check-in is recorded.
+        data_type: date
+      - name: date_enrollment
+        description: Date of enrollment extracted from the form timestamp.
+        data_type: date
+      - name: position
+        description: The position held by the staff member within the organization.
+        data_type: text
+    description: >-
+      Table "data_barcode_checkin" provides a selection of key data fields from the "staff_barcode" table,
+      including unique identifiers, user and facility information, timestamps for enrollment and auto-generated
+      actions, and staff position details. This table is essential for tracking and managing staff barcode
+      check-ins within the facility.

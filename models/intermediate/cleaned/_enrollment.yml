@@ -1,0 +1,47 @@
+version: 2
+models:
+  - name: enrollment
+    columns:
+      - name: formtimestampformatted
+        description: Formatted timestamp of the form submission.
+        data_type: text
+      - name: _airbyte_raw_id
+        description: The primary key for this table
+        data_type: character varying
+      - name: _id
+        description: Unique identifier for each record in the Facility_KoboID_link table.
+        data_type: text
+      - name: dataid
+        data_type: text
+      - name: starttime
+        data_type: text
+      - name: gender
+        data_type: text
+      - name: endtime
+        description: The timestamp indicating when the survey or data entry was completed.
+        data_type: text
+      - name: id_num
+        data_type: text
+      - name: _submitted_by
+        data_type: text
+      - name: facility
+        data_type: text
+      - name: date_enrollment
+        description: Date of enrollment extracted from the form timestamp.
+        data_type: date
+      - name: submission_time
+        description: Timestamp when the enrollment data was submitted.
+        data_type: timestamp without time zone
+      - name: age_years
+        description: Age in years calculated from year of birth.
+        data_type: numeric
+      - name: yob
+        data_type: integer
+      - name: facility_updated
+        description: Updated facility name from the joined table.
+        data_type: text
+      - name: age_cat
+        description: Age category based on the age in years.
+        data_type: text
+    description: >-
+      Processed enrollment data with additional facility information and age categorization.

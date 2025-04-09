@@ -1,0 +1,50 @@
+version: 2
+models:
+  - name: user_data
+    columns:
+      - name: userid
+        description: Unique identifier for the user associated with the enrollment record.
+        data_type: text
+      - name: last_use_date
+        description: Date of the user's most recent interaction or activity.
+        data_type: date
+      - name: first_use_date
+        description: Date when the user first interacted with the system.
+        data_type: date
+      - name: n_by_id
+        description: Count of unique records associated with a specific user identifier.
+        data_type: bigint
+      - name: formtimestampformatted
+        description: Formatted timestamp of the form submission.
+        data_type: text
+      - name: yob
+        description: Year of birth of the enrolled individual.
+        data_type: integer
+      - name: gender
+        description: Gender of the enrolled individual.
+        data_type: text
+      - name: _submitted_by
+        description: Identifier of the user or system that submitted the enrollment data.
+        data_type: text
+      - name: facility
+        description: Name or identifier of the facility associated with the enrollment data.
+        data_type: text
+      - name: date_enrollment
+        description: Date of enrollment extracted from the form timestamp.
+        data_type: date
+      - name: age_years
+        description: Age in years calculated from year of birth.
+        data_type: numeric
+      - name: age_cat
+        description: Age category based on the age in years.
+        data_type: text
+      - name: days_since_enroll
+        description: Number of days since the user's enrollment date.
+        data_type: double precision
+      - name: avg_useperday
+        description: Average number of interactions per day since the user's enrollment.
+        data_type: double precision
+    description: >-
+      Aggregated user data table combining user interaction details and demographic information. It includes
+      the user's first and last use dates, enrollment details, and calculates average use per day since
+      enrollment.

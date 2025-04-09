@@ -1,0 +1,21 @@
+version: 2
+models:
+  - name: usetracking_dashboard_new
+    columns:
+      - name: date_auto
+        description: Date when the automated data entry or processing occurred.
+        data_type: date
+      - name: facility
+        description: Name or identifier of the facility associated with the enrollment data.
+        data_type: text
+      - name: user
+        description: Identifier for the user associated with facility interactions.
+        data_type: text
+      - name: use
+        description: >-
+          Total number of usage events at facilities, aggregating across genders and age groups.
+        data_type: bigint
+    description: >-
+      Aggregated user tracking data per facility and date, detailing the number of interactions by gender
+      and age groups. The table provides insights into facility usage patterns segmented by men, women,
+      girls, and boys.

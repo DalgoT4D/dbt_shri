@@ -1,0 +1,25 @@
+version: 2
+models:
+  - name: no_reports_data
+    tests:
+      - no_reports_data
+
+    description: >-
+      The "no_reports_data" table provides a comprehensive view of submission counts for facilities over
+      a series of dates. It generates a complete timeline for each facility, ensuring that each date within
+      the range is represented, even if no submissions were made on that day. The table excludes dates
+      with exactly two submissions, offering insights into reporting patterns and potential data gaps.
+    columns:
+      - name: facility
+        description: Name of the facility
+        data_type: text
+      - name: date
+        description: >-
+          Represents each date within the reporting timeline for facilities, ensuring inclusion even when
+          no submissions were made.
+        data_type: date
+      - name: submission_count
+        description: >-
+          Number of submissions recorded for each facility on a given date, excluding days with exactly
+          two submissions.
+        data_type: bigint

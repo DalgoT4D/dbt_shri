@@ -1,0 +1,60 @@
+version: 2
+models:
+  - name: nonregular_use_tracking
+    columns:
+      - name: who
+        description: Identifier for the individual related to the event.
+        data_type: text
+      - name: child_girl_number
+        description: Number of child girls involved or observed.
+        data_type: text
+      - name: passerby_woman_number
+        description: Number of passerby women involved or observed.
+        data_type: text
+      - name: passerby_man_number
+        description: Number of passerby men involved or observed.
+        data_type: text
+      - name: child_boy_number
+        description: Number of child boys involved or observed.
+        data_type: text
+      - name: date_auto
+        description: Automatically derived date from submission or event start time.
+        data_type: date
+      - name: time_auto
+        description: Time extracted from the start time of the event.
+        data_type: time without time zone
+      - name: highlow
+        description: High or low categorization of the event.
+        data_type: text
+      - name: highlow_other
+        description: Additional information if highlow is categorized as 'other'.
+        data_type: text
+      - name: _id
+        description: Unique identifier for each record in the nonregular use tracking system.
+        data_type: text
+      - name: starttime
+        data_type: text
+      - name: meta_deprecatedid
+        data_type: text
+      - name: begin_group_aypvm5n7n_highlow_other
+        data_type: text
+      - name: being_who_date
+        data_type: text
+      - name: begin_group_aypvm5n7n_problems
+        data_type: text
+      - name: begin_group_aypvm5n7n_highlow
+        data_type: text
+      - name: begin_group_zqrnjcs3k_name_timestamp
+        data_type: text
+      - name: begin_group_zqrnjcs3k_name_timestamp_formatted
+        data_type: text
+      - name: meta_rootuuid
+        data_type: text
+      - name: being_who_time
+        data_type: text
+      - name: _submitted_by
+        data_type: text
+      - name: facility
+        description: Name of the facility associated with the event.
+        data_type: text
+    description: Model for tracking nonregular use data with facility linkage.

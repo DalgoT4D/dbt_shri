@@ -1,0 +1,35 @@
+version: 2
+models:
+  - name: usetracking_daily_report
+    columns:
+      - name: total_use
+        description: >-
+          Total number of user interactions, aggregating both regular and nonregular usage at facilities
+          per facility and day.
+        data_type: bigint
+      - name: regular_users
+        description: Total number of regular users involved or observed in usage events at facilities.
+        data_type: bigint
+      - name: non_regular_users
+        description: Number of non-regular users involved or observed in usage events at facilities.
+        data_type: bigint
+      - name: men
+        description: Number of men involved or observed in usage events at facilities.
+        data_type: bigint
+      - name: women
+        description: Number of women involved or observed in usage events at facilities.
+        data_type: bigint
+      - name: boys
+        description: Number of boys involved or observed in facility usage events.
+        data_type: bigint
+      - name: girls
+        description: Number of girls involved or observed in usage events at facilities.
+        data_type: bigint
+      - name: highlow_usage_level
+        description: >-
+          Categorization of the event usage level as either high or low, based on the prevalence of events.
+        data_type: text
+    description: >-
+      Aggregates daily user interaction data at facilities, distinguishing between regular and non-regular
+      users across gender and age groups. Includes total usage, specific counts for men, women, boys,
+      and girls, and categorizes usage levels.

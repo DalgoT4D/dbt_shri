@@ -1,0 +1,490 @@
+version: 2
+models:
+  - name: daily_issue_form
+    description: Transformed data from daily issue submissions.
+    columns:
+      - name: other_group_outage_other
+        description: Coalesced value for other group outage, defaulting to '0'.
+        data_type: text
+      - name: date_auto
+        description: The auto-generated or fallback date.
+        tests:
+          - not_null
+
+
+        data_type: date
+      - name: time_auto
+        description: The auto-generated or fallback time.
+        tests:
+          - not_null
+
+        data_type: time without time zone
+      - name: _id
+        description: Unique identifier for each record in the Facility_KoboID_link table.
+        data_type: text
+      - name: cleanliness_group_outage_drainblock
+        data_type: text
+      - name: infrastructure_group_gate_fixed
+        data_type: text
+      - name: infrastructure_group_sides_floor
+        data_type: text
+      - name: plumbing_group_stalls_pipe
+        data_type: text
+      - name: infrastructure_group_outage_roof_full
+        data_type: text
+      - name: infrastructure_group_outage_roof
+        data_type: text
+      - name: technology_group_outage_tablet_hours
+        data_type: text
+      - name: cleanliness_group_stalls_basinclean
+        data_type: text
+      - name: infrastructure_group_outage_floor_fullfacility
+        data_type: text
+      - name: infrastructure_group_outage_painting_hours
+        data_type: text
+      - name: technology_group_internet_fixed
+        data_type: text
+      - name: starttime
+        data_type: text
+      - name: technology_group_stalls_charger
+        data_type: text
+      - name: plumbing_group_outage_tools_fullfacility
+        data_type: text
+      - name: electrical_group_outage_stabilizer
+        data_type: text
+      - name: technology_group_outage_pcmachine
+        data_type: text
+      - name: infrastructure_group_stalls_roof
+        data_type: text
+      - name: electrical_group_outage_stabilizer_hours
+        data_type: text
+      - name: other_group_other_fixed
+        data_type: text
+      - name: cleanliness_group_stalls_odor
+        data_type: text
+      - name: cleanliness_group_stalls_wallclean
+        data_type: text
+      - name: cleanliness_group_outage_wallclean_full
+        data_type: text
+      - name: infrastructure_group_outage_painting
+        data_type: text
+      - name: cleanliness_group_outage_wallclean_hours
+        data_type: text
+      - name: electrical_group_stalls_bulb
+        data_type: text
+      - name: technology_group_outage_internet_hours
+        data_type: text
+      - name: technology_group_sides_internet
+        data_type: text
+      - name: supplies_group_sides_jug
+        data_type: text
+      - name: infrastructure_group_outage_floor_hours
+        data_type: text
+      - name: infrastructure_group_sides_wall
+        data_type: text
+      - name: cleanliness_group_outage_panclean_fullfacility
+        data_type: text
+      - name: cleanliness_group_outage_odor_fullfacility
+        data_type: text
+      - name: technology_group_outage_tablet_fullfacility
+        data_type: text
+      - name: electrical_group_stalls_switch
+        data_type: text
+      - name: cleanliness_group_outage_panclean_hours
+        data_type: text
+      - name: supplies_group_outage_glove_hours
+        data_type: text
+      - name: infrastructure_group_outage_painting_full
+        data_type: text
+      - name: infrastructure_group_stalls_floor
+        data_type: text
+      - name: cleanliness_group_outage_drainblock_fullfacility
+        data_type: text
+      - name: timestamp
+        data_type: text
+      - name: plumbing_group_outage_toilettap_full
+        data_type: text
+      - name: supplies_group_stalls_jug
+        data_type: text
+      - name: electrical_group_sides_switch
+        data_type: text
+      - name: infrastructure_group_outage_pan_fullfacility
+        data_type: text
+      - name: other_group_stalls_other
+        data_type: text
+      - name: endtime
+        description: The timestamp indicating when the survey or data entry was completed.
+        data_type: text
+      - name: supplies_group_outage_jug
+        data_type: text
+      - name: electrical_group_outage_bulb_hours
+        data_type: text
+      - name: electrical_group_outage_switch_full
+        data_type: text
+      - name: electrical_group_wiring_fixed
+        data_type: text
+      - name: electrical_group_boring_fixed
+        data_type: text
+      - name: supplies_group_outage_glove_fullfacility
+        data_type: text
+      - name: cleanliness_group_outage_pan
+        data_type: text
+      - name: supplies_group_outage_harpicetc
+        data_type: text
+      - name: infrastructure_group_wall_fixed
+        data_type: text
+      - name: supplies_group_outage_glove
+        data_type: text
+      - name: cleanliness_group_sides_panclean
+        data_type: text
+      - name: plumbing_group_outage_tools_full
+        data_type: text
+      - name: infrastructure_group_outage_wall_full
+        data_type: text
+      - name: infrastructure_group_outage_floor_full
+        data_type: text
+      - name: cleanliness_group_basinclean_fixed
+        data_type: text
+      - name: infrastructure_group_stalls_gate
+        data_type: text
+      - name: cleanliness_group_outage_drainblock_full
+        data_type: text
+      - name: supplies_group_glove_fixed
+        data_type: text
+      - name: cleanliness_group_outage_basinclean_hours
+        data_type: text
+      - name: plumbing_group_basintap_fixed
+        data_type: text
+      - name: plumbing_group_stalls_tools
+        data_type: text
+      - name: electrical_group_sides_wiring
+        data_type: text
+      - name: technology_group_stalls_tablet
+        data_type: text
+      - name: time
+        data_type: text
+      - name: technology_group_outage_charger_full
+        data_type: text
+      - name: electrical_group_outage_wiring_fullfacility
+        data_type: text
+      - name: formhub_uuid
+        data_type: text
+      - name: other_group_outage_other_hours
+        data_type: text
+      - name: cleanliness_group_odor_fixed
+        data_type: text
+      - name: plumbing_group_outage_socket_full
+        data_type: text
+      - name: cleanliness_group_outage_odor
+        data_type: text
+      - name: supplies_group_sides_harpicetc
+        data_type: text
+      - name: technology_group_stalls_internet
+        data_type: text
+      - name: plumbing_group_outage_basintap_fullfacility
+        data_type: text
+      - name: infrastructure_group_outage_gate_fullfacility
+        data_type: text
+      - name: plumbing_group_socket_fixed
+        data_type: text
+      - name: electrical_group_sides_boring
+        data_type: text
+      - name: electrical_group_outage_bulb_fullfacility
+        data_type: text
+      - name: electrical_group_outage_switch_fullfacility
+        data_type: text
+      - name: infrastructure_group_outage_wall
+        data_type: text
+      - name: electrical_group_outage_bulb_full
+        data_type: text
+      - name: technology_group_tablet_fixed
+        data_type: text
+      - name: infrastructure_group_floor_fixed
+        data_type: text
+      - name: technology_group_outage_tablet
+        data_type: text
+      - name: technology_group_outage_tablet_full
+        data_type: text
+      - name: supplies_group_outage_soap_fullfacility
+        data_type: text
+      - name: supplies_group_sides_dustbin
+        data_type: text
+      - name: cleanliness_group_outage_basinclean_full
+        data_type: text
+      - name: plumbing_group_outage_pipe_hours
+        data_type: text
+      - name: plumbing_group_outage_toilettap_hours
+        data_type: text
+      - name: infrastructure_group_outage_gate_hours
+        data_type: text
+      - name: plumbing_group_tools_fixed
+        data_type: text
+      - name: infrastructure_group_outage_gate
+        data_type: text
+      - name: technology_group_outage_charger
+        data_type: text
+      - name: cleanliness_group_outage_basinclean_fullfacility
+        data_type: text
+      - name: supplies_group_soap_fixed
+        data_type: text
+      - name: technology_group_sides_charger
+        data_type: text
+      - name: supplies_group_outage_dustbin
+        data_type: text
+      - name: electrical_group_outage_wiring_hours
+        data_type: text
+      - name: infrastructure_group_sides_gate
+        data_type: text
+      - name: infrastructure_group_outage_painting_fullfacility
+        data_type: text
+      - name: technology_group_pcmachine_fixed
+        data_type: text
+      - name: plumbing_group_sides_basintap
+        data_type: text
+      - name: cleanliness_group_outage_pan_full
+        data_type: text
+      - name: _uuid
+        data_type: text
+      - name: infrastructure_group_outage_roof_fullfacility
+        data_type: text
+      - name: technology_group_outage_charger_hours
+        data_type: text
+      - name: plumbing_group_pipe_fixed
+        data_type: text
+      - name: plumbing_group_stalls_socket
+        data_type: text
+      - name: plumbing_group_outage_basintap
+        data_type: text
+      - name: cleanliness_group_sides_drainblock
+        data_type: text
+      - name: electrical_group_sides_bulb
+        data_type: text
+      - name: electrical_group_outage_boring_fullfacility
+        data_type: text
+      - name: cleanliness_group_drainblock_fixed
+        data_type: text
+      - name: technology_group_outage_charger_fullfacility
+        data_type: text
+      - name: electrical_group_outage_boring
+        data_type: text
+      - name: supplies_group_outage_jug_hours
+        data_type: text
+      - name: supplies_group_harpicetc_fixed
+        data_type: text
+      - name: supplies_group_outage_harpicetc_hours
+        data_type: text
+      - name: _submission_time
+        description: The timestamp when the submission was made in the KoboToolbox system.
+        data_type: text
+      - name: cleanliness_group_sides_odor
+        data_type: text
+      - name: meta_rootuuid
+        data_type: text
+      - name: electrical_group_bulb_fixed
+        data_type: text
+      - name: infrastructure_group_sides_painting
+        data_type: text
+      - name: technology_group_outage_internet_full
+        data_type: text
+      - name: electrical_group_switch_fixed
+        data_type: text
+      - name: supplies_group_stalls_dustbin
+        data_type: text
+      - name: technology_group_charger_fixed
+        data_type: text
+      - name: infrastructure_group_outage_pan_full
+        data_type: text
+      - name: supplies_group_outage_jug_fullfacility
+        data_type: text
+      - name: plumbing_group_outage_toilettap
+        data_type: text
+      - name: supplies_group_stalls_glove
+        data_type: text
+      - name: infrastructure_group_stalls_pan
+        data_type: text
+      - name: supplies_group_dustbin_fixed
+        data_type: text
+      - name: infrastructure_group_pan_fixed
+        data_type: text
+      - name: electrical_group_outage_stabilizer_fullfacility
+        data_type: text
+      - name: infrastructure_group_sides_roof
+        data_type: text
+      - name: plumbing_group_outage_pipe_fullfacility
+        data_type: text
+      - name: other_group_sides_other
+        data_type: text
+      - name: plumbing_group_sides_pipe
+        data_type: text
+      - name: infrastructure_group_stalls_wall
+        data_type: text
+      - name: other_group_outage_other_full
+        data_type: text
+      - name: plumbing_group_outage_basintap_hours
+        data_type: text
+      - name: electrical_group_outage_bulb
+        data_type: text
+      - name: plumbing_group_outage_tools_hours
+        data_type: text
+      - name: electrical_group_stalls_boring
+        data_type: text
+      - name: electrical_group_outage_switch_hours
+        data_type: text
+      - name: cleanliness_group_stalls_panclean
+        data_type: text
+      - name: plumbing_group_outage_socket_hours
+        data_type: text
+      - name: cleanliness_group_sides_wallclean
+        data_type: text
+      - name: plumbing_group_outage_basintap_full
+        data_type: text
+      - name: meta_instanceid
+        data_type: text
+      - name: infrastructure_group_sides_pan
+        data_type: text
+      - name: cleanliness_group_wallclean_fixed
+        data_type: text
+      - name: supplies_group_jug_fixed
+        data_type: text
+      - name: shift_type
+        data_type: text
+      - name: supplies_group_stalls_harpicetc
+        data_type: text
+      - name: date
+        data_type: text
+      - name: plumbing_group_outage_pipe
+        data_type: text
+      - name: plumbing_group_outage_pipe_full
+        data_type: text
+      - name: plumbing_group_outage_toilettap_fullfacility
+        data_type: text
+      - name: technology_group_outage_internet
+        data_type: text
+      - name: cleanliness_group_stalls_drainblock
+        data_type: text
+      - name: cleanliness_group_outage_drainblock_hours
+        data_type: text
+      - name: minorissue_type
+        data_type: text
+      - name: _attachments
+        data_type: text
+      - name: supplies_group_sides_soap
+        data_type: text
+      - name: infrastructure_group_outage_wall_hours
+        data_type: text
+      - name: electrical_group_outage_switch
+        data_type: text
+      - name: electrical_group_outage_boring_hours
+        data_type: text
+      - name: infrastructure_group_outage_gate_full
+        data_type: text
+      - name: cleanliness_group_outage_odor_full
+        data_type: text
+      - name: electrical_group_stabilizer_fixed
+        data_type: text
+      - name: cleanliness_group_outage_pan_hours
+        data_type: text
+      - name: plumbing_group_outage_socket_fullfacility
+        data_type: text
+      - name: _submitted_by
+        data_type: text
+      - name: plumbing_group_outage_tools
+        data_type: text
+      - name: plumbing_group_outage_socket
+        data_type: text
+      - name: supplies_group_outage_dustbin_hours
+        data_type: text
+      - name: electrical_group_outage_wiring
+        data_type: text
+      - name: supplies_group_outage_soap
+        data_type: text
+      - name: supplies_group_outage_dustbin_full
+        data_type: text
+      - name: plumbing_group_sides_toilettap
+        data_type: text
+      - name: infrastructure_group_outage_wall_fullfacility
+        data_type: text
+      - name: cleanliness_group_outage_panclean
+        data_type: text
+      - name: supplies_group_outage_harpicetc_full
+        data_type: text
+      - name: infrastructure_group_roof_fixed
+        data_type: text
+      - name: supplies_group_outage_glove_full
+        data_type: text
+      - name: cleanliness_group_sides_basinclean
+        data_type: text
+      - name: infrastructure_group_outage_pan
+        data_type: text
+      - name: electrical_group_stalls_wiring
+        data_type: text
+      - name: cleanliness_group_outage_wallclean_fullfacility
+        data_type: text
+      - name: infrastructure_group_outage_pan_hours
+        data_type: text
+      - name: supplies_group_sides_glove
+        data_type: text
+      - name: timestamp_formatted
+        data_type: text
+      - name: technology_group_outage_internet_fullfacility
+        data_type: text
+      - name: supplies_group_outage_harpicetc_fullfacility
+        data_type: text
+      - name: infrastructure_group_outage_floor
+        data_type: text
+      - name: supplies_group_outage_dustbin_fullfacility
+        data_type: text
+      - name: infrastructure_group_painting_fixed
+        data_type: text
+      - name: plumbing_group_stalls_toilettap
+        data_type: text
+      - name: other_group_outage_other_fullfacility
+        data_type: text
+      - name: __version__
+        data_type: text
+      - name: supplies_group_outage_jug_full
+        data_type: text
+      - name: cleanliness_group_outage_panclean_full
+        data_type: text
+      - name: supplies_group_outage_soap_full
+        data_type: text
+      - name: infrastructure_group_stalls_painting
+        data_type: text
+      - name: cleanliness_group_pan_fixed
+        data_type: text
+      - name: cleanliness_group_outage_wallclean
+        data_type: text
+      - name: plumbing_group_toilettap_fixed
+        data_type: text
+      - name: cleanliness_group_outage_basinclean
+        data_type: text
+      - name: cleanliness_group_panclean_fixed
+        data_type: text
+      - name: plumbing_group_sides_socket
+        data_type: text
+      - name: infrastructure_group_outage_roof_hours
+        data_type: text
+      - name: plumbing_group_sides_tools
+        data_type: text
+      - name: cleanliness_group_outage_odor_hours
+        data_type: text
+      - name: electrical_group_outage_boring_full
+        data_type: text
+      - name: supplies_group_stalls_soap
+        data_type: text
+      - name: technology_group_sides_tablet
+        data_type: text
+      - name: electrical_group_outage_stabilizer_full
+        data_type: text
+      - name: electrical_group_outage_wiring_full
+        data_type: text
+      - name: plumbing_group_stalls_basintap
+        data_type: text
+      - name: supplies_group_outage_soap_hours
+        data_type: text
+      - name: facilityname
+        description: Name of the facility associated with the record.
+        data_type: text
+      - name: min_date_auto
+        description: Minimum date_auto for each facility.
+        data_type: date

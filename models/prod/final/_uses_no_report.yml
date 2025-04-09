@@ -1,0 +1,17 @@
+version: 2
+models:
+  - name: uses_no_report
+    description: Describes the usage of reports without actual reports generated.
+    tests:
+      - uses_no_report
+    columns:
+      - name: date_auto
+        description: The auto-generated date when the report should have been used.
+        tests:
+          - not_null
+        data_type: date
+      - name: facility
+        description: The facility associated with the report usage.
+        tests:
+          - not_null
+        data_type: text

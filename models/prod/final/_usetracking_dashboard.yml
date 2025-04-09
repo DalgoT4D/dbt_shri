@@ -1,0 +1,53 @@
+version: 2
+models:
+  - name: usetracking_dashboard
+    columns:
+      - name: facility
+        description: Name or identifier of the facility associated with the enrollment data.
+        data_type: text
+      - name: date_auto
+        description: Date when the automated data entry or processing occurred.
+        data_type: date
+      - name: men_regular_number
+        description: Number of men involved or observed in regular use events at facilities.
+        data_type: bigint
+      - name: women_regular_number
+        description: Number of women involved or observed in regular use events at facilities.
+        data_type: bigint
+      - name: girl_number
+        description: Number of girls involved or observed in nonregular use events at facilities.
+        data_type: bigint
+      - name: boy_number
+        description: Number of boys involved or observed at the facility.
+        data_type: bigint
+      - name: woman_number
+        description: Number of women involved or observed in the event.
+        data_type: bigint
+      - name: man_number
+        description: Number of men involved or observed in nonregular use events at facilities.
+        data_type: bigint
+      - name: women_use
+        description: Number of women involved or observed in facility usage events.
+        data_type: bigint
+      - name: girls_use
+        description: Number of girl users involved or observed in usage events at facilities.
+        data_type: bigint
+      - name: men_use
+        description: Number of men involved or observed in usage events at facilities.
+        data_type: bigint
+      - name: boys_use
+        description: Number of boys involved or observed in facility usage events.
+        data_type: bigint
+      - name: highlow_usage_level
+        description: >-
+          Categorization of the event usage level as either high or low, based on the prevalence of events.
+        data_type: text
+      - name: total_use
+        description: >-
+          Total number of user interactions, aggregating both regular and nonregular usage at facilities
+          per facility and day.
+        data_type: bigint
+    description: >-
+      Aggregated usage data focusing on non-null dates, combining regular and nonregular user interactions
+      at facilities. The table includes user counts across genders and age groups, providing total usage
+      per facility and day.
