@@ -63,7 +63,7 @@ jobs:
           POSTGRES_DBNAME: ${{ secrets.POSTGRES_DBNAME }}
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          POSTGRES_HOST: 127.0.0.1 # Use localhost since the SSH tunnel forwards the port
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
           DBT_PROFILES_DIR: /home/runner/.dbt
 
       # Step 7: Benchmark models using sqlfluff

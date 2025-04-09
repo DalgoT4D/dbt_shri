@@ -37,13 +37,7 @@ models:
 # as tables. These settings can be overridden in the individual model files
 # using the `{{ config(...) }}` macro.
 
-tests:
-  <resource-path>:
-    +fail_calc: <string>
-    +limit: <integer>
-    +severity: error | warn
-    +error_if: <string>
-    +warn_if: <string>
-    +store_failures: true | false
-    +where: <string>
+# tests:
+#     +store_failures: true 
+#     +limit: 5
 
