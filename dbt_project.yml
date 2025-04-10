@@ -37,7 +37,7 @@ models:
 # as tables. These settings can be overridden in the individual model files
 # using the `{{ config(...) }}` macro.
 
-# tests:
-#     +store_failures: true 
-#     +limit: 5
+tests:
+    +store_failures: true 
+    +limit: 5
 
