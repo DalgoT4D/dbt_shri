@@ -1,0 +1,34 @@
+version: 2
+models:
+  - name: enrollment_gender_nodup
+    columns:
+      - name: formtimestampformatted
+        description: Formatted timestamp of the form submission.
+        data_type: text
+      - name: yob
+        description: Year of birth of the enrolled individual.
+        data_type: integer
+      - name: gender
+        description: Gender of the enrolled individual.
+        data_type: text
+      - name: userid
+        description: Unique identifier for the user associated with the enrollment record.
+        data_type: text
+      - name: _submitted_by
+        description: Identifier of the user or system that submitted the enrollment data.
+        data_type: text
+      - name: facility
+        description: Name of the facility associated with the enrollment record.
+        data_type: text
+      - name: date_enrollment
+        description: Date of enrollment extracted from the form timestamp.
+        data_type: date
+      - name: age_years
+        description: Age in years calculated from year of birth.
+        data_type: numeric
+      - name: age_cat
+        description: Age category based on the age in years.
+        data_type: text
+    description: >-
+      Aggregated enrollment data providing insights into demographics, submission details, and facility
+      information. Includes formatted submission timestamps, user IDs, and age categorizations.

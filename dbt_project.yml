@@ -29,6 +29,7 @@ clean-targets:         # directories to be removed by `dbt clean`
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
 
 models:
+  +dbt-osmosis: "_{model}.yml"
   elementary:
     +schema: "elementary"
 
@@ -37,12 +38,6 @@ models:
 # using the `{{ config(...) }}` macro.
 
 tests:
-  <resource-path>:
-    +fail_calc: <string>
-    +limit: <integer>
-    +severity: error | warn
-    +error_if: <string>
-    +warn_if: <string>
-    +store_failures: true | false
-    +where: <string>
+    +store_failures: true 
+    +limit: 5
 

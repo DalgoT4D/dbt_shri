@@ -1,0 +1,23 @@
+version: 2
+models:
+  - name: staffidlink
+    columns:
+      - name: userid
+        description: Unique identifier for the user linked to staff information.
+        data_type: text
+      - name: position
+        description: The position held by the staff member within the organization.
+        data_type: text
+      - name: _airbyte_raw_id
+        description: The primary key for this table
+        data_type: character varying
+      - name: _id
+        description: Unique identifier for the staff ID link.
+        data_type: text
+      - name: meta_rootuuid
+        description: Unique identifier for the root metadata associated with the staff ID link.
+        data_type: text
+    description: >-
+      This table represents cleaned and processed data from the normalized StaffID Link model, focusing
+      on user identification and position details. It includes unique identifiers and key attributes necessary
+      for linking staff information.

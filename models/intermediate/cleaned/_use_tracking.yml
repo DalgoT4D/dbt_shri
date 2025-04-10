@@ -1,0 +1,36 @@
+version: 2
+models:
+  - name: use_tracking
+    columns:
+      - name: userid
+        description: Unique identifier for the user associated with the enrollment record.
+        data_type: text
+      - name: datetime_auto_day
+        description: >-
+          Day component extracted from the datetime value, representing the automatic day assignment.
+        data_type: text
+      - name: date_auto
+        description: Date when the automated data entry or processing occurred.
+        data_type: date
+      - name: _id
+        description: Unique identifier for each record in the use tracking system.
+        data_type: text
+      - name: _submitted_by
+        description: Identifier of the user or system that submitted the enrollment data.
+        data_type: text
+      - name: facility
+        description: Name or identifier of the facility associated with the enrollment data.
+        data_type: text
+      - name: yob
+        description: Year of birth of the enrolled individual.
+        data_type: integer
+      - name: gender
+        description: Gender of the enrolled individual.
+        data_type: text
+      - name: date_enrollment
+        description: Date of enrollment extracted from the form timestamp.
+        data_type: date
+    description: >-
+      The "use_tracking" table aggregates and joins data from normalized use tracking, facility Kobo ID
+      links, and enrollment demographics. It captures user interactions, facility details, and enrollment
+      information, providing a comprehensive view of user activities and demographics across systems.

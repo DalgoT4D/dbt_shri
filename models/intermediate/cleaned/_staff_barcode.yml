@@ -1,0 +1,52 @@
+version: 2
+models:
+  - name: staff_barcode
+    columns:
+      - name: userid
+        description: Unique identifier for the user linked to staff information.
+        data_type: text
+      - name: nametimestampformatted
+        description: >-
+          Formatted timestamp indicating when the staff barcode information was processed for tracking
+          and analysis.
+        data_type: text
+      - name: datetime_auto_day
+        description: Text representation of the auto-generated day from the datetime value.
+        data_type: text
+      - name: date_auto
+        description: The date when the data was automatically recorded or processed.
+        data_type: date
+      - name: end
+        description: End date or time associated with the staff barcode usage period.
+        data_type: text
+      - name: endtime
+        description: The time at which the staff barcode becomes inactive or expires.
+        data_type: text
+      - name: _id
+        description: Unique identifier for the staff ID link.
+        data_type: text
+      - name: meta_deprecatedid
+        description: Placeholder for metadata deprecated ID.
+        data_type: text
+      - name: meta_rootuuid
+        description: Unique identifier for the root metadata associated with the staff ID link.
+        data_type: text
+      - name: _submission_time
+        description: The timestamp when the staff barcode submission was recorded.
+        data_type: text
+      - name: _submitted_by
+        description: Identifier of the user or system that submitted the enrollment data.
+        data_type: text
+      - name: facility
+        description: Name or identifier of the facility associated with the enrollment data.
+        data_type: text
+      - name: date_enrollment
+        description: Date of enrollment extracted from the form timestamp.
+        data_type: date
+      - name: position
+        description: The position held by the staff member within the organization.
+        data_type: text
+    description: >-
+      This table contains cleaned and integrated staff barcode data, linking it with facility and enrollment
+      information. It includes user identification, timestamps, and positional details, ensuring comprehensive
+      tracking and analysis of staff engagement and demographics within the organization.

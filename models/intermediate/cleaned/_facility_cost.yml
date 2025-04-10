@@ -1,0 +1,14 @@
+version: 2
+models:
+  - name: facility_cost
+    description: cost shouldn't be null
+    +schema: intermediate_cleaned
+    columns:
+      - name: totals_inr
+        description: quarterly spent on particular facility
+        tests:
+          - not_null
+        data_type: character varying
+      - name: facility
+        description: Identifier for the facility associated with the calculated financial data.
+        data_type: character varying

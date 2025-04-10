@@ -1,0 +1,60 @@
+version: 2
+models:
+  - name: facility_koboid_link_normalized
+    description: Normalized data of Facility Kobo ID Link
+    +schema: intermediate
+
+    columns:
+      - name: _airbyte_raw_id
+        description: Unique identifier for the raw data record from Airbyte.
+        data_type: character varying
+      - name: _id
+        description: Unique identifier for each record in the Facility_KoboID_link table.
+        data_type: text
+      - name: kobo_username
+        data_type: text
+      - name: start
+        data_type: text
+      - name: starttime
+        data_type: text
+      - name: meta_deprecatedid
+        data_type: text
+      - name: endtime
+        description: The timestamp indicating when the survey or data entry was completed.
+        data_type: text
+      - name: _validation_status
+        data_type: text
+      - name: end
+        description: Timestamp indicating the end time of the data entry session.
+        data_type: text
+      - name: formhub_uuid
+        data_type: text
+      - name: meta_instancename
+        data_type: text
+      - name: _uuid
+        data_type: text
+      - name: _xform_id_string
+        data_type: text
+      - name: _tags
+        data_type: text
+      - name: _submission_time
+        description: The timestamp when the submission was made in the KoboToolbox system.
+        data_type: text
+      - name: meta_rootuuid
+        data_type: text
+      - name: _geolocation
+        data_type: text
+      - name: facilityname
+        data_type: text
+      - name: _status
+        data_type: text
+      - name: meta_instanceid
+        data_type: text
+      - name: _attachments
+        data_type: text
+      - name: _submitted_by
+        data_type: text
+      - name: _notes
+        data_type: text
+      - name: __version__
+        data_type: text

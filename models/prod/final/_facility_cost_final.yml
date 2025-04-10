@@ -1,0 +1,28 @@
+version: 2
+models:
+  - name: facility_cost_final
+    columns:
+      - name: facility
+        description: Name or identifier of the facility associated with the enrollment data.
+        data_type: text
+      - name: total_use
+        description: >-
+          Total number of user interactions, aggregating both regular and nonregular usage at facilities
+          per facility and day.
+        data_type: numeric
+      - name: totals_inr
+        description: quarterly spent on particular facility
+        data_type: character varying
+      - name: inr_per_use
+        description: >-
+          Cost per use in INR, derived from total costs and usage data for the facility over a 3-month
+          period.
+        data_type: numeric
+      - name: usd_per_use
+        description: Cost per use of a facility, calculated in USD.
+        data_type: numeric
+    description: >-
+      Aggregated facility usage and cost data for a 3-month period, including total usage per facility,
+      total costs in INR, and calculated cost per use in both INR and USD. The table combines usage data
+      from the usetracking_dashboard with financial data from facility_cost, providing insights into facility-specific
+      usage efficiency and cost management.

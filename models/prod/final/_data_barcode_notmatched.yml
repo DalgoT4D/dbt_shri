@@ -1,0 +1,25 @@
+version: 2
+models:
+  - name: data_barcode_notmatched
+    columns:
+      - name: userid
+        description: Unique identifier for the user linked to staff information.
+        data_type: text
+      - name: position
+        description: The position held by the staff member within the organization.
+        data_type: text
+      - name: facility
+        description: Name or identifier of the facility associated with the enrollment data.
+        data_type: text
+      - name: date_auto
+        description: Auto-generated date for ordering records in descending order.
+        data_type: date
+      - name: time_auto
+        description: >-
+          The time when the data entry was automatically recorded without a specified time zone.
+        data_type: time without time zone
+    description: >-
+      This table contains records of staff barcode data where the position is not specified. It includes
+      user identifiers, facility details, and timestamps, focusing on instances where position information
+      is missing. The data is ordered by the auto-generated date in descending order for analysis and
+      tracking purposes.

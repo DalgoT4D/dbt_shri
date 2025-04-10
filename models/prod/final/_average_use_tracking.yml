@@ -1,0 +1,24 @@
+version: 2
+models:
+  - name: average_use_tracking
+    columns:
+      - name: facility
+        description: Name or identifier of the facility associated with the enrollment data.
+        data_type: text
+      - name: total_use
+        description: >-
+          Total number of user interactions, aggregating both regular and nonregular usage at facilities
+          per facility and day.
+        data_type: numeric
+      - name: days_range
+        description: Number of days within the specified date range for facility usage tracking.
+        data_type: integer
+      - name: average_use_per
+        description: >-
+          Average usage per facility, calculated over specified date ranges, capturing typical daily user
+          interactions.
+        data_type: numeric
+    description: >-
+      Aggregated data on facility usage tracking, calculating total and average usage per facility over
+      specified date ranges. The table focuses on facilities with non-null usage data, capturing total
+      user interactions and average daily use across different facilities.

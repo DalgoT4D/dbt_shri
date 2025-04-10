@@ -1,0 +1,80 @@
+version: 2
+models:
+  - name: enrollment_normalized
+    description: Normalized data of Raw Enrollment Form
+    +schema: intermediate
+    columns:
+      - name: _airbyte_raw_id
+        description: The primary key for this table
+        tests:
+          - unique
+          - not_null
+
+        data_type: character varying
+      - name: _id
+        description: Unique identifier for each enrollment record.
+        data_type: text
+      - name: dataid
+        data_type: text
+      - name: starttime
+        data_type: text
+      - name: meta_deprecatedid
+        data_type: text
+      - name: firstname
+        data_type: text
+      - name: gender
+        data_type: text
+      - name: mothername
+        data_type: text
+      - name: endtime
+        description: The timestamp indicating when the enrollment period ends.
+        data_type: text
+      - name: form_timestamp_formatted
+        data_type: text
+      - name: _validation_status
+        data_type: text
+      - name: form_timestamp
+        data_type: text
+      - name: formhub_uuid
+        data_type: text
+      - name: _uuid
+        data_type: text
+      - name: firstname_c
+        data_type: text
+      - name: _xform_id_string
+        data_type: text
+      - name: id_num
+        data_type: text
+      - name: yob
+        data_type: text
+      - name: _tags
+        data_type: text
+      - name: _submission_time
+        description: Timestamp indicating when the enrollment data was submitted.
+        data_type: text
+      - name: meta_rootuuid
+        data_type: text
+      - name: name_c
+        data_type: text
+      - name: _geolocation
+        data_type: text
+      - name: _status
+        data_type: text
+      - name: meta_instanceid
+        data_type: text
+      - name: lastname
+        data_type: text
+      - name: identification_c
+        data_type: text
+      - name: _attachments
+        data_type: text
+      - name: _submitted_by
+        data_type: text
+      - name: facility
+        data_type: text
+      - name: _notes
+        data_type: text
+      - name: lastname_c
+        data_type: text
+      - name: __version__
+        data_type: text

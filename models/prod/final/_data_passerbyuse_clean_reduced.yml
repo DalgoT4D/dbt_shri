@@ -1,0 +1,30 @@
+version: 2
+models:
+  - name: data_passerbyuse_clean_reduced
+    columns:
+      - name: facility
+        description: Name of the facility associated with the event.
+        data_type: text
+      - name: date_auto
+        description: Automatically derived date from submission or event start time.
+        data_type: date
+      - name: girl_number
+        description: Number of girls involved or observed in nonregular use events at facilities.
+        data_type: bigint
+      - name: boy_number
+        description: Number of boys involved or observed at the facility.
+        data_type: bigint
+      - name: woman_number
+        description: Number of women involved or observed in the event.
+        data_type: bigint
+      - name: man_number
+        description: Number of men involved or observed in nonregular use events at facilities.
+        data_type: bigint
+      - name: highlow_usage_level
+        description: >-
+          Categorization of the event usage level as either high or low, based on the prevalence of events.
+        data_type: text
+    description: >-
+      Table capturing aggregated nonregular use data at facilities, focusing on the sum of different groups
+      (girls, boys, women, men) involved by date and facility. It includes a high/low usage level categorization
+      based on the prevalence of events.

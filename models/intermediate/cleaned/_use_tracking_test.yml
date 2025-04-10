@@ -1,0 +1,21 @@
+version: 2
+models:
+  - name: use_tracking_test
+    columns:
+      - name: _id
+        description: Unique identifier for each record in the use tracking system.
+        data_type: text
+      - name: date_auto
+        description: The auto-generated date associated with the submission, used for filtering records.
+        data_type: date
+      - name: _submitted_by
+        description: The username of the individual who submitted the record.
+        data_type: text
+      - name: numberid
+        description: >-
+          Unique identifier for tracking use entries related to 'shriindia' submissions on '2021-11-07'.
+        data_type: text
+    description: >-
+      This table filters records from the use_tracking_normalized dataset, specifically selecting entries
+      submitted by 'shriindia' on the date '2021-11-07'. It includes columns such as unique identifiers,
+      submission details, and a normalized date field.

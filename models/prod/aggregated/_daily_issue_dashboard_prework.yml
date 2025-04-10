@@ -1,0 +1,50 @@
+version: 2
+models:
+  - name: daily_issue_dashboard_prework
+    columns:
+      - name: _id
+        description: Unique identifier for each record in the Facility_KoboID_link table.
+        data_type: text
+      - name: facility
+        description: Name of the facility
+        data_type: text
+      - name: date_auto
+        description: The auto-generated or fallback date.
+        data_type: date
+      - name: time_auto
+        description: The auto-generated or fallback time.
+        data_type: time without time zone
+      - name: shift_type
+        description: Type of shift during which the issue was reported
+        data_type: text
+      - name: minorissue_type
+        description: Type of minor issue reported
+        data_type: text
+      - name: category
+        description: Array of category values
+        data_type: text
+      - name: issue
+        description: Array of issue names
+        data_type: text
+      - name: full_facility
+        description: Full facility information for each issue
+        data_type: text
+      - name: stalls
+        description: Stalls information for each issue
+        data_type: text
+      - name: sides
+        description: Sides information for each issue
+        data_type: text
+      - name: full_partial
+        description: Indicates whether the issue affected a full day or only a partial day.
+        data_type: text
+      - name: num_hours
+        description: Number of hours related to the issue
+        data_type: text
+      - name: shutdown
+        description: Indicates if the issue caused a shutdown of operations.
+        data_type: text
+    description: >-
+      Aggregated data from daily issue submissions, including facility details, issue types, shift information,
+      and status indicators such as whether the issue was fixed or caused a shutdown. The data is organized
+      by date and includes both partial and full-day classifications.

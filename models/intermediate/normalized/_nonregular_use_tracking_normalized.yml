@@ -1,0 +1,94 @@
+version: 2
+models:
+  - name: nonregular_use_tracking_normalized
+    description: Normalized data of Nonregular Use Tracking Form
+    +schema: intermediate
+    columns:
+      - name: _airbyte_raw_id
+        description: The primary key for this table
+        tests:
+          - unique
+          - not_null
+
+        data_type: character varying
+      - name: _id
+        description: Unique identifier for each record in the nonregular use tracking system.
+        data_type: text
+      - name: starttime
+        data_type: text
+      - name: meta_deprecatedid
+        data_type: text
+      - name: begin_group_lky5gqsbu_child_girl_number
+        data_type: text
+      - name: begin_group_aypvm5n7n_highlow_other
+        data_type: text
+      - name: endtime
+        description: The time at which the nonregular usage event ended.
+        data_type: text
+      - name: being_who_date
+        data_type: text
+      - name: begin_group_aypvm5n7n_problems
+        data_type: text
+      - name: begin_group_aypvm5n7n_child_girl_number
+        data_type: text
+      - name: _validation_status
+        data_type: text
+      - name: begin_group_aypvm5n7n_highlow
+        data_type: text
+      - name: formhub_uuid
+        data_type: text
+      - name: begin_group_aypvm5n7n_passerby_women_number
+        data_type: text
+      - name: meta_instancename
+        data_type: text
+      - name: begin_group_b0spfk4xt_passerby_woman_number
+        data_type: text
+      - name: begin_group_zqrnjcs3k_name_timestamp
+        data_type: text
+      - name: _uuid
+        data_type: text
+      - name: _xform_id_string
+        data_type: text
+      - name: begin_group_zqrnjcs3k_name_timestamp_formatted
+        data_type: text
+      - name: _tags
+        data_type: text
+      - name: _submission_time
+        description: The time when the survey response was submitted.
+        data_type: text
+      - name: meta_rootuuid
+        data_type: text
+      - name: being_who_time
+        data_type: text
+      - name: _geolocation
+        data_type: text
+      - name: _version_
+        data_type: text
+      - name: begin_group_b0spfk4xt_child_girl_number
+        data_type: text
+      - name: _status
+        data_type: text
+      - name: meta_instanceid
+        data_type: text
+      - name: _attachments
+        data_type: text
+      - name: facility
+        data_type: text
+      - name: _submitted_by
+        data_type: text
+      - name: _notes
+        data_type: text
+      - name: begin_group_b0spfk4xt_passerby_man_number
+        data_type: text
+      - name: begin_group_aypvm5n7n_passerby_man_number
+        data_type: text
+      - name: begin_group_b0spfk4xt_child_boy_number
+        data_type: text
+      - name: __version__
+        data_type: text
+      - name: being_who_who
+        data_type: text
+      - name: begin_group_nrhrybak5_child_boy_number
+        data_type: text
+      - name: begin_group_aypvm5n7n_child_boy_number
+        data_type: text

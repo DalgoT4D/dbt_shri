@@ -1,0 +1,16 @@
+version: 2
+models:
+  - name: data_barcode_final
+    columns:
+      - name: date_auto
+        description: The date when the barcode check-in occurred, truncated to the day.
+        data_type: date
+      - name: time_auto
+        description: The automatically recorded time of barcode check-in, truncated to the minute.
+        data_type: text
+      - name: facility
+        description: Name of the facility where the barcode check-in occurred.
+        data_type: text
+    description: >-
+      This table provides a finalized view of barcode check-in data, specifically filtered for entries
+      with a 'Cleaning' position. It includes the date, time (truncated to the minute), and facility information.

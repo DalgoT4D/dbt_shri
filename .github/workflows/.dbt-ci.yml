@@ -1,0 +1,76 @@
+name: CI/CD
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+  push:
+    branches:
+      - '!main'
+
+jobs:
+  dbt_ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      # Step 2: Set up Python
+      - name: Set Up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      # Step 3: Install Python dependencies
+      - name: Install requirements
+        run: pip install -r requirements.txt  
+
+      # Step 4: Create profiles.yml
+      - name: Create profiles.yml
+        run: |
+          mkdir -p /home/runner/.dbt
+          echo "Creating profiles.yml..."
+          cat <<EOF > /home/runner/.dbt/profiles.yml
+          shri_dbt:
+            outputs:
+              dev:
+                dbname: "{{ env_var('POSTGRES_DBNAME') }}"
+                host: "{{ env_var('POSTGRES_HOST') }}"
+                password: "{{ env_var('POSTGRES_PASSWORD') }}"
+                port: 5432
+                schema: dev
+                threads: 8
+                type: postgres
+                user: "{{ env_var('POSTGRES_USER') }}"
+            target: dev
+          EOF
+          echo "profiles.yml created successfully."
+          ls -al /home/runner/.dbt
+
+      # Step 5: Install dbt dependencies
+      - name: Install dbt dependencies
+        run: dbt deps
+
+      # Step 6: Run dbt build
+      - name: dbt build
+        run: dbt build --full-refresh
+        env:
+          POSTGRES_DBNAME: ${{ secrets.POSTGRES_DBNAME }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          DBT_PROFILES_DIR: /home/runner/.dbt
+
+      # Step 7: Benchmark models using sqlfluff
+      - name: Benchmarking models
+        run: sqlfluff lint models --bench -f human
+        env:
+          POSTGRES_DBNAME: ${{ secrets.POSTGRES_DBNAME }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}

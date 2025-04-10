@@ -1,0 +1,84 @@
+version: 2
+models:
+  - name: use_tracking_normalized
+    description: Normalized data of Weekly Photo Form
+    +schema: intermediate
+    columns:
+      - name: _airbyte_raw_id
+        description: The primary key for this table
+        tests:
+          - unique
+          - not_null
+
+        data_type: character varying
+      - name: _id
+        description: Unique identifier for each record in the use tracking system.
+        data_type: text
+      - name: name_timestamp
+        data_type: text
+      - name: starttime
+        data_type: text
+      - name: repeat_numberid
+        data_type: text
+      - name: meta_deprecatedid
+        data_type: text
+      - name: begin_group_5xw8upowl_repeat_numberid
+        data_type: text
+      - name: begin_group_kthfwkunp_name_timestamp
+        data_type: text
+      - name: numberid
+        data_type: text
+      - name: endtime
+        description: Time when the usage session ended.
+        data_type: text
+      - name: time_and_date
+        data_type: text
+      - name: _validation_status
+        data_type: text
+      - name: formhub_uuid
+        data_type: text
+      - name: begin_group_ajqop6jqs_repeat_numberid
+        data_type: text
+      - name: meta_instancename
+        data_type: text
+      - name: name_timestamp_formatted
+        data_type: text
+      - name: _uuid
+        data_type: text
+      - name: _xform_id_string
+        data_type: text
+      - name: _tags
+        data_type: text
+      - name: _submission_time
+        description: The time when the submission was recorded in the system.
+        data_type: text
+      - name: meta_rootuuid
+        data_type: text
+      - name: begin_group_ajqop6jqs_name_timestamp_formatted
+        data_type: text
+      - name: begin_group_kthfwkunp_name_timestamp_formatted
+        data_type: text
+      - name: _geolocation
+        data_type: text
+      - name: _version_
+        data_type: text
+      - name: begin_group_5xw8upowl_name_timestamp_formatted
+        data_type: text
+      - name: _status
+        data_type: text
+      - name: meta_instanceid
+        data_type: text
+      - name: begin_group_ajqop6jqs_name_timestamp
+        data_type: text
+      - name: begin_group_kthfwkunp_repeat_numberid
+        data_type: text
+      - name: _attachments
+        data_type: text
+      - name: _submitted_by
+        data_type: text
+      - name: _notes
+        data_type: text
+      - name: begin_group_5xw8upowl_name_timestamp
+        data_type: text
+      - name: __version__
+        data_type: text

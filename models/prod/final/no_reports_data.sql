@@ -2,24 +2,22 @@
   materialized='table'
 ) }}
 
-WITH DateRange AS (
-    -- Generate date series without timestamps
-    SELECT generate_series(
-        MIN(DATE(date_auto)), 
-        MAX(DATE(date_auto)), 
-        INTERVAL '1 day'
-    )::DATE AS date
-    FROM {{ ref('daily_issue_clean') }}
-), 
-Facilities AS (
+WITH Facilities AS (
     SELECT DISTINCT facility
     FROM {{ ref('daily_issue_clean') }}
 ), 
 FacilityDates AS (
-    SELECT f.facility, d.date
+    SELECT 
+        f.facility, 
+        generate_series(
+            (SELECT MIN(DATE(date_auto)) 
+             FROM {{ ref('daily_issue_clean') }} 
+             WHERE facility = f.facility),
+            CURRENT_DATE,
+            INTERVAL '1 day'
+        )::DATE AS date
     FROM Facilities f
-    CROSS JOIN DateRange d
-), 
+),
 SubmissionCounts AS (
     SELECT 
         facility, 
@@ -38,5 +36,5 @@ LEFT JOIN SubmissionCounts sc
 ON fd.facility = sc.facility 
 AND fd.date = sc.date_auto
 WHERE fd.date <= CURRENT_DATE::DATE  -- Ensure comparison is done on DATE type
-AND COALESCE(sc.submission_count, 0) < 2
+AND COALESCE(sc.submission_count, 0) <> 2
 ORDER BY fd.facility, fd.date

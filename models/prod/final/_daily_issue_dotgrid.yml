@@ -1,0 +1,37 @@
+version: 2
+models:
+  - name: daily_issue_dotgrid
+    columns:
+      - name: _id
+        description: Unique identifier for each record in the Facility_KoboID_link table.
+        data_type: integer
+      - name: facility
+        description: Name of the facility
+        data_type: text
+      - name: date_auto
+        description: The auto-generated or fallback date.
+        data_type: date
+      - name: status
+        description: >-
+          Indicates the current status of the issue based on shutdown conditions and outage durations.
+        data_type: text
+      - name: day_of_the_week
+        description: >-
+          Indicates the day of the week corresponding to the recorded issue, represented as a numeric
+          value.
+        data_type: bigint
+      - name: week
+        description: >-
+          Represents the week sequence number for time-based analysis of daily issue data within the past
+          70 days.
+        data_type: numeric
+      - name: bubble
+        description: >-
+          Represents a numerical identifier for categorizing or grouping related data points within the
+          daily issue records.
+        data_type: integer
+    description: >-
+      The "daily_issue_dotgrid" table aggregates and processes daily issue data from facilities, assigning
+      statuses based on shutdown conditions and outage durations. It includes sequences for days and weeks
+      to facilitate time-based analysis, focusing on recent records within the last 70 days. The table
+      is ordered by facility and date, providing a structured view of operational impacts.

@@ -1,0 +1,56 @@
+version: 2
+models:
+  - name: daily_issue_form_aggregate_old
+    columns:
+      - name: _id
+        description: Unique identifier for each record in the Facility_KoboID_link table.
+        data_type: text
+      - name: _submitted_by
+        description: Identifier for the user who submitted the form.
+        data_type: text
+      - name: minorissue_type
+        description: Type of minor issue reported.
+        data_type: text
+      - name: facility
+        description: Name of the facility where the issue was reported.
+        data_type: text
+      - name: shift_type
+        description: Type of shift during which the issue was reported.
+        data_type: text
+      - name: date_auto
+        description: The auto-generated or fallback date.
+        data_type: date
+      - name: time_auto
+        description: The auto-generated or fallback time.
+        data_type: time without time zone
+      - name: _submission_time
+        description: The timestamp when the submission was made in the KoboToolbox system.
+        data_type: text
+      - name: issue
+        description: Specific issue reported, derived from unnest operation.
+        data_type: text
+      - name: category
+        description: Category of the issue, derived from unnest operation.
+        data_type: text
+      - name: outage
+        description: Outage status for the issue, derived from unnest operation.
+        data_type: text
+      - name: fixed
+        description: Fix status for the issue, derived from unnest operation.
+        data_type: text
+      - name: full_part
+        description: Full or partial outage status, derived from unnest operation.
+        data_type: text
+      - name: num_hours
+        description: Number of hours the outage lasted, derived from unnest operation.
+        data_type: text
+      - name: full_facility
+        description: Full facility outage status, derived from unnest operation.
+        data_type: text
+      - name: stalls
+        description: Number of stalls affected, derived from unnest operation.
+        data_type: text
+      - name: sides
+        description: Number of sides affected, derived from unnest operation.
+        data_type: text
+    description: Aggregated data from daily issue submissions with unnest operations.

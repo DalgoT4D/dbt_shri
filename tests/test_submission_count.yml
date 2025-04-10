@@ -4,15 +4,20 @@ unit_tests:
     given:
       - input: ref('daily_issue_clean')
         rows:
-          - {facility: 'A', date_auto: '2024-01-01', issue: 'Issue 1'}
-          - {facility: 'A', date_auto: '2024-01-01', issue: 'Issue 2'}
-          - {facility: 'B', date_auto: '2024-01-01', issue: 'Issue 1'}
-          - {facility: 'B', date_auto: '2024-01-02', issue: 'Issue 1'}
-          - {facility: 'C', date_auto: '2024-01-02', issue: 'Issue 1'}
+          # Facility A: Only a record for today.
+          - {facility: 'A', date_auto: "{{ (modules.datetime.date.today()).strftime('%Y-%m-%d') }}", issue: 'Issue 1'}
+          # Facility B: One record for yesterday. This will yield a series from yesterday (min) to today.
+          - {facility: 'B', date_auto: "{{ (modules.datetime.date.today() - modules.datetime.timedelta(days=1)).strftime('%Y-%m-%d') }}", issue: 'Issue 1'}
+          # Facility C: Records for both yesterday and today.
+          - {facility: 'C', date_auto: "{{ (modules.datetime.date.today() - modules.datetime.timedelta(days=1)).strftime('%Y-%m-%d') }}", issue: 'Issue 1'}
+          - {facility: 'C', date_auto: "{{ (modules.datetime.date.today()).strftime('%Y-%m-%d') }}", issue: 'Issue 1'}
     expect:
       rows:
-        - {facility: 'A', date: '2024-01-02', submission_count: 0}  
-        - {facility: 'B', date: '2024-01-01', submission_count: 1}
-        - {facility: 'B', date: '2024-01-02', submission_count: 1}
-        - {facility: 'C', date: '2024-01-01', submission_count: 0}  
-        - {facility: 'C', date: '2024-01-02', submission_count: 1}
+        # Facility A: Only one day (today) is generated, with one submission.
+        - {facility: 'A', date: "{{ (modules.datetime.date.today()).strftime('%Y-%m-%d') }}", submission_count: 1}
+        # Facility B: The date series for B goes from yesterday (with one submission) to today (with 0 submissions).
+        - {facility: 'B', date: "{{ (modules.datetime.date.today() - modules.datetime.timedelta(days=1)).strftime('%Y-%m-%d') }}", submission_count: 1}
+        - {facility: 'B', date: "{{ (modules.datetime.date.today()).strftime('%Y-%m-%d') }}", submission_count: 0}
+        # Facility C: The series for C runs from yesterday to today, with one submission on each day.
+        - {facility: 'C', date: "{{ (modules.datetime.date.today() - modules.datetime.timedelta(days=1)).strftime('%Y-%m-%d') }}", submission_count: 1}
+        - {facility: 'C', date: "{{ (modules.datetime.date.today()).strftime('%Y-%m-%d') }}", submission_count: 1}

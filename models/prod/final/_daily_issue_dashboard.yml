@@ -1,0 +1,43 @@
+version: 2
+models:
+  - name: daily_issue_dashboard
+    columns:
+      - name: _id
+        description: Unique identifier for each record in the Facility_KoboID_link table.
+        data_type: text
+      - name: facility
+        description: Name of the facility
+        data_type: text
+      - name: date_auto
+        description: The auto-generated or fallback date.
+        data_type: date
+      - name: time_auto
+        description: The auto-generated or fallback time.
+        data_type: time without time zone
+      - name: category
+        description: Category of the issue, defaulted to 'Other'
+        data_type: text
+      - name: shift_type
+        description: Type of shift during which the issue was reported
+        data_type: text
+      - name: issue
+        description: Description of the other group issue that was fixed
+        data_type: text
+      - name: fixed
+        description: Indicates if the issue was fixed, defaulted to null
+        data_type: text
+      - name: full_partial
+        description: Indicates if the outage was part day or full day
+        data_type: text
+      - name: num_hours
+        description: Number of hours the outage lasted
+        data_type: text
+      - name: shutdown
+        description: Indicates if there was a shutdown, coalesced value
+        data_type: text
+    description: >-
+      The "daily_issue_dashboard" table aggregates data from daily issue submissions, combining information
+      from multiple sources to provide a comprehensive view of facility issues. It includes details such
+      as facility names, issue categories, shift types, and statuses like whether issues were fixed or
+      caused shutdowns. The data is organized by date and time, with classifications for full or partial
+      day impacts and the duration in hours.
