@@ -22,7 +22,7 @@ SubmissionCounts AS (
     SELECT 
         facility, 
         DATE(date_auto) AS date_auto,  -- Ensure date is without time
-        COUNT(*) AS submission_count
+         COUNT(DISTINCT time_auto) AS submission_count
     FROM {{ ref('daily_issue_clean') }}
     GROUP BY facility, DATE(date_auto)
 )
