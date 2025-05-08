@@ -3,15 +3,19 @@
 ) }}
 
 WITH cte AS(  
-  SELECT
-    CAST(maintenance_numberid_in AS TEXT) AS userid,  -- Ensure it's always treated as text
-    group_qx5fr96_name_timestamp_formatted AS nametimestampformatted,
+    SELECT
+        CAST(maintenance_numberid_in AS TEXT) AS userid,  -- Ensure it's always treated as text
+        group_qx5fr96_name_timestamp_formatted AS nametimestampformatted,
 
-    COALESCE(group_qx5fr96_name_timestamp_formatted, 
-             begin_group_chvgkvrk8_name_timestamp_formatted) AS datetime_auto_day,
+        COALESCE(
+            group_qx5fr96_name_timestamp_formatted, 
+            begin_group_chvgkvrk8_name_timestamp_formatted
+        ) AS datetime_auto_day,
 
-    TO_DATE(COALESCE(group_qx5fr96_name_timestamp_formatted, 
-            begin_group_chvgkvrk8_name_timestamp_formatted), 'YYYY-MM-DD') AS date_auto,
+        TO_DATE(COALESCE(
+            group_qx5fr96_name_timestamp_formatted, 
+            begin_group_chvgkvrk8_name_timestamp_formatted
+        ), 'YYYY-MM-DD') AS date_auto,
 
     {{ dbt_utils.star(from = ref('staff_barcode_normalized'),
      except=['begin_group_chvgkvrk8_name_timestamp_formatted', 
@@ -35,8 +39,8 @@ WITH cte AS(
              'group_qx5fr96_name_timestamp',
              'yob', 
              'gender'
-             ])}}
-  FROM {{ ref('staff_barcode_normalized') }} 
+             ]) }}
+    FROM {{ ref('staff_barcode_normalized') }} 
 )
 
 SELECT

@@ -5,21 +5,23 @@
 -- This model is to join a table with koboid link normalized
 -- Read more about with cte here https://www.postgresql.org/docs/current/queries-with.html
 with cte as(  
-        select
-            numberid as userid,
+    select
+        numberid as userid,
 
-            coalesce(begin_group_ajqop6jqs_name_timestamp_formatted, 
-                     begin_group_kthfwkunp_name_timestamp_formatted, 
-                     begin_group_5xw8upowl_name_timestamp_formatted,
-                     name_timestamp_formatted) 
-            as datetime_auto_day,
+        coalesce(
+            begin_group_ajqop6jqs_name_timestamp_formatted, 
+            begin_group_kthfwkunp_name_timestamp_formatted, 
+            begin_group_5xw8upowl_name_timestamp_formatted,
+            name_timestamp_formatted
+        ) 
+        as datetime_auto_day,
 
-            to_date
-            ( coalesce ( 
+        to_date( coalesce( 
             begin_group_ajqop6jqs_name_timestamp_formatted, 
             begin_group_kthfwkunp_name_timestamp_formatted, 
             begin_group_5xw8upowl_name_timestamp_formatted, 
-            name_timestamp_formatted), 'YYYY-MM-DD') as date_auto,
+            name_timestamp_formatted
+        ), 'YYYY-MM-DD') as date_auto,
 
             {{ dbt_utils.star(from = ref('use_tracking_normalized'), 
             except=['begin_group_5xw8upowl_name_timestamp', 
@@ -55,18 +57,18 @@ with cte as(
                     'meta_deprecatedid', 
                     '_submission_time']) }}
                     
-        from {{ ref('use_tracking_normalized') }} 
+    from {{ ref('use_tracking_normalized') }} 
 )
 
-SELECT
+select
     a.*,
-    b.facilityname AS facility,
-    c.yob AS yob,
-    c.gender AS gender,
+    b.facilityname as facility,
+    c.yob,
+    c.gender,
     c.date_enrollment
-FROM cte AS a
-RIGHT JOIN {{ ref('facility_koboid_link_normalized') }} AS b
-ON a._submitted_by = b.kobo_username
-LEFT JOIN {{ ref('enrollment_gender_nodup') }} AS c
-ON trim(a.userid) = trim(c.userid)
+from cte as a
+right join {{ ref('facility_koboid_link_normalized') }} as b
+    on a._submitted_by = b.kobo_username
+left join {{ ref('enrollment_gender_nodup') }} as c
+    on trim(a.userid) = trim(c.userid)
 order by date_auto asc

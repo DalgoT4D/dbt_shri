@@ -8,7 +8,7 @@
 ) }}
 
 SELECT 
-   _id::integer,
+    _id::integer,
     full_facility,
     stalls,
     sides,
@@ -22,5 +22,4 @@ SELECT
     full_partial,
     num_hours
 FROM {{ ref('daily_issue_clean') }}
-
 {% endsnapshot %}

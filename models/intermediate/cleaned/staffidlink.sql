@@ -6,10 +6,8 @@
 ) }}
 
 select  
-staff_userid as userid,
-staff_position as position,
-
-
+    staff_userid as userid,
+    staff_position as position,
 
     {{ dbt_utils.star(from= ref('staffidlink_normalized'),
          except=['_xform_id_string', 
@@ -33,5 +31,4 @@ staff_position as position,
                 'starttime',
                 '_submitted_by' ]) }}
 
-    from {{ref('staffidlink_normalized')}}
-
+from {{ ref('staffidlink_normalized') }}

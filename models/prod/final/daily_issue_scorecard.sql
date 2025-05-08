@@ -3,99 +3,112 @@
 ) }}
 
 WITH 
-DateCalculations AS (
+DATECALCULATIONS AS (
     -- Calculate today and 10 weeks ago
     SELECT 
-        CURRENT_DATE AS today,
-        CURRENT_DATE - INTERVAL '70 days' AS wks_10
+        CURRENT_DATE AS TODAY,
+        CURRENT_DATE - INTERVAL '70 days' AS WKS_10
 ),
-CleanedData AS (
+
+CLEANEDDATA AS (
     -- Drop records with no issue
     SELECT *
     FROM {{ ref('daily_issue_clean') }}
-    WHERE issue != ''
+    WHERE ISSUE != ''
 ),
-FullDayOutages AS (
+
+FULLDAYOUTAGES AS (
     -- Step 1: Count full-day shutdown instances for each facility within the last 10 weeks
     SELECT 
-        facility, 
-        COUNT(DISTINCT date_auto) AS num_last10_full
-    FROM CleanedData, DateCalculations
-    WHERE shutdown = 'yes' 
-    AND full_partial = 'full day'
-    AND date_auto >= wks_10
-    GROUP BY facility
+        FACILITY, 
+        COUNT(DISTINCT DATE_AUTO) AS NUM_LAST10_FULL
+    FROM CLEANEDDATA, DATECALCULATIONS
+    WHERE
+        SHUTDOWN = 'yes' 
+        AND FULL_PARTIAL = 'full day'
+        AND DATE_AUTO >= WKS_10
+    GROUP BY FACILITY
 ),
-PartialDayShutdownHours AS (
+
+PARTIALDAYSHUTDOWNHOURS AS (
     -- Step 2: Sum partial-day shutdown hours for each facility within the last 10 weeks
     -- Only include days without full shutdowns
     SELECT 
-        cd.facility, 
-        COALESCE(SUM(CAST(cd.num_hours AS NUMERIC)), 0) AS total_partial_shutdown_hours
-    FROM CleanedData cd
+        CD.FACILITY, 
+        COALESCE(SUM(CAST(CD.NUM_HOURS AS NUMERIC)), 0) AS TOTAL_PARTIAL_SHUTDOWN_HOURS
+    FROM CLEANEDDATA AS CD
     LEFT JOIN (
-        SELECT facility, date_auto
-        FROM CleanedData
-        WHERE shutdown = 'yes' AND full_partial = 'full day' AND date_auto >= (SELECT wks_10 FROM DateCalculations)
-        GROUP BY facility, date_auto
-    ) fds ON cd.facility = fds.facility AND cd.date_auto = fds.date_auto
-    WHERE cd.shutdown = 'yes'
-    AND cd.full_partial = 'part day'
-    AND cd.date_auto >= (SELECT wks_10 FROM DateCalculations)
-    AND fds.date_auto IS NULL
-    GROUP BY cd.facility
+        SELECT
+            FACILITY,
+            DATE_AUTO
+        FROM CLEANEDDATA
+        WHERE SHUTDOWN = 'yes' AND FULL_PARTIAL = 'full day' AND DATE_AUTO >= (SELECT WKS_10 FROM DATECALCULATIONS)
+        GROUP BY FACILITY, DATE_AUTO
+    ) AS FDS ON CD.FACILITY = FDS.FACILITY AND CD.DATE_AUTO = FDS.DATE_AUTO
+    WHERE
+        CD.SHUTDOWN = 'yes'
+        AND CD.FULL_PARTIAL = 'part day'
+        AND CD.DATE_AUTO >= (SELECT WKS_10 FROM DATECALCULATIONS)
+        AND FDS.DATE_AUTO IS NULL
+    GROUP BY CD.FACILITY
 ),
-PartialDayOutages AS (
+
+PARTIALDAYOUTAGES AS (
     -- Step 3: Divide the total number of hours of partial shutdowns by 16
     SELECT 
-        facility, 
-        total_partial_shutdown_hours / 16 AS num_last10_partialhrs_days
-    FROM PartialDayShutdownHours
+        FACILITY, 
+        TOTAL_PARTIAL_SHUTDOWN_HOURS / 16 AS NUM_LAST10_PARTIALHRS_DAYS
+    FROM PARTIALDAYSHUTDOWNHOURS
 ),
-ShutdownCounts AS (
+
+SHUTDOWNCOUNTS AS (
     -- Combine full-day and partial-day outages
     SELECT 
-        COALESCE(f.facility, p.facility) AS facility,
-        COALESCE(f.num_last10_full, 0) AS num_last10_full, 
-        COALESCE(p.num_last10_partialhrs_days, 0) AS num_last10_partialhrs_days,
-        (COALESCE(f.num_last10_full, 0) + COALESCE(p.num_last10_partialhrs_days, 0)) AS num_last10_totaldays
-    FROM FullDayOutages f
-    FULL OUTER JOIN PartialDayOutages p ON f.facility = p.facility
+        COALESCE(F.FACILITY, P.FACILITY) AS FACILITY,
+        COALESCE(F.NUM_LAST10_FULL, 0) AS NUM_LAST10_FULL, 
+        COALESCE(P.NUM_LAST10_PARTIALHRS_DAYS, 0) AS NUM_LAST10_PARTIALHRS_DAYS,
+        (COALESCE(F.NUM_LAST10_FULL, 0) + COALESCE(P.NUM_LAST10_PARTIALHRS_DAYS, 0)) AS NUM_LAST10_TOTALDAYS
+    FROM FULLDAYOUTAGES AS F
+    FULL OUTER JOIN PARTIALDAYOUTAGES AS P ON F.FACILITY = P.FACILITY
 ),
-LastOutage AS (
+
+LASTOUTAGE AS (
     -- Get the date of the last outage for each facility
     SELECT
-        facility,
-        MAX(date_auto) AS last_outage
+        FACILITY,
+        MAX(DATE_AUTO) AS LAST_OUTAGE
     FROM {{ ref('daily_issue_clean') }}
-    WHERE shutdown = 'yes'
-    GROUP BY facility
+    WHERE SHUTDOWN = 'yes'
+    GROUP BY FACILITY
 ),
-FirstQuality AS (
+
+FIRSTQUALITY AS (
     -- Get the first date for each facility
     SELECT 
-        facility, 
-        MIN(date_auto) AS first_quality
+        FACILITY, 
+        MIN(DATE_AUTO) AS FIRST_QUALITY
     FROM {{ ref('daily_issue_clean') }}
-    GROUP BY facility
+    GROUP BY FACILITY
 ),
-FinalData AS (
+
+FINALDATA AS (
     -- Combine the above data to compute the necessary columns
     SELECT 
-        fq.facility, 
-        ROUND(100 - 100 * COALESCE(s.num_last10_totaldays, 0) / 70, 2) AS last_10_weeks,
-        COALESCE(lo.last_outage, fq.first_quality) AS continuous_since,
-        ROUND((d.today - COALESCE(lo.last_outage, fq.first_quality))) AS days_continuous_operation
-    FROM FirstQuality fq
-    JOIN DateCalculations d ON TRUE
-    LEFT JOIN ShutdownCounts s ON fq.facility = s.facility
-    LEFT JOIN LastOutage lo ON fq.facility = lo.facility
+        FQ.FACILITY, 
+        ROUND(100 - 100 * COALESCE(S.NUM_LAST10_TOTALDAYS, 0) / 70, 2) AS LAST_10_WEEKS,
+        COALESCE(LO.LAST_OUTAGE, FQ.FIRST_QUALITY) AS CONTINUOUS_SINCE,
+        ROUND((D.TODAY - COALESCE(LO.LAST_OUTAGE, FQ.FIRST_QUALITY))) AS DAYS_CONTINUOUS_OPERATION
+    FROM FIRSTQUALITY AS FQ
+    INNER JOIN DATECALCULATIONS AS D ON TRUE
+    LEFT JOIN SHUTDOWNCOUNTS AS S ON FQ.FACILITY = S.FACILITY
+    LEFT JOIN LASTOUTAGE AS LO ON FQ.FACILITY = LO.FACILITY
 )
+
 -- Select the final output
 SELECT 
-    facility,
-    last_10_weeks,
-    continuous_since,
-    days_continuous_operation
-FROM FinalData
-ORDER BY facility
+    FACILITY,
+    LAST_10_WEEKS,
+    CONTINUOUS_SINCE,
+    DAYS_CONTINUOUS_OPERATION
+FROM FINALDATA
+ORDER BY FACILITY

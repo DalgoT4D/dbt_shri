@@ -17,5 +17,5 @@ SELECT
     attachment->>'download_small_url' AS download_small_url,
     attachment->>'download_medium_url' AS download_medium_url
 FROM 
-    (SELECT * FROM {{source('source_shri_surveys', 'weeklyphoto')}}) AS s,
+    (SELECT * FROM {{ source('source_shri_surveys', 'weeklyphoto') }}) AS s,
     LATERAL jsonb_array_elements(s.data->'_attachments') AS attachment
