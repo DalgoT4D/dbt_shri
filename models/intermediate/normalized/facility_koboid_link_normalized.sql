@@ -5,21 +5,23 @@
     materialized='table'
 ) }}
 
--- Creating a CTE that flattens the JSON data from the raw_facility_koboid_link table
+WITH flattened AS (
+    SELECT * FROM (
+        {{
+            flatten_json(
+                model_name = source('source_shri_surveys', 'facility_koboid_link'),
+                json_column = 'data'
+            )
+        }}
+    ) AS derived_flattened  -- avoid raw unaliased subquery
+),
 
-with my_cte as ({{
-    flatten_json(
-        model_name = source('source_shri_surveys', 'facility_koboid_link'),
-        json_column = 'data'
-    )
-}})
+deduplicated AS (
+    {{ dbt_utils.deduplicate(
+        relation='flattened',
+        partition_by='_id',
+        order_by='_id DESC'
+    ) }}
+)
 
--- Deduplicating the data in the CTE based on the '_id' column
-
-{{ dbt_utils.deduplicate(
-    relation='my_cte',
-    partition_by='_id',
-    order_by='_id desc',
-   )
-}}
-
+SELECT * FROM deduplicated

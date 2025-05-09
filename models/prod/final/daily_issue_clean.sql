@@ -14,8 +14,7 @@ with my_cte as ({{ dbt_utils.union_relations(
     relations=[ref('daily_issue_dashboard'),ref('daily_issue_clean_prework')]
 ) }})
 
-
-SELECT 
+select 
     _id::integer,
     COALESCE(full_facility, '') as full_facility,
     COALESCE(stalls, '') as stalls,
@@ -30,4 +29,4 @@ SELECT
     COALESCE(full_partial, '') as full_partial,
     COALESCE(num_hours::text, '') as num_hours
 
-FROM my_cte
+from my_cte

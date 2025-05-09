@@ -3,11 +3,10 @@
 ) }}
 
 
-
-
 with my_cte as (({{ dbt_utils.union_relations(
     relations=[ref('daily_issue_dashboard_prework'),ref('daily_issue_form_others_issue')]
-) }}))
+) }})
+)
 
 select 
     COALESCE(_id::text, '') as _id,

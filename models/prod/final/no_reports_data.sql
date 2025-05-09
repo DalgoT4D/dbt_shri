@@ -2,39 +2,45 @@
   materialized='table'
 ) }}
 
-WITH Facilities AS (
+WITH facilities AS (
     SELECT DISTINCT facility
     FROM {{ ref('daily_issue_clean') }}
 ), 
-FacilityDates AS (
-    SELECT 
-        f.facility, 
-        generate_series(
-            (SELECT MIN(DATE(date_auto)) 
-             FROM {{ ref('daily_issue_clean') }} 
-             WHERE facility = f.facility),
-            CURRENT_DATE,
-            INTERVAL '1 day'
-        )::DATE AS date
-    FROM Facilities f
-),
-SubmissionCounts AS (
+
+facility_dates AS (
     SELECT 
         facility, 
-        DATE(date_auto) AS date_auto,  -- Ensure date is without time
-        COUNT(*) AS submission_count
+        generate_series(
+            (
+                SELECT min(date(date_auto)) 
+                FROM {{ ref('daily_issue_clean') }} 
+                WHERE facility = f.facility
+            ),
+            current_date,
+            INTERVAL '1 day'
+        )::DATE AS date
+    FROM facilities AS f
+),
+
+submission_counts AS (
+    SELECT 
+        facility, 
+        date(date_auto) AS date_auto,
+        count(DISTINCT time_auto) AS submission_count
     FROM {{ ref('daily_issue_clean') }}
-    GROUP BY facility, DATE(date_auto)
+    GROUP BY facility, date(date_auto)
 )
 
 SELECT 
     fd.facility, 
-    fd.date::DATE AS date,  -- Ensure final output is a pure DATE type
-    COALESCE(sc.submission_count, 0) AS submission_count
-FROM FacilityDates fd
-LEFT JOIN SubmissionCounts sc 
-ON fd.facility = sc.facility 
-AND fd.date = sc.date_auto
-WHERE fd.date <= CURRENT_DATE::DATE  -- Ensure comparison is done on DATE type
-AND COALESCE(sc.submission_count, 0) <> 2
+    fd.date,
+    coalesce(sc.submission_count, 0) AS submission_count
+FROM facility_dates AS fd
+LEFT JOIN submission_counts AS sc 
+    ON
+        fd.facility = sc.facility 
+        AND fd.date = sc.date_auto
+WHERE
+    fd.date <= current_date
+    AND coalesce(sc.submission_count, 0) <> 2
 ORDER BY fd.facility, fd.date

@@ -9,7 +9,7 @@
 WITH cte AS (
     SELECT
 
-        form_timestamp_formatted as formtimestampformatted,
+        form_timestamp_formatted AS formtimestampformatted,
 
         -- Selecting all columns from 'enrollment_normalized' except for the ones listed
         {{ dbt_utils.star(from= ref('enrollment_normalized'), 
@@ -43,21 +43,20 @@ WITH cte AS (
         _submission_time::timestamp AS submission_time,
 
         -- Creating a new column with the age in years from yob
-        case  
-            when CAST(yob AS integer) < 150 then CAST(yob AS integer) 
-            else  ROUND(CAST(EXTRACT(YEAR FROM CURRENT_DATE) - CAST(yob AS integer) AS float)::numeric, 1)
-        end as age_years,
+        CASE  
+            WHEN yob::integer < 150 THEN yob::integer 
+            ELSE  round((extract(YEAR FROM current_date) - yob::integer)::float::numeric, 1)
+        END AS age_years,
 
-        CAST(yob AS integer)
+        yob::integer
 
-
-    from {{ ref('enrollment_normalized') }} 
+    FROM {{ ref('enrollment_normalized') }} 
 )
 
 -- Selecting columns from the CTE and joining with the 'facility_koboid_link_normalized' table to get updated facility data
 SELECT
     a.*,
-    coalesce(b.facilityname, a.facility) as facility_updated,  -- Coalescing the facility name from both tables
+    coalesce(b.facilityname, a.facility) AS facility_updated,  -- Coalescing the facility name from both tables
 
     -- Creating a new column with age categories based on the age in years
     CASE
@@ -72,6 +71,5 @@ SELECT
         WHEN age_years BETWEEN 81 AND 91 THEN '81-91'
         ELSE 'Unknown'
     END AS age_cat
-FROM cte AS a RIGHT JOIN {{ ref('facility_koboid_link_normalized') }} AS b on 
-a._submitted_by = b.kobo_username
-
+FROM cte AS a RIGHT JOIN {{ ref('facility_koboid_link_normalized') }} AS b ON 
+    a._submitted_by = b.kobo_username

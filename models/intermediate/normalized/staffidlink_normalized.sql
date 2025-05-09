@@ -6,14 +6,12 @@
 ) }}
 
 
-
 with my_cte as ({{
     flatten_json(
         model_name = source('source_shri_surveys', 'staffidlink'),
         json_column = 'data'
     )
 }})
-
 
 -- Deduplicating the data in the CTE based on the '_id' column
 

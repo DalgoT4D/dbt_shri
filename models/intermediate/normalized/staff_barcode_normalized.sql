@@ -22,5 +22,3 @@ with my_cte as ({{
     order_by='_id desc',
    )
 }}
-
-
