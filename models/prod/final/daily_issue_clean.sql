@@ -2,14 +2,6 @@
   materialized='table'
 ) }}
 
-
--- To test the data you can run this query
-
--- SELECT facility, COUNT(*) as count
--- FROM prod.daily_issue_clean
--- GROUP BY facility;
-
-
 with my_cte as ({{ dbt_utils.union_relations(
     relations=[ref('daily_issue_dashboard'),ref('daily_issue_clean_prework')]
 ) }})
@@ -27,6 +19,8 @@ select
     COALESCE(issue, '') as issue,
     COALESCE(shutdown, '') as shutdown,
     COALESCE(full_partial, '') as full_partial,
+    day_shutdown,
+    shift_shutdown,
     COALESCE(num_hours::text, '') as num_hours
 
 from my_cte
