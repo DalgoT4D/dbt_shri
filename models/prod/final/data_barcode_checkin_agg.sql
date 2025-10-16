@@ -2,89 +2,156 @@
   materialized='table'
 ) }}
 
--- Aggregated staff barcode check-ins by facility with expected vs actual counts
+-- Aggregated staff barcode check-ins by facility and position with expected vs actual counts
 
-WITH expected_checkins AS (
-  SELECT 'Azad Nagar' AS facility, 6 AS expected_check_ins
-  UNION ALL SELECT 'Basgoda', 5
-  UNION ALL SELECT 'Dundibagh', 6
-  UNION ALL SELECT 'Gomia', 5
-  UNION ALL SELECT 'Jaridih CSR', 4
-  UNION ALL SELECT 'Jaridih SBM', 4
-  UNION ALL SELECT 'Kasmar', 4
-  UNION ALL SELECT 'North Basgoda', 6
-  UNION ALL SELECT 'Peterbaar', 4
-  UNION ALL SELECT 'Katiya Bus Stand', 4
-  UNION ALL SELECT 'Katiya Market', 4
-  UNION ALL SELECT 'Patratu Block Campus', 4
-  UNION ALL SELECT 'Patratu Railway Gate', 4
-  UNION ALL SELECT 'Bela Museri', 6
-  UNION ALL SELECT 'Bairo', 5
-  UNION ALL SELECT 'Karanpur', 5
-  UNION ALL SELECT 'Nemua', 6
-  UNION ALL SELECT 'Vurahi', 5
-  UNION ALL SELECT 'Mahuatand', 5
-  UNION ALL SELECT 'Gomia Block', 5
-  UNION ALL SELECT 'Dugdha Market', 5
-  UNION ALL SELECT 'Dugdha Chhathghat', 5
+WITH position_mapping AS (
+  SELECT position_raw, standardized_position
+  FROM (VALUES
+    ('Data Staff 1', 'Data Collector'),
+    ('Data Staff 2', 'Data Collector'),
+    ('Data Staff 3', 'Data Collector'),
+    ('Data collection 1', 'Data Collector'),
+    ('Data collection 2', 'Data Collector'),
+    ('Data collection 3', 'Data Collector'),
+    ('Data Collection 2', 'Data Collector'),
+    ('Cleaning', 'Cleaning'),
+    ('Cleaning Staff', 'Cleaning'),
+    ('Night guard', 'Night Guard'),
+    ('Night Guard', 'Night Guard'),
+    ('Cleaning Backup/Night Guard', 'Night Guard'),
+    ('Facility incharge', 'Facility Incharge'),
+    ('Facility Incharge', 'Facility Incharge'),
+    ('Facility incharge and water seller', 'Facility Incharge')
+  ) AS mapping(position_raw, standardized_position)
 ),
 
--- Step 1: Add row numbers and time differences for deduplication
-checkin_with_time_analysis AS (
+expected_checkins_by_facility_position AS (
+  -- Jharkhand facilities (corrected facility names)
+  SELECT 'Dundibagh' AS facility, 'Data Collector' AS position_type, 2 AS expected_daily_checkins
+  UNION ALL SELECT 'Dundibagh', 'Cleaning', 2 -- 1 cleaner * 2 checkins per day
+  UNION ALL SELECT 'Dundibagh', 'Night Guard', 1
+  UNION ALL SELECT 'Dundibagh', 'Facility Incharge', 1
+  
+  UNION ALL SELECT 'Basgoda', 'Data Collector', 2
+  UNION ALL SELECT 'Basgoda', 'Cleaning', 2
+  UNION ALL SELECT 'Basgoda', 'Facility Incharge', 1
+  
+  UNION ALL SELECT 'Gomia', 'Data Collector', 2
+  UNION ALL SELECT 'Gomia', 'Cleaning', 2
+  UNION ALL SELECT 'Gomia', 'Facility Incharge', 1
+  
+  UNION ALL SELECT 'Azad Nagar', 'Data Collector', 2
+  UNION ALL SELECT 'Azad Nagar', 'Cleaning', 2
+  UNION ALL SELECT 'Azad Nagar', 'Night Guard', 1
+  
+  UNION ALL SELECT 'North Basgoda', 'Data Collector', 2
+  UNION ALL SELECT 'North Basgoda', 'Cleaning', 2
+  UNION ALL SELECT 'North Basgoda', 'Night Guard', 1
+  
+  UNION ALL SELECT 'Jaridih CSR', 'Data Collector', 2
+  UNION ALL SELECT 'Jaridih CSR', 'Cleaning', 2
+  
+  UNION ALL SELECT 'Jaridih SBM', 'Data Collector', 2
+  UNION ALL SELECT 'Jaridih SBM', 'Cleaning', 2
+  
+  UNION ALL SELECT 'Kasmar', 'Data Collector', 2
+  UNION ALL SELECT 'Kasmar', 'Cleaning', 2
+  
+  UNION ALL SELECT 'Peterbaar', 'Data Collector', 2
+  UNION ALL SELECT 'Peterbaar', 'Cleaning', 2
+  
+  UNION ALL SELECT 'Mahuatand', 'Data Collector', 2
+  UNION ALL SELECT 'Mahuatand', 'Cleaning', 2
+  
+  UNION ALL SELECT 'Gomia Block', 'Data Collector', 2
+  UNION ALL SELECT 'Gomia Block', 'Cleaning', 2
+  
+  UNION ALL SELECT 'Dugdha Market', 'Data Collector', 2
+  UNION ALL SELECT 'Dugdha Market', 'Cleaning', 2
+  
+  UNION ALL SELECT 'Dugdha Chhatghat', 'Data Collector', 2
+  UNION ALL SELECT 'Dugdha Chhatghat', 'Cleaning', 2
+  
+  UNION ALL SELECT 'Katiya Bus Stand, Ramgarh', 'Data Collector', 2
+  UNION ALL SELECT 'Katiya Bus Stand, Ramgarh', 'Cleaning', 2
+  
+  UNION ALL SELECT 'Katiya Market, Ramgarh', 'Data Collector', 2
+  UNION ALL SELECT 'Katiya Market, Ramgarh', 'Cleaning', 2
+  
+  UNION ALL SELECT 'Patratu Block Campus, Ramgarh', 'Data Collector', 2
+  UNION ALL SELECT 'Patratu Block Campus, Ramgarh', 'Cleaning', 2
+  
+  UNION ALL SELECT 'Patratu Rly Gate, Ramgarh', 'Data Collector', 2
+  UNION ALL SELECT 'Patratu Rly Gate, Ramgarh', 'Cleaning', 2
+  
+  -- Bihar facilities
+  UNION ALL SELECT 'Nemua', 'Data Collector', 2
+  UNION ALL SELECT 'Nemua', 'Cleaning', 2
+  UNION ALL SELECT 'Nemua', 'Night Guard', 1
+  UNION ALL SELECT 'Nemua', 'Facility Incharge', 1
+  
+  UNION ALL SELECT 'Vurahi', 'Data Collector', 2
+  UNION ALL SELECT 'Vurahi', 'Cleaning', 2
+  UNION ALL SELECT 'Vurahi', 'Night Guard', 1
+  
+  UNION ALL SELECT 'Karanpur', 'Data Collector', 2
+  UNION ALL SELECT 'Karanpur', 'Cleaning', 2
+  UNION ALL SELECT 'Karanpur', 'Night Guard', 1
+  
+  UNION ALL SELECT 'Bairo', 'Data Collector', 2
+  UNION ALL SELECT 'Bairo', 'Cleaning', 2
+  UNION ALL SELECT 'Bairo', 'Night Guard', 1
+  
+  UNION ALL SELECT 'Bela Museri', 'Data Collector', 3
+  UNION ALL SELECT 'Bela Museri', 'Cleaning', 2
+  UNION ALL SELECT 'Bela Museri', 'Night Guard', 1
+),
+
+-- Process check-ins with standardized positions
+checkins_with_standard_positions AS (
   SELECT 
-    *,
-    ROW_NUMBER() OVER (
-      PARTITION BY userid, facility, date_auto 
-      ORDER BY time_auto ASC
-    ) AS checkin_sequence,
-    LAG(time_auto) OVER (
-      PARTITION BY userid, facility, date_auto 
-      ORDER BY time_auto ASC
-    ) AS previous_checkin_time,
-    EXTRACT(EPOCH FROM (
-      time_auto - LAG(time_auto) OVER (
-        PARTITION BY userid, facility, date_auto 
-        ORDER BY time_auto ASC
-      )
-    )) / 60 AS minutes_since_last_checkin
-  FROM {{ ref('data_barcode_checkin') }}
-  WHERE position <> 'Unknown Position'
+    c.*,
+    COALESCE(pm.standardized_position, 
+      CASE WHEN c.position = 'Unknown Position' THEN 'Unknown Position' 
+           ELSE 'Other' END
+    ) AS standardized_position
+  FROM {{ ref('data_barcode_checkin') }} c
+  LEFT JOIN position_mapping pm ON c.position = pm.position_raw
 ),
 
--- Step 2: Flag legitimate vs duplicate check-ins
-deduplicated_checkins AS (
-  SELECT 
-    *,
-    CASE 
-      WHEN checkin_sequence = 1 THEN true  -- First check-in of the day is always legitimate
-      WHEN minutes_since_last_checkin IS NULL THEN true  -- Handle NULL case (should be first check-in)
-      WHEN minutes_since_last_checkin > 30 THEN true  -- Check-ins >30 minutes apart are legitimate
-      ELSE false  -- Check-ins within 30 minutes are likely duplicates
-    END AS is_legitimate_checkin
-  FROM checkin_with_time_analysis
-),
-
--- Step 3: Aggregate the deduplicated data
-daily_checkins AS (
+-- Aggregate by facility, date, and position type
+daily_checkins_by_position AS (
   SELECT 
     facility,
     date_auto,
-    COUNT(DISTINCT userid) AS unique_staff_ids,
-    COUNT(*) AS total_check_ins,
-    COUNT(CASE WHEN is_legitimate_checkin = false THEN 1 END) AS duplicate_check_ins,
-    COUNT(CASE WHEN is_legitimate_checkin = true THEN 1 END) AS legitimate_check_ins
-  FROM deduplicated_checkins
-  GROUP BY facility, date_auto
+    standardized_position,
+    COUNT(*) AS actual_checkins
+  FROM checkins_with_standard_positions
+  WHERE date_auto IS NOT NULL
+  GROUP BY facility, date_auto, standardized_position
+),
+
+-- Calculate totals and differences
+final_aggregation AS (
+  SELECT 
+    dc.facility,
+    dc.date_auto,
+    dc.standardized_position,
+    COALESCE(ec.expected_daily_checkins, 0) AS expected_checkins,
+    dc.actual_checkins,
+    GREATEST(0, dc.actual_checkins - COALESCE(ec.expected_daily_checkins, 0)) AS duplicate_checkins
+  FROM daily_checkins_by_position dc
+  LEFT JOIN expected_checkins_by_facility_position ec 
+    ON dc.facility = ec.facility 
+    AND dc.standardized_position = ec.position_type
 )
 
 SELECT 
-  dc.facility,
-  dc.date_auto,
-  COALESCE(ec.expected_check_ins, 0) AS expected_check_ins,
-  dc.legitimate_check_ins,  -- Count of legitimate check-in events
-  dc.unique_staff_ids,  -- Count of distinct staff positions
-  dc.total_check_ins,   -- Total raw check-ins
-  dc.duplicate_check_ins  -- Count of flagged duplicates for monitoring
-FROM daily_checkins dc
-JOIN expected_checkins ec ON dc.facility = ec.facility
-ORDER BY dc.date_auto DESC, dc.facility
+  facility,
+  date_auto,
+  standardized_position AS position_type,
+  expected_checkins,
+  actual_checkins,
+  duplicate_checkins
+FROM final_aggregation
+ORDER BY date_auto DESC, facility, position_type
