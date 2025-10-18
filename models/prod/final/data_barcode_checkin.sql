@@ -13,5 +13,8 @@ SELECT
     TO_TIMESTAMP(datetime_auto_day, 'YYYY-MM-DD HH24:MI:SS')::TIME AS time_auto, 
     date_auto, 
     date_enrollment,
-    position
+    CASE 
+        WHEN position ~ '^[0-9]+$' THEN 'Unknown Position'
+        ELSE position
+    END AS position
 FROM {{ ref('staff_barcode') }}
