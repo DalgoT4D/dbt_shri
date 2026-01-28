@@ -6,3 +6,4 @@ logs/
 dbt-env/
 profiles.yml
 
+.qodo
