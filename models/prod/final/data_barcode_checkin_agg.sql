@@ -105,6 +105,16 @@ expected_checkins_by_facility_position AS (
   UNION ALL SELECT 'Bela Museri', 'Data Collector', 3
   UNION ALL SELECT 'Bela Museri', 'Cleaning', 2
   UNION ALL SELECT 'Bela Museri', 'Night Guard', 1
+  
+  UNION ALL SELECT 'Basgoda', 'Night Guard', 1
+  UNION ALL SELECT 'Bahadurpur', 'Data Collector', 2
+  UNION ALL SELECT 'Urwan, Koderma', 'Data Collector', 2
+  UNION ALL SELECT 'PM SHRI School Basgoda', 'Data Collector', 1
+  UNION ALL SELECT 'High School Dugdha', 'Cleaning', 2
+  UNION ALL SELECT 'Bahadurpur', 'Cleaning', 2
+  UNION ALL SELECT 'High School Dugdha', 'Data Collector', 1
+  UNION ALL SELECT 'Urwan, Koderma', 'Cleaning', 2
+  UNION ALL SELECT 'PM SHRI School Basgoda', 'Cleaning', 2
 ),
 
 -- Process check-ins with standardized positions
@@ -139,7 +149,8 @@ final_aggregation AS (
     dc.standardized_position,
     COALESCE(ec.expected_daily_checkins, 0) AS expected_checkins,
     dc.actual_checkins,
-    GREATEST(0, dc.actual_checkins - COALESCE(ec.expected_daily_checkins, 0)) AS duplicate_checkins
+    GREATEST(0, dc.actual_checkins - COALESCE(ec.expected_daily_checkins, 0)) AS duplicate_checkins,
+    GREATEST(0, COALESCE(ec.expected_daily_checkins, 0) - dc.actual_checkins) AS missing_checkins
   FROM daily_checkins_by_position dc
   LEFT JOIN expected_checkins_by_facility_position ec 
     ON dc.facility = ec.facility 
@@ -152,6 +163,7 @@ SELECT
   standardized_position AS position_type,
   expected_checkins,
   actual_checkins,
-  duplicate_checkins
+  duplicate_checkins,
+  missing_checkins
 FROM final_aggregation
 ORDER BY date_auto DESC, facility, position_type
