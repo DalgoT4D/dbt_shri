@@ -5,6 +5,18 @@
     materialized='table'
 ) }}
 
+{% set survey_methods_query %}
+SELECT DISTINCT(jsonb_object_keys(data)) AS column_name
+FROM {{ source('source_shri_surveys', 'facility_koboid_link') }}
+{% endset %}
+
+{% if execute %}
+{% set survey_methods_results = run_query(survey_methods_query) %}
+{% set facility_link_keys = survey_methods_results.columns[0].values() %}
+{% else %}
+{% set facility_link_keys = [] %}
+{% endif %}
+
 WITH flattened AS (
     SELECT * FROM (
         {{
@@ -26,33 +38,23 @@ deduplicated AS (
 
 SELECT
     _airbyte_raw_id,
-    _id,
+    {% for column_name in facility_link_keys %}
+    {%- set flattened_column_name = column_name
+        | replace('begin_group_yeQ4kl9Kt/', '')
+        | replace('begin_group_G8GvBDlis/', '')
+        | replace('/', '_')
+        | replace('-', '_')
+        | lower -%}
+    {% if flattened_column_name == 'kobo_username' %}
     CASE
         -- Correct the Kobo username typo so Sayal North submissions join downstream models.
         WHEN facilityname = 'Sayal North Patratu'
             AND kobo_username = 'savalnorthratratu'
             THEN 'sayalnorthpatratu'
         ELSE kobo_username
-    END AS kobo_username,
-    start,
-    starttime,
-    meta_deprecatedid,
-    endtime,
-    _validation_status,
-    "end",
-    formhub_uuid,
-    meta_instancename,
-    _uuid,
-    _xform_id_string,
-    _tags,
-    _submission_time,
-    meta_rootuuid,
-    _geolocation,
-    facilityname,
-    _status,
-    meta_instanceid,
-    _attachments,
-    _submitted_by,
-    _notes,
-    __version__
+    END AS kobo_username
+    {% else %}
+    {{ adapter.quote(flattened_column_name) }}
+    {% endif %}{% if not loop.last %},{% endif %}
+    {% endfor %}
 FROM deduplicated
