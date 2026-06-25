@@ -47,6 +47,13 @@ SELECT
         | lower -%}
     {% if flattened_column_name == 'kobo_username' %}
     CASE
+        -- Correct known Kobo username typos so submissions join downstream models.
+        WHEN facilityname = 'Sayal North Patratu'
+            AND kobo_username = 'savalnorthratratu'
+            THEN 'sayalnorthpatratu'
+        WHEN facilityname = 'PM SHRI Middle school Jaridih East'
+            AND kobo_username = 'middeschooljaridiheast'
+            THEN 'middleschooljaridiheast'
         -- Correct the Kobo username typo so Sayal North submissions join downstream models.
         WHEN facilityname = 'Sayal North Patratu'
             AND kobo_username = 'savalnorthratratu'
