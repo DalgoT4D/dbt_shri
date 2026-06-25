@@ -102,7 +102,7 @@ expected_checkins_by_facility_position AS (
   UNION ALL SELECT 'Bairo', 'Cleaning', 2
   UNION ALL SELECT 'Bairo', 'Night Guard', 1
   
-  UNION ALL SELECT 'Bela Museri', 'Data Collector', 3
+  UNION ALL SELECT 'Bela Museri', 'Data Collector', 2
   UNION ALL SELECT 'Bela Museri', 'Cleaning', 2
   UNION ALL SELECT 'Bela Museri', 'Night Guard', 1
   
@@ -135,7 +135,8 @@ daily_checkins_by_position AS (
     facility,
     date_auto,
     standardized_position,
-    COUNT(*) AS actual_checkins
+    COUNT(DISTINCT userid) AS actual_checkins,
+    COUNT(*) AS actual_checkin_events
   FROM checkins_with_standard_positions
   WHERE date_auto IS NOT NULL
   GROUP BY facility, date_auto, standardized_position
