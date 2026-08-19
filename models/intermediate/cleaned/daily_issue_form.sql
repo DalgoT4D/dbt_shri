@@ -85,6 +85,9 @@ WHERE
         OR (jt.facilityname = 'Bela Museri' AND jt.date_auto >= '2023-12-04')
         OR (jt.facilityname = 'Bairo' AND jt.date_auto >= '2023-11-01')
         OR (jt.facilityname = 'Karanpur' AND jt.date_auto >= '2023-10-13')
+        OR (jt.facilityname = 'Jiorid Koderma' AND jt.date_auto >= '2026-07-31')
+        OR (jt.facilityname = 'Arogya Mandir Koderma' AND jt.date_auto >= '2026-07-31')
+        OR (jt.facilityname = 'PM SHRI Middle school Jaridih East' AND jt.date_auto >= '2026-06-15')
         -- Default condition for new facilities: Use their minimum date_auto
         OR (jt.date_auto >= md.min_date_auto)
     )
