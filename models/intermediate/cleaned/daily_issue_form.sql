@@ -88,6 +88,15 @@ WHERE
         OR (jt.facilityname = 'Jiorid Koderma' AND jt.date_auto >= '2026-07-31')
         OR (jt.facilityname = 'Arogya Mandir Koderma' AND jt.date_auto >= '2026-07-31')
         OR (jt.facilityname = 'PM SHRI Middle school Jaridih East' AND jt.date_auto >= '2026-06-15')
-        -- Default condition for new facilities: Use their minimum date_auto
-        OR (jt.date_auto >= md.min_date_auto)
+        -- Default condition for new/unlisted facilities only
+        OR (
+            jt.facilityname NOT IN (
+                'Dundibagh', 'Basgoda', 'Gomia', 'Azad Nagar', 'North Basgoda',
+                'Peterbaar', 'Vurahi', 'Jaridih CSR', 'Jaridih SBM', 'Kasmar',
+                'Nemua', 'Bela Museri', 'Bairo', 'Karanpur',
+                'Jiorid Koderma', 'Arogya Mandir Koderma',
+                'PM SHRI Middle school Jaridih East'
+            )
+            AND jt.date_auto >= md.min_date_auto
+        )
     )
